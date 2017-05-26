@@ -95,6 +95,7 @@
         }
     }
 
+    /* Set the home button to the selected color */
     Button01.backgroundColor = [UIColor ColorYellow];
 }
 
