@@ -49,7 +49,7 @@
     // Override point for customization after application launch.
     
     // Delay lanch screen display for 5 seconds
-    [NSThread sleepForTimeInterval:5.0];
+    [NSThread sleepForTimeInterval:3.0];
     
     
     
