@@ -62,7 +62,7 @@
                                     <action selector="didTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uEj-Gy-aJM"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="main_screen_1_sw800dp.png" translatesAutoresizingMaskIntoConstraints="NO" id="sGQ-M4-HOk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="main_screen_1_sw800dp" translatesAutoresizingMaskIntoConstraints="NO" id="sGQ-M4-HOk">
                                 <rect key="frame" x="74" y="55" width="573" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -111,6 +111,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="main_screen_1_sw800dp.png" width="2560" height="1190"/>
+        <image name="main_screen_1_sw800dp" width="2560" height="1190"/>
     </resources>
 </document>
