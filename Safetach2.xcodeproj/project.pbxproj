@@ -14,13 +14,9 @@
 		A719EC351ED386FB008BF6AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A719EC341ED386FB008BF6AC /* Assets.xcassets */; };
 		A719EC381ED386FB008BF6AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A719EC361ED386FB008BF6AC /* LaunchScreen.storyboard */; };
 		A719EC431ED386FB008BF6AC /* Safetach2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A719EC421ED386FB008BF6AC /* Safetach2Tests.m */; };
-		A7E3C1A31ED497910018E17F /* safetach2_splash_node.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E3C1A11ED497910018E17F /* safetach2_splash_node.png */; };
-		A7E3C1A41ED497910018E17F /* safetach2_splash.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E3C1A21ED497910018E17F /* safetach2_splash.png */; };
 		A7E3C1A81ED6016A0018E17F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1A71ED6016A0018E17F /* CoreBluetooth.framework */; };
 		A7E3C1AA1ED601880018E17F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1A91ED601880018E17F /* CoreGraphics.framework */; };
 		A7E3C1AC1ED601960018E17F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1AB1ED601960018E17F /* CoreFoundation.framework */; };
-		A7E3C1B31ED624650018E17F /* main_screen_1_sw800dp.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E3C1B11ED624650018E17F /* main_screen_1_sw800dp.png */; };
-		A7E3C1B41ED624650018E17F /* main_screen_2_sw800dp.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E3C1B21ED624650018E17F /* main_screen_2_sw800dp.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,13 +44,9 @@
 		A719EC421ED386FB008BF6AC /* Safetach2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Safetach2Tests.m; sourceTree = "<group>"; };
 		A719EC441ED386FB008BF6AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A719EC4E1ED39C22008BF6AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		A7E3C1A11ED497910018E17F /* safetach2_splash_node.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = safetach2_splash_node.png; sourceTree = "<group>"; };
-		A7E3C1A21ED497910018E17F /* safetach2_splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = safetach2_splash.png; sourceTree = "<group>"; };
 		A7E3C1A71ED6016A0018E17F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		A7E3C1A91ED601880018E17F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A7E3C1AB1ED601960018E17F /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		A7E3C1B11ED624650018E17F /* main_screen_1_sw800dp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_screen_1_sw800dp.png; sourceTree = "<group>"; };
-		A7E3C1B21ED624650018E17F /* main_screen_2_sw800dp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_screen_2_sw800dp.png; sourceTree = "<group>"; };
 		A7E3C1B51ED762990018E17F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A7E3C1B71ED790EA0018E17F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,7 +94,6 @@
 		A719EC271ED386FB008BF6AC /* Safetach2 */ = {
 			isa = PBXGroup;
 			children = (
-				A7E3C1A51ED4979E0018E17F /* Images */,
 				A7E3C1B51ED762990018E17F /* Constants.h */,
 				A719EC2B1ED386FB008BF6AC /* AppDelegate.h */,
 				A719EC2C1ED386FB008BF6AC /* AppDelegate.m */,
@@ -132,18 +123,6 @@
 				A719EC441ED386FB008BF6AC /* Info.plist */,
 			);
 			path = Safetach2Tests;
-			sourceTree = "<group>";
-		};
-		A7E3C1A51ED4979E0018E17F /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				A7E3C1B11ED624650018E17F /* main_screen_1_sw800dp.png */,
-				A7E3C1B21ED624650018E17F /* main_screen_2_sw800dp.png */,
-				A7E3C1A11ED497910018E17F /* safetach2_splash_node.png */,
-				A7E3C1A21ED497910018E17F /* safetach2_splash.png */,
-			);
-			name = Images;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		A7E3C1A61ED6016A0018E17F /* Frameworks */ = {
@@ -240,10 +219,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7E3C1A41ED497910018E17F /* safetach2_splash.png in Resources */,
-				A7E3C1B31ED624650018E17F /* main_screen_1_sw800dp.png in Resources */,
-				A7E3C1B41ED624650018E17F /* main_screen_2_sw800dp.png in Resources */,
-				A7E3C1A31ED497910018E17F /* safetach2_splash_node.png in Resources */,
 				A719EC381ED386FB008BF6AC /* LaunchScreen.storyboard in Resources */,
 				A719EC351ED386FB008BF6AC /* Assets.xcassets in Resources */,
 				A719EC331ED386FB008BF6AC /* Main.storyboard in Resources */,
