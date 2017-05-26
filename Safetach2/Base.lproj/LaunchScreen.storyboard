@@ -21,11 +21,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="safetach2_splash.png" translatesAutoresizingMaskIntoConstraints="NO" id="aXY-ct-q6d">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="safetach2_splash" translatesAutoresizingMaskIntoConstraints="NO" id="aXY-ct-q6d">
                                 <rect key="frame" x="0.0" y="28" width="667" height="318"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="safetach2_splash_node.png" translatesAutoresizingMaskIntoConstraints="NO" id="3vV-eA-CSM">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="safetach2_splash_node" translatesAutoresizingMaskIntoConstraints="NO" id="3vV-eA-CSM">
                                 <rect key="frame" x="213" y="80" width="240" height="238"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -39,7 +39,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="safetach2_splash.png" width="800" height="480"/>
-        <image name="safetach2_splash_node.png" width="182" height="382"/>
+        <image name="safetach2_splash" width="800" height="480"/>
+        <image name="safetach2_splash_node" width="182" height="382"/>
     </resources>
 </document>
