@@ -14,6 +14,8 @@
 		A719EC351ED386FB008BF6AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A719EC341ED386FB008BF6AC /* Assets.xcassets */; };
 		A719EC381ED386FB008BF6AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A719EC361ED386FB008BF6AC /* LaunchScreen.storyboard */; };
 		A719EC431ED386FB008BF6AC /* Safetach2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A719EC421ED386FB008BF6AC /* Safetach2Tests.m */; };
+		A775B0A41EE0C7D100264C4E /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A775B0A31EE0C7D100264C4E /* SetupViewController.m */; };
+		A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A775B0A61EE0C8F400264C4E /* InfoViewController.m */; };
 		A7E3C1A81ED6016A0018E17F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1A71ED6016A0018E17F /* CoreBluetooth.framework */; };
 		A7E3C1AA1ED601880018E17F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1A91ED601880018E17F /* CoreGraphics.framework */; };
 		A7E3C1AC1ED601960018E17F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1AB1ED601960018E17F /* CoreFoundation.framework */; };
@@ -44,6 +46,10 @@
 		A719EC421ED386FB008BF6AC /* Safetach2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Safetach2Tests.m; sourceTree = "<group>"; };
 		A719EC441ED386FB008BF6AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A719EC4E1ED39C22008BF6AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		A775B0A21EE0C7D100264C4E /* SetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupViewController.h; sourceTree = "<group>"; };
+		A775B0A31EE0C7D100264C4E /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupViewController.m; sourceTree = "<group>"; };
+		A775B0A51EE0C8F400264C4E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		A775B0A61EE0C8F400264C4E /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		A7E3C1A71ED6016A0018E17F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		A7E3C1A91ED601880018E17F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A7E3C1AB1ED601960018E17F /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -95,6 +101,10 @@
 			isa = PBXGroup;
 			children = (
 				A7E3C1B51ED762990018E17F /* Constants.h */,
+				A775B0A21EE0C7D100264C4E /* SetupViewController.h */,
+				A775B0A31EE0C7D100264C4E /* SetupViewController.m */,
+				A775B0A51EE0C8F400264C4E /* InfoViewController.h */,
+				A775B0A61EE0C8F400264C4E /* InfoViewController.m */,
 				A719EC2B1ED386FB008BF6AC /* AppDelegate.h */,
 				A719EC2C1ED386FB008BF6AC /* AppDelegate.m */,
 				A719EC2E1ED386FB008BF6AC /* ViewController.h */,
@@ -239,8 +249,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A775B0A41EE0C7D100264C4E /* SetupViewController.m in Sources */,
 				A719EC301ED386FB008BF6AC /* ViewController.m in Sources */,
 				A719EC2D1ED386FB008BF6AC /* AppDelegate.m in Sources */,
+				A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */,
 				A719EC2A1ED386FB008BF6AC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
