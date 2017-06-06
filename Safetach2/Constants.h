@@ -69,6 +69,20 @@
 #define NOTIFY_MTU                      20
 
 
+/* User default keys and default values */
+#define SETUP_RUNTYPE_KEY               @"runtype"
+#define SETUP_RUNTYPE_DEFAULT_VALUE     @"hydro"
+#define SETUP_RUNMODE_KEY               @"runmode"
+#define SETUP_RUNMODE_DEFAULT_VALUE     @"triggered"
+#define SETUP_UNITS_KEY                 @"units"
+#define SETUP_UNITS_DEFAULT_VALUE       @"imperial"
+#define SETUP_SCALE_KEY                 @"scale"
+#define SETUP_SCALE_DEFAULT_VALUE       @"mg"
+#define SETUP_DEVICE_NAME_KEY           @"devicename"
+#define SETUP_DEVICE_ADDRESS_KEY        @"deviceaddress"
+
+
+
 
 
 #endif /* Constants_h */
