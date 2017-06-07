@@ -71,13 +71,25 @@
 
 /* User default keys and default values */
 #define SETUP_RUNTYPE_KEY               @"runtype"
-#define SETUP_RUNTYPE_DEFAULT_VALUE     @"hydro"
+#define SETUP_RUNTYPE_HYDRO_VALUE       @"hydro"
+#define SETUP_RUNTYPE_TRACTION_VALUE    @"traction"
+#define SETUP_RUNTYPE_DEFAULT_VALUE     SETUP_RUNTYPE_HYDRO_VALUE
+
 #define SETUP_RUNMODE_KEY               @"runmode"
-#define SETUP_RUNMODE_DEFAULT_VALUE     @"triggered"
+#define SETIP_RUNMODE_TRIGGERED_VALUE   @"triggered"
+#define SETUP_RUNMODE_FREERUN_VALUE     @"freerun"
+#define SETUP_RUNMODE_DEFAULT_VALUE     SETUP_RUNMODE_TRIGGERED_VALUE
+
 #define SETUP_UNITS_KEY                 @"units"
-#define SETUP_UNITS_DEFAULT_VALUE       @"imperial"
+#define SETUP_UNITS_IMPERIAL_VALUE      @"imperial"
+#define SETUP_UNITS_METRIC_VALUE        @"metric"
+#define SETUP_UNITS_DEFAULT_VALUE       SETUP_UNITS_IMPERIAL_VALUE
+
 #define SETUP_SCALE_KEY                 @"scale"
-#define SETUP_SCALE_DEFAULT_VALUE       @"mg"
+#define SETUP_SCALE_MG_VALUE            @"mg"
+#define SETUP_SCALE_G_VALUE             @"g"
+#define SETUP_SCALE_DEFAULT_VALUE       SETUP_SCALE_MG_VALUE
+
 #define SETUP_DEVICE_NAME_KEY           @"devicename"
 #define SETUP_DEVICE_ADDRESS_KEY        @"deviceaddress"
 
