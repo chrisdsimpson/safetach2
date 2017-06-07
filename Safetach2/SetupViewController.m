@@ -46,8 +46,12 @@
 @implementation SetupViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    
+    self.ConnectNodeButton.backgroundColor = [UIColor ColorYellow];
+    self.CompanyInfoButton.backgroundColor = [UIColor ColorYellow];
     
     /* Get the user defaults */
     Defaults = [NSUserDefaults standardUserDefaults];
@@ -56,9 +60,10 @@
     DeviceName = [Defaults stringForKey:SETUP_DEVICE_NAME_KEY];
     DeviceAddress = [Defaults stringForKey:SETUP_DEVICE_ADDRESS_KEY];
     
+    /* Set all the buttons to the correct state */
     Units = [Defaults stringForKey:SETUP_UNITS_KEY];
     
-    if([Units length] == 0)
+    if(Units == nil || [Units length] == 0)
     {
         Units = SETUP_UNITS_DEFAULT_VALUE;
         [Defaults setObject:Units forKey:SETUP_UNITS_KEY];
@@ -76,13 +81,51 @@
         self.MetricButton.backgroundColor = [UIColor ColorYellow];
     }
     
-    //NSString *units = @"mg";
     
-    /* Save the user data */
-    //[Defaults setObject:units forKey:SETUP_UNITS_KEY];
+    Scale = [Defaults stringForKey:SETUP_SCALE_KEY];
+    
+    if(Scale == nil || [Scale length] == 0)
+    {
+        Scale = SETUP_SCALE_DEFAULT_VALUE;
+        [Defaults setObject:Scale forKey:SETUP_SCALE_KEY];
+        [Defaults synchronize];
+    }
+    
+    if([Scale isEqualToString:SETUP_SCALE_DEFAULT_VALUE])
+    {
+        self.MGButton.backgroundColor = [UIColor ColorYellow];
+        self.GButton.backgroundColor = [UIColor ColorLightGrey];
+    }
+    else
+    {
+        self.MGButton.backgroundColor = [UIColor ColorLightGrey];
+        self.GButton.backgroundColor = [UIColor ColorYellow];
+    }
+
+    
+    RunType = [Defaults stringForKey:SETUP_RUNTYPE_KEY];
+    
+    if(RunType == nil || [RunType length] == 0)
+    {
+        RunType = SETUP_RUNTYPE_DEFAULT_VALUE;
+        [Defaults setObject:RunType forKey:SETUP_RUNTYPE_KEY];
+        [Defaults synchronize];
+    }
+    
+    if([RunType isEqualToString:SETUP_RUNTYPE_DEFAULT_VALUE])
+    {
+        self.HydroButton.backgroundColor = [UIColor ColorYellow];
+        self.TractionButton.backgroundColor = [UIColor ColorLightGrey];
+    }
+    else
+    {
+        self.HydroButton.backgroundColor = [UIColor ColorLightGrey];
+        self.TractionButton.backgroundColor = [UIColor ColorYellow];
+    }
+   
+    
     //[Defaults synchronize];
-    
-    
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -155,7 +198,7 @@
     self.ImperialButton.backgroundColor = [UIColor ColorYellow];
     self.MetricButton.backgroundColor = [UIColor ColorLightGrey];
     
-    Units = SETUP_UNITS_DEFAULT_VALUE;
+    Units = SETUP_UNITS_IMPERIAL_VALUE;
     [Defaults setObject:Units forKey:SETUP_UNITS_KEY];
     [Defaults synchronize];
     
@@ -167,7 +210,7 @@
     self.ImperialButton.backgroundColor = [UIColor ColorLightGrey];
     self.MetricButton.backgroundColor = [UIColor ColorYellow];
     
-    Units = @"metric";
+    Units = SETUP_UNITS_METRIC_VALUE;
     [Defaults setObject:Units forKey:SETUP_UNITS_KEY];
     [Defaults synchronize];
     
@@ -178,7 +221,9 @@
     self.MGButton.backgroundColor = [UIColor ColorYellow];
     self.GButton.backgroundColor = [UIColor ColorLightGrey];
     
-    
+    Scale = SETUP_SCALE_MG_VALUE;
+    [Defaults setObject:Scale forKey:SETUP_SCALE_KEY];
+    [Defaults synchronize];
     
 }
 
@@ -188,6 +233,9 @@
     self.MGButton.backgroundColor = [UIColor ColorLightGrey];
     self.GButton.backgroundColor = [UIColor ColorYellow];
     
+    Scale = SETUP_SCALE_G_VALUE;
+    [Defaults setObject:Scale forKey:SETUP_SCALE_KEY];
+    [Defaults synchronize];
     
 }
 
@@ -196,7 +244,9 @@
     self.HydroButton.backgroundColor = [UIColor ColorYellow];
     self.TractionButton.backgroundColor = [UIColor ColorLightGrey];
     
-    
+    RunType = SETUP_RUNTYPE_HYDRO_VALUE;
+    [Defaults setObject:RunType forKey:SETUP_RUNTYPE_KEY];
+    [Defaults synchronize];
     
 }
 
@@ -206,6 +256,9 @@
     self.HydroButton.backgroundColor = [UIColor ColorLightGrey];
     self.TractionButton.backgroundColor = [UIColor ColorYellow];
     
+    RunType = SETUP_RUNTYPE_TRACTION_VALUE;
+    [Defaults setObject:RunType forKey:SETUP_RUNTYPE_KEY];
+    [Defaults synchronize];
     
 }
 
