@@ -39,6 +39,7 @@
 #import "ViewController.h"
 #import "Constants.h"
 
+
 @interface ViewController ()
 
 @end
@@ -95,23 +96,22 @@
         }
     }
 
-    /* Set the home button to the selected color */
+    /* Set the button colors */
     Button01.backgroundColor = [UIColor ColorYellow];
-    
+    Button02.backgroundColor = [UIColor ColorBlue];
+    Button03.backgroundColor = [UIColor ColorBlue];
+    Button04.backgroundColor = [UIColor ColorBlue];
+    Button05.backgroundColor = [UIColor ColorBlue];
+    Button06.backgroundColor = [UIColor ColorGreen];
    
+    /* Set the startup meny state */
+    MenuState = MENU_STATE_HOME;
+    
 }
 
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    
-    //[self setButton1:nil];
-    //[self setButton2:nil];
-    //[self setButton3:nil];
-    //[self setButton4:nil];
-    //[self setButton5:nil];
-    //[self setButton6:nil];
-    
     
 }
 
@@ -130,33 +130,27 @@
     switch(button.tag)
     {
         case 1:
-            
             [self onHomePressed];
-            
         break;
          
         case 2:
-            
             [self onGraphPressed];
-            
         break;
             
         case 3:
-            
             [self onAudioPressed];
-            
         break;
         
         case 4:
-            NSLog(@"Button 4 Pressed");
+            [self onReportPressed];
         break;
             
         case 5:
-            NSLog(@"Button 5 Pressed");
+            [self onFilePressed];
         break;
             
         case 6:
-            NSLog(@"Button 6 Pressed");
+            [self onResetPressed];
         break;
             
     }
@@ -170,7 +164,7 @@
     Button02.backgroundColor = [UIColor ColorBlue];
     Button03.backgroundColor = [UIColor ColorBlue];
     
-    NSLog(@"Button 1 Pressed");
+    NSLog(@"Home Button Pressed");
     
 }
 
@@ -182,7 +176,7 @@
     Button02.backgroundColor = [UIColor ColorYellow];
     Button03.backgroundColor = [UIColor ColorBlue];
     
-    NSLog(@"Button 2 Pressed");
+    NSLog(@"Grahp Button Pressed");
     
 }
 
@@ -194,10 +188,30 @@
     Button02.backgroundColor = [UIColor ColorBlue];
     Button03.backgroundColor = [UIColor ColorYellow];
     
-    NSLog(@"Button 3 Pressed");
+    NSLog(@"Audio Button Pressed");
+    
+}
+
+- (void)onReportPressed {
+    
+    
+    NSLog(@"Report Button Pressed");
     
 }
 
 
+- (void)onFilePressed {
+    
+    
+    NSLog(@"File Button Pressed");
+    
+}
+
+- (void)onResetPressed {
+    
+    
+    NSLog(@"Reset Button Pressed");
+
+}
 
 @end
