@@ -58,7 +58,11 @@
     
     /* Reterive the user data */
     DeviceName = [Defaults stringForKey:SETUP_DEVICE_NAME_KEY];
+    self.DeviceNameLabel.text = DeviceName;
+    
     DeviceAddress = [Defaults stringForKey:SETUP_DEVICE_ADDRESS_KEY];
+    self.DeviceAddressLabel.text = DeviceAddress;
+    
     
     /* Set all the buttons to the correct state */
     Units = [Defaults stringForKey:SETUP_UNITS_KEY];
