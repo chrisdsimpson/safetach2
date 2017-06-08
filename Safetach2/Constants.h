@@ -39,6 +39,14 @@
 #ifndef Constants_h
 #define Constants_h
 
+
+#define APP_NAME                          @"Safetach2"
+#define APP_VERSION                       @"1.0.0"
+#define CANCEL                            @"Cancel"
+#define OK                                @"OK"
+
+#define FIRMWARE_FILE_VERSION             @"1.0.5"
+
 /* State defines */
 #define MENU_STATE_HOME                   1
 #define MENU_STATE_GRAPH                  2
@@ -50,6 +58,10 @@
 #define SUB_MENU_STATE_AUDIO_LEVEL        4
 #define SUB_MENU_STATE_AUDIOFREQ          5
 
+
+/* BLE device connection/scan time out */
+#define DEVICE_CONNECTION_TIMEOUT         10.0
+#define SEARCH_BAR_TAG                    101
 
 /* Color defines */
 #define ColorYellow                       colorWithRed:(250.0/255.0) green:(217.0/255.0) blue:(5.0/255.0) alpha:(1.0)
@@ -115,38 +127,101 @@
 #define SETUP_DEVICE_ADDRESS_KEY          @"deviceaddress"
 
 
+/* GATT DB*/
+#define CELL_BG_IMAGE                     @"list_bg"
+#define CELL_BG_IMAGE_SMALL               @"list_bg_small"
+
+
+/* Device information strings */
+#define MANUFACTURER_NAME                 @"Manufacturer Name"
+#define MODEL_NUMBER                      @"Model Number"
+#define SERIAL_NUMBER                     @"Serial Number"
+#define HARDWARE_REVISION                 @"Hardware Revision"
+#define FIRMWARE_REVISION                 @"Firmware Revision"
+#define SOFTWARE_REVISION                 @"Software Revision"
+#define SYSTEM_ID                         @"System ID"
+#define REGULATORY_CERTIFICATION_DATA_LIST  @"Regulatory Certification Data List"
+#define PNP_ID                            @"PnP ID"
+
+/* Characteristic properties*/
+#define READ                              @"Read"
+#define WRITE                             @"Write"
+#define NOTIFY                            @"Notify"
+#define INDICATE                          @"Indicate"
+
+/* Log strings */
+#define CONNECTION_REQUEST                @"Connection request sent"
+#define CONNECTION_ESTABLISH              @"Connection established"
+#define PAIRING_REQUEST                   @"Pairing request sent"
+#define PAIRING_RQUEST_RECEIVED           @"Pairing request received"
+#define PAIRED                            @"Paired"
+#define UNPAIRED                          @"Unpaired"
+#define SERVICE_DISCOVERY_REQUEST         @"Service discovery request sent"
+#define SERVICE_DISCOVERY_STATUS          @"Service discovery status "
+#define DISCONNECTION_REQUEST             @"Disconnection request sent"
+#define DISCONNECTED                      @"Disconnected"
+
+#define SERVICE_DISCOVERED                @"Success"
+#define SERVICE_DISCOVERY_ERROR           @"Service discovery request failed with error : "
+
+/* BLE operations strings */
+#define WRITE_REQUEST                     @"Write request sent with value "
+#define WRITE_REQUEST_STATUS              @"Write request status "
+#define WRITE_SUCCESS                     @"Success"
+#define WRITE_ERROR                       @"Failed with error : "
+
+#define START_NOTIFY                      @"Start notification request sent"
+#define STOP_NOTIFY                       @"Stop notification request sent"
+#define NOTIFY_RESPONSE                   @"Notification received with value "
+
+#define READ_REQUEST                      @"Read request sent"
+#define READ_RESPONSE                     @"Read response received with value "
+#define READ_ERROR                        @"Failed with error : "
+
+
+#define START_INDICATE                    @"Start indicate request sent"
+#define STOP_INDICATE                     @"Stop indicate request sent"
+#define INDICATE_RESPONSE                 @"Indicate response received with value "
 
 
 
 /* Bootloader command codes */
-#define COMMAND_START_BYTE    0x01
-#define COMMAND_END_BYTE      0x17
-#define VERIFY_CHECKSUM       0x31
-#define GET_FLASH_SIZE        0x32
-#define SEND_DATA             0x37
-#define ENTER_BOOTLOADER      0x38
-#define PROGRAM_ROW           0x39
-#define VERIFY_ROW            0x3A
-#define EXIT_BOOTLOADER       0x3B
-
+#define COMMAND_START_BYTE                0x01
+#define COMMAND_END_BYTE                  0x17
+#define VERIFY_CHECKSUM                   0x31
+#define GET_FLASH_SIZE                    0x32
+#define SEND_DATA                         0x37
+#define ENTER_BOOTLOADER                  0x38
+#define PROGRAM_ROW                       0x39
+#define VERIFY_ROW                        0x3A
+#define EXIT_BOOTLOADER                   0x3B
 
 /* Bootloader status/Error codes */
-#define SUCCESS               @"0x00"
-#define ERROR_FILE            @"0x01"
-#define ERROR_EOF             @"0x02"
-#define ERROR_LENGTH          @"0x03"
-#define ERROR_DATA            @"0x04"
-#define ERROR_COMMAND         @"0x05"
-#define ERROR_DEVICE          @"0x06"
-#define ERROR_VERSION         @"0x07"
-#define ERROR_CHECKSUM        @"0x08"
-#define ERROR_ARRAY           @"0x09"
-#define ERROR_ROW             @"0x0A"
-#define ERROR_BOOTLOADER      @"0x0B"
-#define ERROR_APPLICATION     @"0x0C"
-#define ERROR_ACTIVE          @"0x0D"
-#define ERROR_UNKNOWN         @"0x0F"
-#define ERROR_ABORT           @"0xFF"
+#define SUCCESS                           @"0x00"
+#define ERROR_FILE                        @"0x01"
+#define ERROR_EOF                         @"0x02"
+#define ERROR_LENGTH                      @"0x03"
+#define ERROR_DATA                        @"0x04"
+#define ERROR_COMMAND                     @"0x05"
+#define ERROR_DEVICE                      @"0x06"
+#define ERROR_VERSION                     @"0x07"
+#define ERROR_CHECKSUM                    @"0x08"
+#define ERROR_ARRAY                       @"0x09"
+#define ERROR_ROW                         @"0x0A"
+#define ERROR_BOOTLOADER                  @"0x0B"
+#define ERROR_APPLICATION                 @"0x0C"
+#define ERROR_ACTIVE                      @"0x0D"
+#define ERROR_UNKNOWN                     @"0x0F"
+#define ERROR_ABORT                       @"0xFF"
 
+/* Bootloader defines */
+#define FLASH_ARRAY_ID                    @"flashArrayID"
+#define FLASH_ROW_NUMBER                  @"flashRowNumber"
+
+#define CHECK_SUM                         @"checkSum"
+#define CRC_16                            @"crc_16"
+#define ROW_DATA                          @"rowData"
+
+#define LOCALIZEDSTRING(string)           NSLocalizedString(string, nil)
 
 #endif /* Constants_h */
