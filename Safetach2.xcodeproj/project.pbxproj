@@ -16,6 +16,10 @@
 		A719EC431ED386FB008BF6AC /* Safetach2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A719EC421ED386FB008BF6AC /* Safetach2Tests.m */; };
 		A77017381EE8B59800443F5C /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A77017331EE8B50600443F5C /* Charts.framework */; };
 		A77017391EE8B59800443F5C /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A77017331EE8B50600443F5C /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A77017421EE9C58600443F5C /* CBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A770173F1EE9C58600443F5C /* CBManager.m */; };
+		A77017431EE9C58600443F5C /* CBPeripheralExt.m in Sources */ = {isa = PBXBuildFile; fileRef = A77017411EE9C58600443F5C /* CBPeripheralExt.m */; };
+		A77017481EE9ECCF00443F5C /* DeviceScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A77017451EE9ECCF00443F5C /* DeviceScanViewController.m */; };
+		A77017491EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A77017471EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m */; };
 		A775B0A41EE0C7D100264C4E /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A775B0A31EE0C7D100264C4E /* SetupViewController.m */; };
 		A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A775B0A61EE0C8F400264C4E /* InfoViewController.m */; };
 		A7E3C1A81ED6016A0018E17F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1A71ED6016A0018E17F /* CoreBluetooth.framework */; };
@@ -91,6 +95,14 @@
 		A719EC441ED386FB008BF6AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A719EC4E1ED39C22008BF6AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		A770172C1EE8B50500443F5C /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../Charts-3.0.0/Charts.xcodeproj"; sourceTree = "<group>"; };
+		A770173E1EE9C58600443F5C /* CBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBManager.h; sourceTree = "<group>"; };
+		A770173F1EE9C58600443F5C /* CBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBManager.m; sourceTree = "<group>"; };
+		A77017401EE9C58600443F5C /* CBPeripheralExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPeripheralExt.h; sourceTree = "<group>"; };
+		A77017411EE9C58600443F5C /* CBPeripheralExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPeripheralExt.m; sourceTree = "<group>"; };
+		A77017441EE9ECCF00443F5C /* DeviceScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceScanViewController.h; sourceTree = "<group>"; };
+		A77017451EE9ECCF00443F5C /* DeviceScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceScanViewController.m; sourceTree = "<group>"; };
+		A77017461EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannedPeripheralTableViewCell.h; sourceTree = "<group>"; };
+		A77017471EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannedPeripheralTableViewCell.m; sourceTree = "<group>"; };
 		A775B0A21EE0C7D100264C4E /* SetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupViewController.h; sourceTree = "<group>"; };
 		A775B0A31EE0C7D100264C4E /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupViewController.m; sourceTree = "<group>"; };
 		A775B0A51EE0C8F400264C4E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -147,6 +159,14 @@
 		A719EC271ED386FB008BF6AC /* Safetach2 */ = {
 			isa = PBXGroup;
 			children = (
+				A77017441EE9ECCF00443F5C /* DeviceScanViewController.h */,
+				A77017451EE9ECCF00443F5C /* DeviceScanViewController.m */,
+				A77017461EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.h */,
+				A77017471EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m */,
+				A770173E1EE9C58600443F5C /* CBManager.h */,
+				A770173F1EE9C58600443F5C /* CBManager.m */,
+				A77017401EE9C58600443F5C /* CBPeripheralExt.h */,
+				A77017411EE9C58600443F5C /* CBPeripheralExt.m */,
 				A7E3C1B51ED762990018E17F /* Constants.h */,
 				A775B0A21EE0C7D100264C4E /* SetupViewController.h */,
 				A775B0A31EE0C7D100264C4E /* SetupViewController.m */,
@@ -338,11 +358,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A77017421EE9C58600443F5C /* CBManager.m in Sources */,
+				A77017431EE9C58600443F5C /* CBPeripheralExt.m in Sources */,
+				A77017491EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m in Sources */,
 				A775B0A41EE0C7D100264C4E /* SetupViewController.m in Sources */,
 				A719EC301ED386FB008BF6AC /* ViewController.m in Sources */,
 				A719EC2D1ED386FB008BF6AC /* AppDelegate.m in Sources */,
 				A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */,
 				A719EC2A1ED386FB008BF6AC /* main.m in Sources */,
+				A77017481EE9ECCF00443F5C /* DeviceScanViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
