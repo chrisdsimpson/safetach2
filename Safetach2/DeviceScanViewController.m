@@ -103,8 +103,6 @@
     
     // Start scanning for devices
     [[CBManager sharedManager] startScanning];
-    
-    NSLog(@"Log - Scan started");
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -186,8 +184,6 @@
  */
 -(void)addRefreshControl
 {
-    NSLog(@"Log - Refresh");
-    
     refreshPeripheralListControl=[[UIRefreshControl alloc]init];
     [refreshPeripheralListControl addTarget:self action:@selector(refreshPeripheralList:) forControlEvents:UIControlEventValueChanged];
     [_scannedPeripheralsTableView addSubview:refreshPeripheralListControl];
@@ -306,9 +302,8 @@
  */
 -(void)reloadPeripheralTable
 {
-    NSLog(@"Log - Reload device list");
-    
-    if (!isSearchActive) {
+    if (!isSearchActive)
+    {
         [_scannedPeripheralsTableView reloadData];
     }
 }
@@ -329,7 +324,7 @@
  */
 -(void)bluetoothStateUpdatedToState:(BOOL)state
 {
-    NSLog(@"Log - BLE is On = %@", state ? @"Yes" : @"No");
+    //NSLog(@"Log - BLE is On = %@", state ? @"Yes" : @"No");
     
     isBluetoothON = state;
     [self reloadPeripheralTable];
