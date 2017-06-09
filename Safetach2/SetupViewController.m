@@ -142,10 +142,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    /* Tell the child view controller that this is its delegate */
-    DeviceScanViewController *controller = [segue destinationViewController];
-    controller.delegate = self;
-    
+    /* Test to see which view controller we are headed to */
+    if([segue.identifier isEqualToString:@"DeviceScanViewController"])
+    {
+        /* Tell the child view controller that this is its delegate */
+        DeviceScanViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+    }
 }
 
 
