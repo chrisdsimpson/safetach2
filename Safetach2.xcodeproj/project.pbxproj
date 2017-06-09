@@ -20,6 +20,7 @@
 		A77017431EE9C58600443F5C /* CBPeripheralExt.m in Sources */ = {isa = PBXBuildFile; fileRef = A77017411EE9C58600443F5C /* CBPeripheralExt.m */; };
 		A77017481EE9ECCF00443F5C /* DeviceScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A77017451EE9ECCF00443F5C /* DeviceScanViewController.m */; };
 		A77017491EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A77017471EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m */; };
+		A770174C1EEB146D00443F5C /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = A770174B1EEB146D00443F5C /* UIView+Toast.m */; };
 		A775B0A41EE0C7D100264C4E /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A775B0A31EE0C7D100264C4E /* SetupViewController.m */; };
 		A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A775B0A61EE0C8F400264C4E /* InfoViewController.m */; };
 		A7E3C1A81ED6016A0018E17F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1A71ED6016A0018E17F /* CoreBluetooth.framework */; };
@@ -103,6 +104,8 @@
 		A77017451EE9ECCF00443F5C /* DeviceScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceScanViewController.m; sourceTree = "<group>"; };
 		A77017461EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannedPeripheralTableViewCell.h; sourceTree = "<group>"; };
 		A77017471EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannedPeripheralTableViewCell.m; sourceTree = "<group>"; };
+		A770174A1EEB146D00443F5C /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
+		A770174B1EEB146D00443F5C /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		A775B0A21EE0C7D100264C4E /* SetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupViewController.h; sourceTree = "<group>"; };
 		A775B0A31EE0C7D100264C4E /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupViewController.m; sourceTree = "<group>"; };
 		A775B0A51EE0C8F400264C4E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -159,6 +162,9 @@
 		A719EC271ED386FB008BF6AC /* Safetach2 */ = {
 			isa = PBXGroup;
 			children = (
+				A7E3C1B51ED762990018E17F /* Constants.h */,
+				A770174A1EEB146D00443F5C /* UIView+Toast.h */,
+				A770174B1EEB146D00443F5C /* UIView+Toast.m */,
 				A77017441EE9ECCF00443F5C /* DeviceScanViewController.h */,
 				A77017451EE9ECCF00443F5C /* DeviceScanViewController.m */,
 				A77017461EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.h */,
@@ -167,7 +173,6 @@
 				A770173F1EE9C58600443F5C /* CBManager.m */,
 				A77017401EE9C58600443F5C /* CBPeripheralExt.h */,
 				A77017411EE9C58600443F5C /* CBPeripheralExt.m */,
-				A7E3C1B51ED762990018E17F /* Constants.h */,
 				A775B0A21EE0C7D100264C4E /* SetupViewController.h */,
 				A775B0A31EE0C7D100264C4E /* SetupViewController.m */,
 				A775B0A51EE0C8F400264C4E /* InfoViewController.h */,
@@ -366,6 +371,7 @@
 				A719EC2D1ED386FB008BF6AC /* AppDelegate.m in Sources */,
 				A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */,
 				A719EC2A1ED386FB008BF6AC /* main.m in Sources */,
+				A770174C1EEB146D00443F5C /* UIView+Toast.m in Sources */,
 				A77017481EE9ECCF00443F5C /* DeviceScanViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
