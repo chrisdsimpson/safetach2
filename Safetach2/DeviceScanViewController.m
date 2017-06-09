@@ -43,7 +43,7 @@
 #import "Constants.h"
 //#import "ProgressHandler.h"
 //#import "Utilities.h"
-//#import "UIView+Toast.h"
+#import "UIView+Toast.h"
 
 #define CAROUSEL_SEGUE              @"CarouselViewID"
 #define PERIPHERAL_CELL_IDENTIFIER  @"peripheralCell"
@@ -193,7 +193,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return isBluetoothON ? LOCALIZEDSTRING(@"pullToRefresh") : LOCALIZEDSTRING(@"bluetoothTurnOnAlert") ;
+    return isBluetoothON ? LOCALIZEDSTRING(@"Pull To Refresh") : LOCALIZEDSTRING(@"Bluetooth Turn On Alert") ;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -206,7 +206,7 @@
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     CGRect headerFrame = header.frame;
     header.textLabel.frame = headerFrame;
-    [header.textLabel setTextColor:[UIColor colorWithRed:12.0/255.0 green:55.0/255.0 blue:123.0/255.0 alpha:1.0]];
+    [header.textLabel setTextColor:[UIColor ColorBlack]];
     header.textLabel.textAlignment = NSTextAlignmentCenter;
 }
 
@@ -353,7 +353,18 @@
             
             if(success)
             {
+                
+                NSLog(@"Log - Conecting to : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
                 //[self performSegueWithIdentifier:CAROUSEL_SEGUE sender:self];
+                
+                NSString *deviceName = selectedBLE.mPeripheral.name;
+                [self.delegate addItem1ViewController:self didFinishEnteringItem:deviceName];
+                
+                NSString *deviceAddress = selectedBLE.mPeripheral.identifier.UUIDString;
+                [self.delegate addItem2ViewController:self didFinishEnteringItem:deviceAddress];
+                
+                /* Return to calling setup view controller */
+                [self.navigationController popViewControllerAnimated:YES];
             }
             else
             {
@@ -364,12 +375,12 @@
                     if(errorString.length)
                     {
                         NSLog(@"Log - User Alert - %@", errorString);
-                        //[self.view makeToast:errorString];
+                        [self.view makeToast:errorString];
                     }
                     else
                     {
-                        NSLog(@"Log - User Alert - unknownError");
-                        //[self.view makeToast:LOCALIZEDSTRING(@"unknownError")];
+                        NSLog(@"Log - User Alert - Unknown Error");
+                        [self.view makeToast:LOCALIZEDSTRING(@"Unknown Error")];
                     }
                 }
             }

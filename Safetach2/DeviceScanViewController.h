@@ -38,7 +38,24 @@
 
 #import <UIKit/UIKit.h>
 
+@class DeviceScanViewController;
+
+@protocol DeviceScanViewControllerDelegate <NSObject>
+
+-(void)addItem1ViewController:(DeviceScanViewController *)controller didFinishEnteringItem:(NSString *)item;
+-(void)addItem2ViewController:(DeviceScanViewController *)controller didFinishEnteringItem:(NSString *)item;
+
+@end
+
+
 @interface DeviceScanViewController : UIViewController
+{
+    
+    
+}
+
+@property (nonatomic, weak) id <DeviceScanViewControllerDelegate> delegate;
+
 
 @end
 
