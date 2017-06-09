@@ -334,7 +334,7 @@
                                         <rect key="frame" x="0.0" y="28" width="667" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F35-4U-zZA" id="kbC-jv-Cq4">
-                                            <rect key="frame" x="0.0" y="0.0" width="667" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="667" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CustomCell" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gxm-BB-H4L">
