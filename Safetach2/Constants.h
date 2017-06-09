@@ -72,7 +72,7 @@
 #define ColorMagenta                      colorWithRed:(225.0/255.0) green:(0.0/255.0) blue:(255.0/255.0) alpha:(1.0)
 #define ColorLightGrey                    colorWithRed:(217.0/255.0) green:(217.0/255.0) blue:(217.0/255.0) alpha:(1.0)
 #define ColorOrange                       colorWithRed:(255.0/255.0) green:(153.0/255.0) blue:(51.0/255.0) alpha:(1.0)
-
+#define ColorBlack                        colorWithRed:(0.0/255.0) green:(0.0/255.0) blue:(0.0/255.0) alpha:(1.0)
 
 /* BLE service and char defines */
 #define TRANSFER_SERVICE_UUID             @"FB694B90-F49E-4597-8306-171BBA78F846"
