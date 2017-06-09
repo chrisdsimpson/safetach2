@@ -272,10 +272,12 @@
 - (void)addItem1ViewController:(DeviceScanViewController *)controller didFinishEnteringItem:(NSString *)item
 {
     
-    NSLog(@"Log - Device Name = %@", item);
-    
     DeviceName = item;
     self.DeviceNameLabel.text = DeviceName;
+    
+    [Defaults setObject:DeviceName forKey:SETUP_DEVICE_NAME_KEY];
+    [Defaults synchronize];
+
     
 }
 
@@ -283,10 +285,11 @@
 - (void)addItem2ViewController:(DeviceScanViewController *)controller didFinishEnteringItem:(NSString *)item
 {
     
-    NSLog(@"Log - Device Address = %@", item);
-    
     DeviceAddress = item;
     self.DeviceAddressLabel.text = DeviceAddress;
+    
+    [Defaults setObject:DeviceAddress forKey:SETUP_DEVICE_ADDRESS_KEY];
+    [Defaults synchronize];
     
 }
 
