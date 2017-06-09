@@ -41,11 +41,16 @@
 
 
 #define APP_NAME                          @"Safetach2"
-#define APP_VERSION                       @"1.0.0"
+#define APP_VERSION                       @"1.0.0.0030"
 #define CANCEL                            @"Cancel"
 #define OK                                @"OK"
 
 #define FIRMWARE_FILE_VERSION             @"1.0.5"
+
+
+/* Debug flags - Set to 1 or 0 */
+#define DEBUG_DISPLAY_INFO                1
+#define DEBUG_VERSION_INFO                1
 
 /* State defines */
 #define MENU_STATE_HOME                   1
