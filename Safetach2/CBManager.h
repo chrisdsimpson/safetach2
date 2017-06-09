@@ -142,21 +142,12 @@
 
 @end
 
-// CDS ++ 06/08/17
+
 @interface CBManager () <CBCentralManagerDelegate, CBPeripheralDelegate>
 {
-    //CBCentralManager    *centralManager;
-    //NSMutableArray *peripheralListArray;
     
-    //void (^cbCommunicationHandler)(BOOL success, NSError *error);
-    //BOOL isTimeOutAlert;
 }
 
-//@interface CBManager : NSObject
-//{
-
-//}
-// CDS--
 
 @property (strong,nonatomic)  id<cbCharacteristicManagerDelegate> cbCharacteristicDelegate;
 @property (nonatomic, assign) id<cbDiscoveryManagerDelegate>           cbDiscoveryDelegate;
