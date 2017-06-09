@@ -178,7 +178,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="K7B-mh-tTZ" kind="show" id="mDu-JA-7oe"/>
+                                    <segue destination="K7B-mh-tTZ" kind="show" identifier="DeviceScanViewController" id="mDu-JA-7oe"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-su-Ssb">
@@ -233,7 +233,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="qgU-ze-Och" kind="show" id="Y99-8o-eiD"/>
+                                    <segue destination="qgU-ze-Och" kind="show" identifier="InfoViewController" id="Y99-8o-eiD"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tnB-a4-8BP">
