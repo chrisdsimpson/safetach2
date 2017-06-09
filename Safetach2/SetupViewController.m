@@ -49,7 +49,6 @@
     
     [super viewDidLoad];
     
-    
     self.ConnectNodeButton.backgroundColor = [UIColor ColorYellow];
     self.CompanyInfoButton.backgroundColor = [UIColor ColorYellow];
     
@@ -137,15 +136,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    /* Tell the child view controller that this is its delegate */
+    DeviceScanViewController *controller = [segue destinationViewController];
+    controller.delegate = self;
+    
 }
-*/
+
 
 - (IBAction)didTouchUp:(id)sender {
 
@@ -266,5 +268,26 @@
     
 }
 
+
+- (void)addItem1ViewController:(DeviceScanViewController *)controller didFinishEnteringItem:(NSString *)item
+{
+    
+    NSLog(@"Log - Device Name = %@", item);
+    
+    DeviceName = item;
+    self.DeviceNameLabel.text = DeviceName;
+    
+}
+
+
+- (void)addItem2ViewController:(DeviceScanViewController *)controller didFinishEnteringItem:(NSString *)item
+{
+    
+    NSLog(@"Log - Device Address = %@", item);
+    
+    DeviceAddress = item;
+    self.DeviceAddressLabel.text = DeviceAddress;
+    
+}
 
 @end

@@ -36,6 +36,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "DeviceScanViewController.h"
+
 
 NSUserDefaults *Defaults;
 NSString *DeviceName;
@@ -47,7 +49,10 @@ NSString *RunType;
 
 
 
-@interface SetupViewController : UIViewController
+@interface SetupViewController : UIViewController <DeviceScanViewControllerDelegate>
+
+@property (retain, nonatomic) NSString *DeviceName;
+@property (retain, nonatomic) NSString *DeviceAddress;
 
 @property (weak, nonatomic) IBOutlet UILabel *DeviceNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *DeviceAddressLabel;
