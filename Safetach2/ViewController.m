@@ -38,6 +38,7 @@
 
 #import "ViewController.h"
 #import "Constants.h"
+#import "UIView+Toast.h"
 
 
 @interface ViewController ()
@@ -51,6 +52,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    /* Debug display the application version */
+    if(DEBUG_VERSION_INFO)
+    {
+        [self.view makeToast:[NSString stringWithFormat:@" Application Version : %@", APP_VERSION]];
+    }
     
     /* Add a new button */
     //Button01 = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -106,6 +113,8 @@
    
     /* Set the startup meny state */
     MenuState = MENU_STATE_HOME;
+    
+    
     
 }
 
