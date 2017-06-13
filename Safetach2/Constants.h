@@ -48,6 +48,11 @@
 #define FIRMWARE_FILE_VERSION             @"1.0.5"
 
 
+#define DATE_FORMAT                       @"yyyyMMdd"
+#define TIME_FORMAT                       @"HHmmss"
+
+#define RIDE_DATA_FILE_NAME               @"st_"DATE_FORMAT"_"TIME_FORMAT".csv"
+
 /* Debug flags - Set to 1 or 0 */
 #define DEBUG_DISPLAY_INFO                1
 #define DEBUG_VERSION_INFO                1
