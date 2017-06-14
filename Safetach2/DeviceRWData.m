@@ -118,7 +118,7 @@
 }
 
 
-/* Read the next line from the ride data file */
+/* Read the lines from the ride data file */
 -(NSArray *) ReadLineRideDataFile:(NSString *)fileName
 {
     NSError *error;
@@ -136,6 +136,32 @@
             NSLog(@"Log - Error reading ride data file at %@\n%@", FilePath, [error localizedFailureReason]);
         }
     
+        lines = [txtInFile componentsSeparatedByString:@"\r\n"];
+    }
+    else
+    {
+        NSLog(@"Log - Error reading ride data file at %@", FilePath);
+    }
+    
+    return lines;
+}
+
+
+/* Read the next line from the ride data file */
+-(NSArray *) ReadLineRideDataFile
+{
+    NSError *error;
+    NSArray *lines;
+    
+    if([FileManager fileExistsAtPath:FilePath])
+    {
+        NSString *txtInFile = [[NSString alloc] initWithContentsOfFile:FilePath encoding:NSUnicodeStringEncoding error:&error];
+        
+        if(!txtInFile)
+        {
+            NSLog(@"Log - Error reading ride data file at %@\n%@", FilePath, [error localizedFailureReason]);
+        }
+        
         lines = [txtInFile componentsSeparatedByString:@"\r\n"];
     }
     else

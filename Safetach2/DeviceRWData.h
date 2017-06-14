@@ -59,6 +59,7 @@
 -(void) OpenRideDataFile:(NSString *)fileName;
 -(void) WriteLineRideDataFile:(NSString *)textToWrite;
 -(NSArray *) ReadLineRideDataFile:(NSString *)fileName;
+-(NSArray *) ReadLineRideDataFile;
 
 @end
 
