@@ -36,6 +36,7 @@
  */
 
 #import "DeviceRWData.h"
+#import "Constants.h"
 
 @implementation DeviceRWData
 @synthesize FileManager;
@@ -44,9 +45,14 @@
 @synthesize FilePath;
 
 
--(NSString *) setFilename
+-(NSString *) SetFileName
 {
-    FileName = @"mytextfile.txt";
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:RIDE_DATA_FILE_DATE_TIME_FORMAT];
+    
+    /* Format the ride data file name */
+    FileName = [NSString stringWithFormat:@"st_%@.csv", [dateFormat stringFromDate:[NSDate date]]];
+    
     return FileName;
 }
 
@@ -55,7 +61,7 @@
  * Get a handle on the directory where to write and read our files. If
  * it doesn't exist, it will be created.
  */
--(NSString *)GetDocumentDirectory
+-(NSString *) GetDocumentsDirectory
 {
     FileManager = [NSFileManager defaultManager];
     HomeDir = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -64,32 +70,122 @@
 }
 
 
-/* Create a new file */
--(void)WriteToStringFile:(NSMutableString *)textToWrite
+/* Create the new ride data file */
+-(void) CreateRideDataFile
 {
     FilePath = [[NSString alloc] init];
     NSError *err;
     
-    FilePath = [self.GetDocumentDirectory stringByAppendingPathComponent:self.setFilename];
+    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:self.SetFileName];
     
-    BOOL ok = [textToWrite writeToFile:FilePath atomically:YES encoding:NSUnicodeStringEncoding error:&err];
+    BOOL ok = [@"" writeToFile:FilePath atomically:YES encoding:NSUnicodeStringEncoding error:&err];
     
     if(!ok)
     {
-        NSLog(@"Error writing file at %@\n%@", FilePath, [err localizedFailureReason]);
+        NSLog(@"Log - Error writing ride data file at %@\n%@", FilePath, [err localizedFailureReason]);
     }
+}
+
+
+/* Open the file path for the file */
+-(void) OpenRideDataFile:(NSString *)fileName
+{
+    FilePath = [[NSString alloc] init];
+    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:fileName];
+    
+    if(![FileManager fileExistsAtPath:FilePath])
+    {
+        NSLog(@"Log - Error no ride data file at %@", FilePath);
+    }
+}
+
+
+/* Write a new line to the ride data file */
+-(void) WriteLineRideDataFile:(NSString *)textToWrite
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:RIDE_DATA_DATE_TIME_FORMAT];
+    
+    NSString *tstr = [NSString stringWithFormat:@"%@, %@\r\n", [dateFormat stringFromDate:[NSDate date]], textToWrite];
+   
+    if([FileManager fileExistsAtPath:FilePath])
+    {
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:FilePath];
+        [fileHandle seekToEndOfFile];
+        [fileHandle writeData:[tstr dataUsingEncoding:NSUnicodeStringEncoding]];
+        [fileHandle closeFile];
+    }
+}
+
+
+/* Read the next line from the ride data file */
+-(NSArray *) ReadLineRideDataFile:(NSString *)fileName
+{
+    NSError *error;
+    NSArray *lines;
+    
+    FilePath = [[NSString alloc] init];
+    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:fileName];
+    
+    if([FileManager fileExistsAtPath:FilePath])
+    {
+        NSString *txtInFile = [[NSString alloc] initWithContentsOfFile:FilePath encoding:NSUnicodeStringEncoding error:&error];
+        
+        if(!txtInFile)
+        {
+            NSLog(@"Log - Error reading ride data file at %@\n%@", FilePath, [error localizedFailureReason]);
+        }
+    
+        lines = [txtInFile componentsSeparatedByString:@"\r\n"];
+    }
+    else
+    {
+        NSLog(@"Log - Error reading ride data file at %@", FilePath);
+    }
+    
+    return lines;
+}
+
+
+/* Create a new file */
+-(void) WriteToStringFile:(NSMutableString *)textToWrite
+{
+    FilePath = [[NSString alloc] init];
+    NSError *err;
+    
+    NSMutableString *tstr = [NSMutableString stringWithFormat:@"%@\r\n", textToWrite];
+    
+    
+    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:self.SetFileName];
+    
+    if(![FileManager fileExistsAtPath:FilePath])
+    {
+        BOOL ok = [tstr writeToFile:FilePath atomically:YES encoding:NSUnicodeStringEncoding error:&err];
+        
+        if(!ok)
+        {
+            NSLog(@"Log - Error writing ride data file at %@\n%@", FilePath, [err localizedFailureReason]);
+        }
+    }
+    else
+    {
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:FilePath];
+        [fileHandle seekToEndOfFile];
+        [fileHandle writeData:[tstr dataUsingEncoding:NSUnicodeStringEncoding]];
+    }
+    
 }
 
 
 /*
  *  Read the contents from file
  */
--(NSString *) readFromFile
+-(NSString *) ReadFromFile
 {
     FilePath = [[NSString alloc] init];
     NSError *error;
     //NSString *title;
-    FilePath = [self.GetDocumentDirectory stringByAppendingPathComponent:self.setFilename];
+    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:self.SetFileName];
     NSString *txtInFile = [[NSString alloc] initWithContentsOfFile:FilePath encoding:NSUnicodeStringEncoding error:&error];
     
     if(!txtInFile)
