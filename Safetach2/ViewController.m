@@ -39,6 +39,7 @@
 #import "ViewController.h"
 #import "Constants.h"
 #import "UIView+Toast.h"
+#import "DeviceRWData.h"
 
 
 @interface ViewController ()
@@ -49,7 +50,8 @@
 
 
 /* Do any additional setup after loading the view, typically from a nib */
-- (void)viewDidLoad {
+- (void) viewDidLoad
+{
     [super viewDidLoad];
     
     
@@ -58,6 +60,10 @@
     {
         [self.view makeToast:[NSString stringWithFormat:@" Application Version : %@", APP_VERSION]];
     }
+    
+    
+    /* Create the DeviceRWData class */
+    RWData = [[DeviceRWData alloc] init];
     
     /* Add a new button */
     //Button01 = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -119,20 +125,23 @@
 }
 
 
-- (void)viewDidUnload {
+- (void) viewDidUnload
+{
     [super viewDidUnload];
     
 }
 
 
 /* Dispose of any resources that can be recreated */
-- (void)didReceiveMemoryWarning {
+- (void) didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     
 }
 
 
-- (IBAction)didTouchUp:(id)sender {
+- (IBAction) didTouchUp:(id)sender
+{
     
     UIButton *button = sender;
     
@@ -165,7 +174,8 @@
     }
 }
 
-- (void)onHomePressed {
+- (void) onHomePressed
+{
     
     MenuState = MENU_STATE_HOME;
     
@@ -177,7 +187,8 @@
     
 }
 
-- (void)onGraphPressed {
+- (void) onGraphPressed
+{
     
     MenuState = MENU_STATE_GRAPH;
     
@@ -189,7 +200,8 @@
     
 }
 
-- (void)onAudioPressed {
+- (void) onAudioPressed
+{
     
     MenuState = MENU_STATE_AUDIO;
     
@@ -201,7 +213,8 @@
     
 }
 
-- (void)onReportPressed {
+- (void) onReportPressed
+{
     
     
     NSLog(@"Report Button Pressed");
@@ -209,14 +222,25 @@
 }
 
 
-- (void)onFilePressed {
-    
+- (void) onFilePressed
+{
     
     NSLog(@"File Button Pressed");
     
+    //DeviceRWData *RWData = [[DeviceRWData alloc] init];
+    
+    [RWData CreateRideDataFile];
+    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00001"];
+    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00002"];
+    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00003"];
+    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00004"];
+    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00005"];
+    
+    
 }
 
-- (void)onResetPressed {
+- (void) onResetPressed
+{
     
     
     NSLog(@"Reset Button Pressed");
