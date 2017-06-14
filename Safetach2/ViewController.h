@@ -37,11 +37,12 @@
 
 
 #import <UIKit/UIKit.h>
-
+#import "DeviceRWData.h"
 
 //@import CoreBluetooth;
 //@import QuartzCore;
 @import Charts;
+
 
 
 
@@ -57,6 +58,8 @@ UIButton *Button05;
 UIButton *Button06;
 
 int MenuState;
+
+DeviceRWData *RWData = nil;
 
 
 
