@@ -501,11 +501,23 @@
                     </view>
                     <navigationItem key="navigationItem" title="Report" id="3z0-3P-IHA">
                         <barButtonItem key="backBarButtonItem" title=" " id="8pH-6c-eIi"/>
-                        <barButtonItem key="rightBarButtonItem" tag="1" image="ic_help_24pt" id="Qyt-fW-qbs">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem tag="1" image="ic_help_24pt" id="Qyt-fW-qbs">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </barButtonItem>
+                            <barButtonItem tag="2" image="ic_print_24pt" id="7A1-Dd-5L5">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="sDA-AD-S2R"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem tag="3" image="ic_email_24pt" id="xbw-Mg-WNI">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="PrintButton" destination="7A1-Dd-5L5" id="i5K-bf-iee"/>
                         <outlet property="WebView" destination="zIr-Qm-DBN" id="Idd-9I-VbQ"/>
                     </connections>
                 </viewController>
@@ -573,10 +585,12 @@
         <image name="ic_autorenew_white_24pt" width="24" height="24"/>
         <image name="ic_bluetooth_disabled_black_24pt" width="24" height="24"/>
         <image name="ic_description_white_24pt" width="24" height="24"/>
+        <image name="ic_email_24pt" width="24" height="24"/>
         <image name="ic_folder_open_white_24pt" width="24" height="24"/>
         <image name="ic_help_24pt" width="24" height="24"/>
         <image name="ic_import_export_white_24pt" width="24" height="24"/>
         <image name="ic_info_24pt" width="24" height="24"/>
+        <image name="ic_print_24pt" width="24" height="24"/>
         <image name="ic_save_black_24pt" width="24" height="24"/>
         <image name="ic_settings_black_24pt" width="24" height="24"/>
         <image name="ic_volume_up_white_24pt" width="24" height="24"/>
