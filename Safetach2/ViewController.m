@@ -219,6 +219,18 @@
     
     NSLog(@"Report Button Pressed");
     
+    //if(RWData != nil)
+    //{
+    //    NSArray *lines = [RWData ReadLineRideDataFile];
+        
+        
+    //    for(int i = 0; i < ([lines count] - 1); i++)
+    //    {
+    //        NSLog(@"Ride Data Line = %@", [lines objectAtIndex:i]);
+    //    }
+    //}
+    
+    
 }
 
 
