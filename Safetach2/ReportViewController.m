@@ -40,6 +40,7 @@
 #import "Constants.h"
 
 
+//@synthesize PrintButton;
 
 @interface ReportViewController ()
 
@@ -67,6 +68,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (IBAction)didTouchUp:(id)sender
+{
+    UIButton *button = sender;
+    
+    switch(button.tag)
+    {
+        case 1: /* Help button */
+        
+        break;
+            
+        case 2: /* Print button */
+            [self PrintReport];
+        break;
+            
+        case 3: /* Email button */
+            [self EmailReport];
+        break;
+    }
+}
 
 -(void) LoadReport
 {
@@ -132,5 +153,66 @@
     
 }
 
+
+- (void) PrintReport
+{
+    NSArray *arrayPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [arrayPaths objectAtIndex:0];
+    NSString* pdfFileName = [path stringByAppendingPathComponent:REPORT_FILE_NAME];
+    
+    NSURL *targetURL = [NSURL fileURLWithPath:pdfFileName];
+    
+    UIPrintInteractionController *pc = [UIPrintInteractionController sharedPrintController];
+    UIPrintInfo *printInfo = [UIPrintInfo printInfo];
+    printInfo.outputType = UIPrintInfoOutputGeneral;
+    printInfo.orientation = UIPrintInfoOrientationPortrait;
+    printInfo.jobName =@"Safetach2 Report";
+    
+    pc.printInfo = printInfo;
+    //pc.showsPageRange = YES;
+    pc.printingItem = targetURL;
+    //pc.printingItem = [NSURL fileURLWithPath:[self returnFilePath]];
+    
+    UIPrintInteractionCompletionHandler completionHandler = ^(UIPrintInteractionController *printController, BOOL completed, NSError *error)
+    {
+        if(!completed && error)
+        {
+            NSLog(@"Log - Print failed - domain: %@ error code %ld", error.domain, (long)error.code);
+        }
+    };
+    
+    [pc presentAnimated:YES completionHandler:completionHandler];
+    
+}
+
+
+-(void) EmailReport
+{
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    
+    picker.mailComposeDelegate = self;
+    [picker setSubject:@"Safetach2 Report"];
+    //[picker addAttachmentData:pdfData mimeType:@"application/pdf" fileName:[NSString stringWithFormat:@"CadabraCorp.pdf"]];
+    //[picker setMessageBody:@"Here's the PDF you wanted." isHTML:YES];
+    
+    [self presentModalViewController:picker animated:YES];
+    //[picker release];
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    [self dismissModalViewControllerAnimated:YES];
+    
+    if (result==MessageComposeResultSent)
+    {
+        NSLog(@"Log - Email PDF sent");
+    }
+    else
+    {
+        NSLog(@"Log - Email PDF send error %@",error);
+    }
+}
 
 @end
