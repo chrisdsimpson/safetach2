@@ -38,9 +38,16 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
+#import <MessageUI/MessageUI.h>
 
 @interface ReportViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *HelpButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *EmailButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *PrintButton;
 @property (weak, nonatomic) IBOutlet UIWebView *WebView;
+properties 
+- (IBAction)didTouchUp:(id)sender;
+
 
 @end
