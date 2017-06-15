@@ -46,7 +46,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *EmailButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *PrintButton;
 @property (weak, nonatomic) IBOutlet UIWebView *WebView;
-properties 
+
 - (IBAction)didTouchUp:(id)sender;
 
 
