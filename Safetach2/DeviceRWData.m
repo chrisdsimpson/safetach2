@@ -103,6 +103,8 @@
 /* Write a new line to the ride data file */
 -(void) WriteLineRideDataFile:(NSString *)textToWrite
 {
+    NSError *error = nil;
+    
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:RIDE_DATA_DATE_TIME_FORMAT];
     
@@ -110,10 +112,16 @@
    
     if([FileManager fileExistsAtPath:FilePath])
     {
-        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:FilePath];
-        [fileHandle seekToEndOfFile];
-        [fileHandle writeData:[tstr dataUsingEncoding:NSUnicodeStringEncoding]];
-        [fileHandle closeFile];
+        /* Less efficient but pure text data */
+        NSString *contents = [NSString stringWithContentsOfFile:FilePath encoding:NSUnicodeStringEncoding error:&error];
+        contents = [contents stringByAppendingString:tstr];
+        [contents writeToFile:FilePath atomically:YES encoding:NSUnicodeStringEncoding error:&error];
+        
+        /* More efficient but inserts non string data in the file */
+        //NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:FilePath];
+        //[fileHandle seekToEndOfFile];
+        //[fileHandle writeData:[tstr dataUsingEncoding:NSUnicodeStringEncoding]];
+        //[fileHandle closeFile];
     }
 }
 
@@ -136,7 +144,7 @@
             NSLog(@"Log - Error reading ride data file at %@\n%@", FilePath, [error localizedFailureReason]);
         }
     
-        lines = [txtInFile componentsSeparatedByString:@"\r\n"];
+        lines = [txtInFile componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     }
     else
     {
@@ -173,7 +181,7 @@
 }
 
 
-/* Create a new file */
+/* Create a new file with the contents of textToWrite */
 -(void) WriteToStringFile:(NSMutableString *)textToWrite
 {
     FilePath = [[NSString alloc] init];
@@ -198,29 +206,25 @@
         NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:FilePath];
         [fileHandle seekToEndOfFile];
         [fileHandle writeData:[tstr dataUsingEncoding:NSUnicodeStringEncoding]];
+        [fileHandle closeFile];
     }
-    
 }
 
 
-/*
- *  Read the contents from file
- */
+/* Read the contents from file */
 -(NSString *) ReadFromFile
 {
     FilePath = [[NSString alloc] init];
     NSError *error;
-    //NSString *title;
+    
     FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:self.SetFileName];
     NSString *txtInFile = [[NSString alloc] initWithContentsOfFile:FilePath encoding:NSUnicodeStringEncoding error:&error];
     
     if(!txtInFile)
     {
-        
         NSLog(@"Error writing file at %@\n%@", FilePath, [error localizedFailureReason]);
-        //UIAlertView *tellErr = [[UIAlertView alloc] initWithTitle:title message:@"Unable to get text from file." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        //[tellErr show];
     }
+    
     return txtInFile;
 }
 
