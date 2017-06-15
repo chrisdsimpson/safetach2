@@ -41,7 +41,7 @@
 
 
 #define APP_NAME                          @"Safetach2"
-#define APP_VERSION                       @"1.0.0.0030"
+#define APP_VERSION                       @"1.0.0.0031"
 #define CANCEL                            @"Cancel"
 #define OK                                @"OK"
 
@@ -49,7 +49,7 @@
 
 #define RIDE_DATA_FILE_DATE_TIME_FORMAT   @"yyyyMMdd_HHmmss"
 #define RIDE_DATA_DATE_TIME_FORMAT        @"yyyy-MM-dd HH:mm:ss:SSS"
-
+#define REPORT_FILE_NAME                  @"Safetach2_Report.pdf"
 
 /* Debug flags - Set to 1 or 0 */
 #define DEBUG_DISPLAY_INFO                1
