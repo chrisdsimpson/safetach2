@@ -188,15 +188,19 @@
 
 -(void) EmailReport
 {
+    NSArray *arrayPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [arrayPaths objectAtIndex:0];
+    NSString* pdfFileName = [path stringByAppendingPathComponent:REPORT_FILE_NAME];
+    
     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     
     picker.mailComposeDelegate = self;
     [picker setSubject:@"Safetach2 Report"];
-    //[picker addAttachmentData:pdfData mimeType:@"application/pdf" fileName:[NSString stringWithFormat:@"CadabraCorp.pdf"]];
-    //[picker setMessageBody:@"Here's the PDF you wanted." isHTML:YES];
+    NSData *pdfData = [NSData dataWithContentsOfFile:pdfFileName];
+    [picker addAttachmentData:pdfData mimeType:@"application/pdf" fileName:REPORT_FILE_NAME];
+    //[picker setMessageBody:@"Safetach2 report PDF file." isHTML:YES];
     
     [self presentModalViewController:picker animated:YES];
-    //[picker release];
 }
 
 
