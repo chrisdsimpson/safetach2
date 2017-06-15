@@ -65,6 +65,7 @@
                                 <state key="normal" backgroundImage="ic_description_white_24pt"/>
                                 <connections>
                                     <action selector="didTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZA2-4p-wE4"/>
+                                    <segue destination="IZ2-cX-cKA" kind="show" id="6b4-Y0-ocd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fzh-M9-fCM" userLabel="Button5">
@@ -422,7 +423,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NVX-Np-Nwm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3977" y="686"/>
+            <point key="canvasLocation" x="3977" y="870"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a8p-Hd-Xr1">
@@ -478,6 +479,40 @@
             </objects>
             <point key="canvasLocation" x="1791" y="239"/>
         </scene>
+        <!--Report-->
+        <scene sceneID="DQ6-WY-UOr">
+            <objects>
+                <viewController id="IZ2-cX-cKA" customClass="ReportViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dEL-d6-4hw"/>
+                        <viewControllerLayoutGuide type="bottom" id="mef-rZ-NQL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="o05-hn-4lW">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zIr-Qm-DBN">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Report" id="3z0-3P-IHA">
+                        <barButtonItem key="backBarButtonItem" title=" " id="8pH-6c-eIi"/>
+                        <barButtonItem key="rightBarButtonItem" tag="1" image="ic_help_24pt" id="Qyt-fW-qbs">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="WebView" destination="zIr-Qm-DBN" id="Idd-9I-VbQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ME8-Me-Ga6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2571.3643178410798" y="1312.8"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="qjE-lb-ROn">
             <objects>
@@ -512,7 +547,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJE-ch-Yt8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3296" y="686"/>
+            <point key="canvasLocation" x="3296" y="871"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="e9M-L1-ykF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FlK-g1-HjO" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UPn-Ej-i49">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="IZ2-cX-cKA" kind="relationship" relationship="rootViewController" id="Jt4-Jw-xSI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0uL-s6-MK6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1791" y="1314"/>
         </scene>
     </scenes>
     <resources>
@@ -531,8 +584,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="PKJ-FJ-idm"/>
-        <segue reference="MNo-Nk-Dif"/>
+        <segue reference="bEq-QB-EZn"/>
         <segue reference="mDu-JA-7oe"/>
-        <segue reference="Y99-8o-eiD"/>
+        <segue reference="MNo-Nk-Dif"/>
+        <segue reference="Jt4-Jw-xSI"/>
     </inferredMetricsTieBreakers>
 </document>
