@@ -504,19 +504,27 @@
                         <rightBarButtonItems>
                             <barButtonItem tag="1" image="ic_help_24pt" id="Qyt-fW-qbs">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="fna-RW-sir"/>
+                                </connections>
                             </barButtonItem>
                             <barButtonItem tag="2" image="ic_print_24pt" id="7A1-Dd-5L5">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="sDA-AD-S2R"/>
+                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="TcK-ds-WF8"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem tag="3" image="ic_email_24pt" id="xbw-Mg-WNI">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="0Vu-w7-D2k"/>
+                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="EmailButton" destination="xbw-Mg-WNI" id="NdK-Zx-1s9"/>
+                        <outlet property="HelpButton" destination="Qyt-fW-qbs" id="7d6-j0-d39"/>
                         <outlet property="PrintButton" destination="7A1-Dd-5L5" id="i5K-bf-iee"/>
                         <outlet property="WebView" destination="zIr-Qm-DBN" id="Idd-9I-VbQ"/>
                     </connections>
