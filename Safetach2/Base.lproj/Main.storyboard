@@ -582,7 +582,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bvL-N4-gbB">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bvL-N4-gbB" userLabel="File Listing Table View">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -596,6 +596,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="z4d-D0-RIj" id="Kle-Np-dJ9"/>
+                                    <outlet property="delegate" destination="z4d-D0-RIj" id="IVA-Yj-cLo"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -623,6 +627,12 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="DeleteButton" destination="yiT-eg-Utg" id="Z45-a1-HBE"/>
+                        <outlet property="EditButton" destination="SUr-LW-fjD" id="Hcg-VI-C9E"/>
+                        <outlet property="FileListingsTableView" destination="bvL-N4-gbB" id="STH-1D-r2d"/>
+                        <outlet property="HelpButton" destination="m9X-cd-QIN" id="vYj-6Z-kso"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jlk-fF-7qd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
