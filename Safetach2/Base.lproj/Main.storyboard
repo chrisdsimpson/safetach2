@@ -610,19 +610,19 @@
                             <barButtonItem tag="1" image="ic_help_24pt" id="m9X-cd-QIN">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="n9J-GN-8g4"/>
+                                    <action selector="didTouchUp:" destination="z4d-D0-RIj" id="2hT-X9-Qqm"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem tag="2" image="ic_mode_edit_24pt" id="SUr-LW-fjD">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="fTq-CP-b0q"/>
+                                    <action selector="didTouchUp:" destination="z4d-D0-RIj" id="Ki2-Aa-CIx"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem tag="3" image="ic_delete_24pt" id="yiT-eg-Utg">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="4UH-30-vXx"/>
+                                    <action selector="didTouchUp:" destination="z4d-D0-RIj" id="HGE-Ho-Tmy"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
