@@ -42,6 +42,7 @@
 @interface FileSelectionViewController : UIViewController
 {
     NSArray *FilePathsArray;
+    NSArray *RunDataFiles;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *HelpButton;
@@ -49,5 +50,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *DeleteButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *FileListingsTableView;
+
+- (IBAction)didTouchUp:(id)sender;
 
 @end

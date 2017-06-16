@@ -50,9 +50,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    FilePathsArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:documentsDirectory  error:nil];
+    //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //NSString *documentsDirectory = [paths objectAtIndex:0];
+    //FilePathsArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
+    
+    [self buildFileList];
 }
 
 
@@ -60,6 +62,27 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (IBAction)didTouchUp:(id)sender
+{
+    UIButton *button = sender;
+    
+    switch(button.tag)
+    {
+        case 1: /* Help button */
+            
+        break;
+            
+        case 2: /* Edit button */
+            
+        break;
+            
+        case 3: /* Delete button */
+            
+        break;
+    }
 }
 
 
@@ -75,9 +98,9 @@
     //if(!isDataLoading)  // if data loading has been completed, return the number of rows ELSE return 1
     {
         
-        if([FilePathsArray count] > 0)
+        if([RunDataFiles count] > 0)
         {
-            return [FilePathsArray count];
+            return [RunDataFiles count];
         }
         else
         {
@@ -99,17 +122,29 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MainCell"];
     }
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    FilePathsArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:documentsDirectory  error:nil];
+    //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //NSString *documentsDirectory = [paths objectAtIndex:0];
+    //FilePathsArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
     
-    cell.textLabel.text = [documentsDirectory stringByAppendingPathComponent:[FilePathsArray objectAtIndex:indexPath.row]];
+    cell.textLabel.text = [RunDataFiles objectAtIndex:indexPath.row];
     
     return cell;
     
-    //UITableViewCell *currentCell = [tableView dequeueReusableCellWithIdentifier:@"peripheralCell"];
+}
+
+
+-(void) buildFileList
+{
+    NSMutableArray *filelist;
+    NSString *item;
     
-    //return currentCell;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    FilePathsArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
+    RunDataFiles = [FilePathsArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH '.csv'"]];
+    
+    
+    
 }
 
 @end
