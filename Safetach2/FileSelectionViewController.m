@@ -38,7 +38,7 @@
 
 #import "FileSelectionViewController.h"
 
-@interface FileSelectionViewController ()
+@interface FileSelectionViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -49,6 +49,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    FilePathsArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:documentsDirectory  error:nil];
 }
 
 
@@ -59,5 +63,53 @@
 }
 
 
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    //if(!isDataLoading)  // if data loading has been completed, return the number of rows ELSE return 1
+    {
+        
+        if([FilePathsArray count] > 0)
+        {
+            return [FilePathsArray count];
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    
+    //return 1;
+    //return [FilePathsArray count];
+}
+
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MainCell"];
+    
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MainCell"];
+    }
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    FilePathsArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:documentsDirectory  error:nil];
+    
+    cell.textLabel.text = [documentsDirectory stringByAppendingPathComponent:[FilePathsArray objectAtIndex:indexPath.row]];
+    
+    return cell;
+    
+    //UITableViewCell *currentCell = [tableView dequeueReusableCellWithIdentifier:@"peripheralCell"];
+    
+    //return currentCell;
+}
 
 @end
