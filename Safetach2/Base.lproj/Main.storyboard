@@ -75,6 +75,7 @@
                                 <state key="normal" backgroundImage="ic_folder_open_white_24pt"/>
                                 <connections>
                                     <action selector="didTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6XJ-Yz-I3j"/>
+                                    <segue destination="z4d-D0-RIj" kind="show" id="QJX-CG-Gbc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPO-33-VgR" userLabel="Button6">
@@ -423,7 +424,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NVX-Np-Nwm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3977" y="870"/>
+            <point key="canvasLocation" x="3977" y="1140"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a8p-Hd-Xr1">
@@ -459,7 +460,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BrV-je-bW4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1791" y="-1050"/>
+            <point key="canvasLocation" x="1836" y="-1050"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oNz-RS-2wX">
@@ -477,7 +478,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygk-rg-JUe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1791" y="239"/>
+            <point key="canvasLocation" x="1838" y="108"/>
         </scene>
         <!--Report-->
         <scene sceneID="DQ6-WY-UOr">
@@ -531,7 +532,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ME8-Me-Ga6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2571.3643178410798" y="1312.8"/>
+            <point key="canvasLocation" x="2572" y="1452"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qjE-lb-ROn">
@@ -567,7 +568,65 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJE-ch-Yt8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3296" y="871"/>
+            <point key="canvasLocation" x="3296" y="1140"/>
+        </scene>
+        <!--File Selection-->
+        <scene sceneID="VyN-Dt-Jq3">
+            <objects>
+                <viewController id="z4d-D0-RIj" customClass="FileSelectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qeX-w8-G2j"/>
+                        <viewControllerLayoutGuide type="bottom" id="UiN-IF-rhW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6FU-Ew-SYM">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bvL-N4-gbB">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Ree-qL-zCp">
+                                        <rect key="frame" x="0.0" y="28" width="667" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ree-qL-zCp" id="VZj-5H-YX9">
+                                            <rect key="frame" x="0.0" y="0.0" width="667" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="File Selection" id="5aa-Jh-B95">
+                        <barButtonItem key="backBarButtonItem" title=" " id="OEH-F9-YcU"/>
+                        <rightBarButtonItems>
+                            <barButtonItem tag="1" image="ic_help_24pt" id="m9X-cd-QIN">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="n9J-GN-8g4"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem tag="2" image="ic_mode_edit_24pt" id="SUr-LW-fjD">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="fTq-CP-b0q"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem tag="3" image="ic_delete_24pt" id="yiT-eg-Utg">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="didTouchUp:" destination="IZ2-cX-cKA" id="4UH-30-vXx"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jlk-fF-7qd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="906" y="1452"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="e9M-L1-ykF">
@@ -585,19 +644,39 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uL-s6-MK6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1791" y="1314"/>
+            <point key="canvasLocation" x="1837" y="1452"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wkP-gt-PUs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Stt-R9-5fb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jt8-vJ-dih">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="z4d-D0-RIj" kind="relationship" relationship="rootViewController" id="sXw-HN-2va"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qP3-gR-bKe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="134" y="1452"/>
         </scene>
     </scenes>
     <resources>
         <image name="ic_assessment_white_24pt" width="24" height="24"/>
         <image name="ic_autorenew_white_24pt" width="24" height="24"/>
         <image name="ic_bluetooth_disabled_black_24pt" width="24" height="24"/>
+        <image name="ic_delete_24pt" width="24" height="24"/>
         <image name="ic_description_white_24pt" width="24" height="24"/>
         <image name="ic_email_24pt" width="24" height="24"/>
         <image name="ic_folder_open_white_24pt" width="24" height="24"/>
         <image name="ic_help_24pt" width="24" height="24"/>
         <image name="ic_import_export_white_24pt" width="24" height="24"/>
         <image name="ic_info_24pt" width="24" height="24"/>
+        <image name="ic_mode_edit_24pt" width="24" height="24"/>
         <image name="ic_print_24pt" width="24" height="24"/>
         <image name="ic_save_black_24pt" width="24" height="24"/>
         <image name="ic_settings_black_24pt" width="24" height="24"/>
@@ -605,10 +684,11 @@
         <image name="main_screen_1_sw800dp" width="2560" height="1190"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PKJ-FJ-idm"/>
         <segue reference="bEq-QB-EZn"/>
         <segue reference="mDu-JA-7oe"/>
         <segue reference="MNo-Nk-Dif"/>
+        <segue reference="sXw-HN-2va"/>
         <segue reference="Jt4-Jw-xSI"/>
+        <segue reference="L2A-fh-Nag"/>
     </inferredMetricsTieBreakers>
 </document>
