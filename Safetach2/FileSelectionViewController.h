@@ -38,6 +38,16 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface FileSelectionViewController : UIViewController
+{
+    NSArray *FilePathsArray;
+}
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *HelpButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *EditButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *DeleteButton;
+
+@property (weak, nonatomic) IBOutlet UITableView *FileListingsTableView;
 
 @end
