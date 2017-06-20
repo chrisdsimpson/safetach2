@@ -37,6 +37,7 @@
 
 
 #import "FileSelectionViewController.h"
+#import "DeviceRWData.h"
 
 @interface FileSelectionViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -50,9 +51,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    //NSString *documentsDirectory = [paths objectAtIndex:0];
-    //FilePathsArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
     
     [self buildFileList];
 }
@@ -94,22 +92,14 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    //if(!isDataLoading)  // if data loading has been completed, return the number of rows ELSE return 1
+    if([SortedRunDataFiles count] > 0)
     {
-        
-        if([RunDataFiles count] > 0)
-        {
-            return [RunDataFiles count];
-        }
-        else
-        {
-            return 1;
-        }
+        return [SortedRunDataFiles count];
     }
-    
-    //return 1;
-    //return [FilePathsArray count];
+    else
+    {
+        return 1;
+    }
 }
 
 
@@ -122,11 +112,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MainCell"];
     }
     
-    //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    //NSString *documentsDirectory = [paths objectAtIndex:0];
-    //FilePathsArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
-    
-    cell.textLabel.text = [RunDataFiles objectAtIndex:indexPath.row];
+    cell.textLabel.text = [SortedRunDataFiles objectAtIndex:indexPath.row];
     
     return cell;
     
@@ -135,14 +121,102 @@
 
 -(void) buildFileList
 {
-    NSMutableArray *filelist;
-    NSString *item;
+    NSError *error;
+    NSString *filedatetime;
+    NSString *direction;
+    NSString *jobref;
+    NSString *elevatorname;
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     FilePathsArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
     RunDataFiles = [FilePathsArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH '.csv'"]];
     
+    
+    /* Sort by creation date */
+    NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[RunDataFiles count]];
+    
+    for(NSString* file in RunDataFiles)
+    {
+        NSString* filePath = [documentsDirectory stringByAppendingPathComponent:file];
+        NSDictionary* properties = [[NSFileManager defaultManager]attributesOfItemAtPath:filePath error:&error];
+        NSDate* modDate = [properties objectForKey:NSFileModificationDate];
+        
+        if(error == nil)
+        {
+            [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:file, @"path", modDate, @"lastModDate", nil]];
+        }
+    }
+    
+    /* Sort using a block */
+    /* Order inverted as we want latest date first */
+    NSArray *sortedFiles = [filesAndProperties sortedArrayUsingComparator:^(id path1, id path2)
+        {
+            // compare
+            NSComparisonResult comp = [[path1 objectForKey:@"lastModDate"] compare:[path2 objectForKey:@"lastModDate"]];
+            
+            // invert ordering
+            if(comp == NSOrderedDescending)
+            {
+                comp = NSOrderedAscending;
+            }
+            else if(comp == NSOrderedAscending)
+            {
+                comp = NSOrderedDescending;
+            }
+            
+            return comp;
+        }];
+    
+    
+    /* Sorted files */
+    SortedRunDataFiles = [sortedFiles valueForKey:@"path"];
+    
+    /* Create a instance of the ride data file read/write class */
+    DeviceRWData *rwdata = [[DeviceRWData alloc] init];
+
+    
+    for(NSString *filename in SortedRunDataFiles)
+    {
+        
+        /* Open the file and read the lines */
+        NSArray *lines = [rwdata ReadLineRideDataFile:filename];
+  
+        /* Get the header line from the ride data file */
+        NSString *header = [lines objectAtIndex:0];
+        
+        /* Split the header into seperate strings */
+        NSArray *headerparts = [header componentsSeparatedByString:@","];
+        
+        /* Get the packet mode info */
+        NSString *packetmode = [headerparts objectAtIndex:5];
+        
+        /* Strip the run direction from the packet mode */
+        int pm = [packetmode intValue];
+        
+        pm = pm & 0x0030;
+        
+        /* Get the correct text for the direction */
+        if(pm == 0x0010)
+        {
+            direction = @"UP";
+        }
+        else
+        {
+            direction = @"DOWN";
+        }
+        
+        /* Get the job refferenc and the elevator name if available */
+        if([headerparts count] > 6)
+        {
+            jobref = [headerparts objectAtIndex:6];
+            elevatorname = [headerparts objectAtIndex:8];
+        }
+        
+        
+        
+    
+    }
     
     
 }
