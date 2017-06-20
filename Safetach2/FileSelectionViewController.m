@@ -126,6 +126,7 @@
     NSString *direction;
     NSString *jobref;
     NSString *elevatorname;
+    NSMutableArray *rundatafilenames;
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -214,10 +215,11 @@
         }
         
         
-        
+        /* Build the display string */
+        [rundatafilenames addObject:[NSString stringWithFormat:@"%@ %@ %@ %@", filedatetime, direction, jobref, elevatorname]];
     
     }
-    
+
     
 }
 
