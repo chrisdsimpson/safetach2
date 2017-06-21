@@ -221,7 +221,7 @@
     
     //if(RWData != nil)
     //{
-    //    NSArray *lines = [RWData ReadLineRideDataFile];
+    //    NSArray *lines = [RWData readLineRideDataFile];
         
         
     //    for(int i = 0; i < ([lines count] - 1); i++)
@@ -241,13 +241,19 @@
     
     //DeviceRWData *RWData = [[DeviceRWData alloc] init];
     
-    [RWData CreateRideDataFile];
-    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00001"];
-    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00002"];
-    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00003"];
-    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00004"];
-    [RWData WriteLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00005"];
     
+    /* Temp test ride data file */
+    [RWData createRideDataFile];
+    [RWData writeLineRideDataFile:(NSString *)@"00085, 00016, 00425, 01000, 00037, Trauma, Traction, Car 1, Test User, Test Notes"]; /* Header sample */
+    [RWData writeLineRideDataFile:(NSString *)@"16383, 16383, 16383, 10500, 00067"]; /* Calibration sample */
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"]; /* Data */
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
     
 }
 
