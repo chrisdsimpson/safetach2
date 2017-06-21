@@ -49,6 +49,7 @@
 
 #define RIDE_DATA_FILE_DATE_TIME_FORMAT   @"yyyyMMdd_HHmmss"
 #define RIDE_DATA_DATE_TIME_FORMAT        @"yyyy-MM-dd HH:mm:ss:SSS"
+#define RIDE_DATA_FILE_LIST_FORMAT        @"MM-dd-yyyy HH:mm:ss"
 #define REPORT_FILE_NAME                  @"Safetach2_Report.pdf"
 
 /* Debug flags - Set to 1 or 0 */
