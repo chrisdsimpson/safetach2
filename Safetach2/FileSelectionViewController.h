@@ -44,6 +44,7 @@
     NSArray *FilePathsArray;
     NSArray *RunDataFiles;
     NSArray *SortedRunDataFiles;
+    NSArray *FormattedRowData;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *HelpButton;

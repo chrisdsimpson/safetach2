@@ -37,7 +37,11 @@
 
 
 #import "FileSelectionViewController.h"
+#import "FileSelectionTableViewCell.h"
 #import "DeviceRWData.h"
+#import "Constants.h"
+
+static NSString *CellIdentifier = @"FileSelectionCell";
 
 @interface FileSelectionViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -51,6 +55,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    /* Register the class for the Cell Reuse Identifier */
+    [self.FileListingsTableView registerClass:[FileSelectionTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     
     [self buildFileList];
 }
@@ -92,9 +98,9 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if([SortedRunDataFiles count] > 0)
+    if([FormattedRowData count] > 0)
     {
-        return [SortedRunDataFiles count];
+        return [FormattedRowData count];
     }
     else
     {
@@ -105,14 +111,36 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MainCell"];
     
-    if(cell == nil)
+    //FileSelectionTableViewCell *cell = (FileSelectionTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    FileSelectionTableViewCell *cell = (FileSelectionTableViewCell *)
+                                       [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    //FileSelectionTableViewCell *cell = (FileSelectionTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"MainCell"];
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MainCell"];
+    
+    //if(cell == nil)
     {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MainCell"];
+        //NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FileSelectionCell" owner:self options:nil];
+        //cell = [nib objectAtIndex:0];
+        
+        
+        //cell = [[FileSelectionTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        //cell = [[FileSelectionTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MainCell"];
+        //cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MainCell"];
     }
     
-    cell.textLabel.text = [SortedRunDataFiles objectAtIndex:indexPath.row];
+    //[cell setCellValues];
+    //[cell.DateTime setText:@"Date Time"];
+    //[cell.Direction setText:@"UP"];
+    //[cell.Jobref setText:@"Job Reference 1"];
+    //[cell.ElevatorName setText:@"Elevator Name 1"];
+
+    
+    cell.DateTime.text = [FormattedRowData objectAtIndex:indexPath.row];
+    
+    //cell.textLabel.text = [FormattedRowData objectAtIndex:indexPath.row];
     
     return cell;
     
@@ -126,7 +154,8 @@
     NSString *direction;
     NSString *jobref;
     NSString *elevatorname;
-    NSMutableArray *rundatafilenames;
+    NSMutableArray *rundatafilenames = [[NSMutableArray alloc] init];
+    
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -181,7 +210,7 @@
     {
         
         /* Open the file and read the lines */
-        NSArray *lines = [rwdata ReadLineRideDataFile:filename];
+        NSArray *lines = [rwdata readLineRideDataFile:filename];
   
         /* Get the header line from the ride data file */
         NSString *header = [lines objectAtIndex:0];
@@ -190,7 +219,7 @@
         NSArray *headerparts = [header componentsSeparatedByString:@","];
         
         /* Get the packet mode info */
-        NSString *packetmode = [headerparts objectAtIndex:5];
+        NSString *packetmode = TRIM([headerparts objectAtIndex:5]);
         
         /* Strip the run direction from the packet mode */
         int pm = [packetmode intValue];
@@ -210,17 +239,19 @@
         /* Get the job refferenc and the elevator name if available */
         if([headerparts count] > 6)
         {
-            jobref = [headerparts objectAtIndex:6];
-            elevatorname = [headerparts objectAtIndex:8];
+            jobref = TRIM([headerparts objectAtIndex:6]);
+            elevatorname = TRIM([headerparts objectAtIndex:8]);
         }
         
+        /* Get the string version of the ride data file date and time */
+        filedatetime = [rwdata getRideDataFileDateTime:filename];
         
         /* Build the display string */
-        [rundatafilenames addObject:[NSString stringWithFormat:@"%@ %@ %@ %@", filedatetime, direction, jobref, elevatorname]];
+        [rundatafilenames addObject:[NSString stringWithFormat:@"%@     %@     %@     %@", filedatetime, direction, jobref, elevatorname]];
     
     }
 
-    
+    FormattedRowData = rundatafilenames;
 }
 
 @end
