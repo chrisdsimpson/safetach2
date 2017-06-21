@@ -71,6 +71,9 @@
 #define DEVICE_CONNECTION_TIMEOUT         10.0
 #define SEARCH_BAR_TAG                    101
 
+/* String trim macro */
+#define TRIM(string)                      [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
+
 /* Color defines */
 #define ColorYellow                       colorWithRed:(250.0/255.0) green:(217.0/255.0) blue:(5.0/255.0) alpha:(1.0)
 #define ColorBlue                         colorWithRed:(27.0/255.0) green:(120.0/255.0) blue:(250.0/255.0) alpha:(1.0)
