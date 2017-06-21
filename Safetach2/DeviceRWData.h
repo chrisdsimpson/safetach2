@@ -51,15 +51,16 @@
 @property (nonatomic, retain) NSString *FileName;
 @property (nonatomic, retain) NSString *FilePath;
 
--(NSString *) GetDocumentsDirectory;
--(void) WriteToStringFile:(NSMutableString *)textToWrite;
--(NSString *) ReadFromFile;
--(NSString *) SetFileName;
--(void) CreateRideDataFile;
--(void) OpenRideDataFile:(NSString *)fileName;
--(void) WriteLineRideDataFile:(NSString *)textToWrite;
--(NSArray *) ReadLineRideDataFile:(NSString *)fileName;
--(NSArray *) ReadLineRideDataFile;
+-(NSString *) getDocumentsDirectory;
+-(void) writeToStringFile:(NSMutableString *)textToWrite;
+-(NSString *) readFromFile;
+-(NSString *) setFileName;
+-(void) createRideDataFile;
+-(void) openRideDataFile:(NSString *)fileName;
+-(NSString *) getRideDataFileDateTime:(NSString *)fileName;
+-(void) writeLineRideDataFile:(NSString *)textToWrite;
+-(NSArray *) readLineRideDataFile:(NSString *)fileName;
+-(NSArray *) readLineRideDataFile;
 
 @end
 

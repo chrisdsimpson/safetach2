@@ -45,7 +45,7 @@
 @synthesize FilePath;
 
 
--(NSString *) SetFileName
+-(NSString *) setFileName
 {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:RIDE_DATA_FILE_DATE_TIME_FORMAT];
@@ -61,7 +61,7 @@
  * Get a handle on the directory where to write and read our files. If
  * it doesn't exist, it will be created.
  */
--(NSString *) GetDocumentsDirectory
+-(NSString *) getDocumentsDirectory
 {
     FileManager = [NSFileManager defaultManager];
     HomeDir = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -71,12 +71,12 @@
 
 
 /* Create the new ride data file */
--(void) CreateRideDataFile
+-(void) createRideDataFile
 {
     FilePath = [[NSString alloc] init];
     NSError *err;
     
-    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:self.SetFileName];
+    FilePath = [self.getDocumentsDirectory stringByAppendingPathComponent:self.setFileName];
     
     BOOL ok = [@"" writeToFile:FilePath atomically:YES encoding:NSUnicodeStringEncoding error:&err];
     
@@ -88,10 +88,10 @@
 
 
 /* Open the file path for the file */
--(void) OpenRideDataFile:(NSString *)fileName
+-(void) openRideDataFile:(NSString *)fileName
 {
     FilePath = [[NSString alloc] init];
-    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:fileName];
+    FilePath = [self.getDocumentsDirectory stringByAppendingPathComponent:fileName];
     
     if(![FileManager fileExistsAtPath:FilePath])
     {
@@ -101,7 +101,7 @@
 
 
 /* Write a new line to the ride data file */
--(void) WriteLineRideDataFile:(NSString *)textToWrite
+-(void) writeLineRideDataFile:(NSString *)textToWrite
 {
     NSError *error = nil;
     
@@ -127,13 +127,13 @@
 
 
 /* Read the lines from the ride data file */
--(NSArray *) ReadLineRideDataFile:(NSString *)fileName
+-(NSArray *) readLineRideDataFile:(NSString *)fileName
 {
     NSError *error;
     NSArray *lines;
     
     FilePath = [[NSString alloc] init];
-    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:fileName];
+    FilePath = [self.getDocumentsDirectory stringByAppendingPathComponent:fileName];
     
     if([FileManager fileExistsAtPath:FilePath])
     {
@@ -155,8 +155,33 @@
 }
 
 
+/* Get the reformatted date and time from the file name */
+-(NSString *) getRideDataFileDateTime:(NSString *)fileName
+{
+    NSString *retval;
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    
+    /* Set the date format to match the file name */
+    [dateFormat setDateFormat:RIDE_DATA_FILE_DATE_TIME_FORMAT];
+    
+    /* Strip of the file extention leading text from the file name */
+    NSString *tstr = [fileName substringWithRange:NSMakeRange(3, 15)];
+    
+    /* Create date object from the file name */
+    NSDate *dt = [dateFormat dateFromString:tstr];
+    
+    /* Reset the date format to match our output format */
+    [dateFormat setDateFormat:RIDE_DATA_FILE_LIST_FORMAT];
+    
+    /* Format the date and time from the file name date and time */
+    retval = [dateFormat stringFromDate:dt];
+    
+    return retval;
+}
+
+
 /* Read the next line from the ride data file */
--(NSArray *) ReadLineRideDataFile
+-(NSArray *) readLineRideDataFile
 {
     NSError *error;
     NSArray *lines;
@@ -182,7 +207,7 @@
 
 
 /* Create a new file with the contents of textToWrite */
--(void) WriteToStringFile:(NSMutableString *)textToWrite
+-(void) writeToStringFile:(NSMutableString *)textToWrite
 {
     FilePath = [[NSString alloc] init];
     NSError *err;
@@ -190,7 +215,7 @@
     NSMutableString *tstr = [NSMutableString stringWithFormat:@"%@\r\n", textToWrite];
     
     
-    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:self.SetFileName];
+    FilePath = [self.getDocumentsDirectory stringByAppendingPathComponent:self.setFileName];
     
     if(![FileManager fileExistsAtPath:FilePath])
     {
@@ -212,12 +237,12 @@
 
 
 /* Read the contents from file */
--(NSString *) ReadFromFile
+-(NSString *) readFromFile
 {
     FilePath = [[NSString alloc] init];
     NSError *error;
     
-    FilePath = [self.GetDocumentsDirectory stringByAppendingPathComponent:self.SetFileName];
+    FilePath = [self.getDocumentsDirectory stringByAppendingPathComponent:self.setFileName];
     NSString *txtInFile = [[NSString alloc] initWithContentsOfFile:FilePath encoding:NSUnicodeStringEncoding error:&error];
     
     if(!txtInFile)
