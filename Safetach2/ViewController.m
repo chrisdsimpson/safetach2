@@ -282,7 +282,8 @@
 - (void)addItem1ViewController:(FileSelectionViewController *)controller didFinishEnteringItem:(NSString *)item
 {
     
-    NSLog(@"Log - Selected file = %@", item);
+    //NSLog(@"Log - Selected file = %@", item);
+    [self.view makeToast:[NSString stringWithFormat:@" File (%@) selected", item]];
     
 }
 
