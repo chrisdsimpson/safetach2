@@ -43,6 +43,7 @@
 
 static NSString *CellIdentifier = @"FileSelectionCell";
 
+
 @interface FileSelectionViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
@@ -57,6 +58,21 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     
     /* Register the class for the Cell Reuse Identifier */
     [self.FileListingsTableView registerClass:[FileSelectionTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    
+    /* Set the tableview to allow more than one selection */
+    self.FileListingsTableView.allowsMultipleSelection = true;
+    NumSelectedRows = 1;
+    
+    Mode = 0;
+    
+    if(Mode == 0)
+    {
+        NumSelectableRows = 1;
+    }
+    else
+    {
+        NumSelectableRows = 8;
+    }
     
     [self buildFileList];
 }
@@ -106,6 +122,52 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     {
         return 1;
     }
+}
+
+- (NSIndexPath *) tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(NumSelectedRows > NumSelectableRows)
+    {
+        return nil;
+    }
+    else
+    {
+        return indexPath;
+    }
+}
+
+
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSMutableArray *selectedFiles = [[NSMutableArray alloc] init];;
+    NSArray *selectedRows = [tableView indexPathsForSelectedRows];
+    
+    NumSelectedRows++;
+    
+    for(NSIndexPath *index in selectedRows)
+    {
+         NSString *filename = [FormattedRowData objectAtIndex:index.row][@"key_filename"];
+        [selectedFiles addObject:filename];
+    }
+    
+    SelectedFiles = selectedFiles;
+    
+    if(Mode == 0)
+    {
+        /* Pass the file name back to the calling view controoler */
+        [self.delegate addItem1ViewController:self didFinishEnteringItem:[SelectedFiles objectAtIndex:0]];
+        
+        /* Return to calling view controller */
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+
+- (void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NumSelectedRows--;
 }
 
 
@@ -219,7 +281,8 @@ static NSString *CellIdentifier = @"FileSelectionCell";
         filedatetime = [rwdata getRideDataFileDateTime:filename];
         
         /* Add the values to a dictionary */
-        NSDictionary *cellvalues = [NSDictionary dictionaryWithObjectsAndKeys:filedatetime, @"key_filedatetime",
+        NSDictionary *cellvalues = [NSDictionary dictionaryWithObjectsAndKeys:filename, @"key_filename",
+                                                                              filedatetime, @"key_filedatetime",
                                                                               direction, @"key_direction",
                                                                               jobref, @"key_jobref",
                                                                               elevatorname, @"key_elevatorname", nil];

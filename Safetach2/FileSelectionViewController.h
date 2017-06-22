@@ -38,11 +38,24 @@
 
 #import <UIKit/UIKit.h>
 
+@class FileSelectionViewController;
+
+@protocol FileSelectionViewControllerDelegate <NSObject>
+
+-(void)addItem1ViewController:(FileSelectionViewController *)controller didFinishEnteringItem:(NSString *)item;
+
+@end
 
 @interface FileSelectionViewController : UIViewController
 {
     NSArray *FormattedRowData;
+    NSArray *SelectedFiles;
+    int NumSelectableRows;
+    int NumSelectedRows;
+    int Mode;
 }
+
+@property (nonatomic, weak) id <FileSelectionViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *HelpButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *EditButton;
