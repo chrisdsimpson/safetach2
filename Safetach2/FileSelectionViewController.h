@@ -57,6 +57,8 @@
 
 @property (nonatomic, weak) id <FileSelectionViewControllerDelegate> delegate;
 
+@property (nonatomic) int FileListingMode;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *HelpButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *EditButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *DeleteButton;

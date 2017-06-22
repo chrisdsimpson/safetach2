@@ -63,9 +63,9 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     self.FileListingsTableView.allowsMultipleSelection = true;
     NumSelectedRows = 1;
     
-    Mode = 0;
+    NSLog(@"Log - FileListingMode = %d", self.FileListingMode);
     
-    if(Mode == 0)
+    if(self.FileListingMode == FILE_LISTING_MODE_EDIT)
     {
         NumSelectableRows = 1;
     }
@@ -154,7 +154,7 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     
     SelectedFiles = selectedFiles;
     
-    if(Mode == 0)
+    if(self.FileListingMode == FILE_LISTING_MODE_EDIT)
     {
         /* Pass the file name back to the calling view controoler */
         [self.delegate addItem1ViewController:self didFinishEnteringItem:[SelectedFiles objectAtIndex:0]];
