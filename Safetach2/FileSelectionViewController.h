@@ -41,9 +41,6 @@
 
 @interface FileSelectionViewController : UIViewController
 {
-    NSArray *FilePathsArray;
-    NSArray *RunDataFiles;
-    NSArray *SortedRunDataFiles;
     NSArray *FormattedRowData;
 }
 
