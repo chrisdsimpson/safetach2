@@ -3,7 +3,7 @@
  *
  * Version      1.0.0
  *
- * Date:		06/16/2017
+ * Date:		06/22/2017
  *
  * Description:
  *   This is view controller class for run file selection for the iOS Safetach2 project.
@@ -111,39 +111,15 @@ static NSString *CellIdentifier = @"FileSelectionCell";
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    //FileSelectionTableViewCell *cell = (FileSelectionTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
     FileSelectionTableViewCell *cell = (FileSelectionTableViewCell *)
                                        [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    //FileSelectionTableViewCell *cell = (FileSelectionTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"MainCell"];
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MainCell"];
-    
-    //if(cell == nil)
-    {
-        //NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FileSelectionCell" owner:self options:nil];
-        //cell = [nib objectAtIndex:0];
-        
-        
-        //cell = [[FileSelectionTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        //cell = [[FileSelectionTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MainCell"];
-        //cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MainCell"];
-    }
-    
-    //[cell setCellValues];
-    //[cell.DateTime setText:@"Date Time"];
-    //[cell.Direction setText:@"UP"];
-    //[cell.Jobref setText:@"Job Reference 1"];
-    //[cell.ElevatorName setText:@"Elevator Name 1"];
-
-    
-    cell.DateTime.text = [FormattedRowData objectAtIndex:indexPath.row];
-    
-    //cell.textLabel.text = [FormattedRowData objectAtIndex:indexPath.row];
+    cell.DateTime.text = [FormattedRowData objectAtIndex:indexPath.row][@"key_filedatetime"];
+    cell.Direction.text = [FormattedRowData objectAtIndex:indexPath.row][@"key_direction"];
+    cell.Jobref.text = [FormattedRowData objectAtIndex:indexPath.row][@"key_jobref"];
+    cell.ElevatorName.text = [FormattedRowData objectAtIndex:indexPath.row][@"key_elevatorname"];
     
     return cell;
-    
 }
 
 
@@ -156,17 +132,16 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     NSString *elevatorname;
     NSMutableArray *rundatafilenames = [[NSMutableArray alloc] init];
     
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    FilePathsArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
-    RunDataFiles = [FilePathsArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH '.csv'"]];
+    NSArray *filepaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
+    NSArray *rundatafiles = [filepaths filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH '.csv'"]];
     
     
     /* Sort by creation date */
-    NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[RunDataFiles count]];
+    NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[rundatafiles count]];
     
-    for(NSString* file in RunDataFiles)
+    for(NSString* file in rundatafiles)
     {
         NSString* filePath = [documentsDirectory stringByAppendingPathComponent:file];
         NSDictionary* properties = [[NSFileManager defaultManager]attributesOfItemAtPath:filePath error:&error];
@@ -174,18 +149,17 @@ static NSString *CellIdentifier = @"FileSelectionCell";
         
         if(error == nil)
         {
-            [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:file, @"path", modDate, @"lastModDate", nil]];
+            [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:file, @"path", modDate, @"fileCreationDate", nil]];
         }
     }
     
-    /* Sort using a block */
-    /* Order inverted as we want latest date first */
+    /* Sort using a block and order inverted as we want latest date first */
     NSArray *sortedFiles = [filesAndProperties sortedArrayUsingComparator:^(id path1, id path2)
         {
-            // compare
-            NSComparisonResult comp = [[path1 objectForKey:@"lastModDate"] compare:[path2 objectForKey:@"lastModDate"]];
+            /* Do the compare */
+            NSComparisonResult comp = [[path1 objectForKey:@"fileCreationDate"] compare:[path2 objectForKey:@"fileCreationDate"]];
             
-            // invert ordering
+            /* Now invert the ordering */
             if(comp == NSOrderedDescending)
             {
                 comp = NSOrderedAscending;
@@ -200,15 +174,13 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     
     
     /* Sorted files */
-    SortedRunDataFiles = [sortedFiles valueForKey:@"path"];
+    NSArray *sortedrundatafiles = [sortedFiles valueForKey:@"path"];
     
     /* Create a instance of the ride data file read/write class */
     DeviceRWData *rwdata = [[DeviceRWData alloc] init];
-
     
-    for(NSString *filename in SortedRunDataFiles)
+    for(NSString *filename in sortedrundatafiles)
     {
-        
         /* Open the file and read the lines */
         NSArray *lines = [rwdata readLineRideDataFile:filename];
   
@@ -246,9 +218,14 @@ static NSString *CellIdentifier = @"FileSelectionCell";
         /* Get the string version of the ride data file date and time */
         filedatetime = [rwdata getRideDataFileDateTime:filename];
         
-        /* Build the display string */
-        [rundatafilenames addObject:[NSString stringWithFormat:@"%@     %@     %@     %@", filedatetime, direction, jobref, elevatorname]];
-    
+        /* Add the values to a dictionary */
+        NSDictionary *cellvalues = [NSDictionary dictionaryWithObjectsAndKeys:filedatetime, @"key_filedatetime",
+                                                                              direction, @"key_direction",
+                                                                              jobref, @"key_jobref",
+                                                                              elevatorname, @"key_elevatorname", nil];
+        
+        /* Add each record set to the array */
+        [rundatafilenames addObject:cellvalues];
     }
 
     FormattedRowData = rundatafilenames;
