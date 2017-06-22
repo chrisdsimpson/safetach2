@@ -67,6 +67,9 @@
 #define SUB_MENU_STATE_AUDIO_LEVEL        4
 #define SUB_MENU_STATE_AUDIOFREQ          5
 
+#define FILE_LISTING_MODE_EDIT            1
+#define FILE_LISTING_MODE_REPORT          2
+
 
 /* BLE device connection/scan time out */
 #define DEVICE_CONNECTION_TIMEOUT         10.0
