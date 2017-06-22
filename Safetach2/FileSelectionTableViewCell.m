@@ -53,7 +53,7 @@
     // Configure the view for the selected state
 }
 
-#if 1
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -64,11 +64,6 @@
         CGSize size = self.contentView.frame.size;
         
         /* Initialize lables */
-        //self.DateTime = [[UILabel alloc] init];
-        //self.Direction = [[UILabel alloc] init];
-        //self.Jobref = [[UILabel alloc] init];
-        //self.ElevatorName = [[UILabel alloc] init];
-        
         self.DateTime = [[UILabel alloc] initWithFrame:CGRectMake(8.0, 8.0, size.width - 16.0, size.height - 16.0)];
         self.Direction = [[UILabel alloc] initWithFrame:CGRectMake(197.0, 8.0, size.width - 16.0, size.height - 16.0)];
         self.Jobref = [[UILabel alloc] initWithFrame:CGRectMake(284.0, 8.0, size.width - 16.0, size.height - 16.0)];
@@ -94,7 +89,7 @@
 
     return self;
 }
-#endif
+
 
 - (void) setCellValues
 {
