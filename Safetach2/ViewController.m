@@ -139,6 +139,19 @@
     
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    /* Test to see which view controller we are headed to */
+    if([segue.identifier isEqualToString:@"FileSelectionViewController"])
+    {
+        /* Tell the child view controller that this is its delegate */
+        FileSelectionViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+    }
+}
+
+
 
 - (IBAction) didTouchUp:(id)sender
 {
@@ -264,5 +277,14 @@
     NSLog(@"Reset Button Pressed");
 
 }
+
+
+- (void)addItem1ViewController:(FileSelectionViewController *)controller didFinishEnteringItem:(NSString *)item
+{
+    
+    NSLog(@"Log - Selected file = %@", item);
+    
+}
+
 
 @end

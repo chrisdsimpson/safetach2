@@ -38,6 +38,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DeviceRWData.h"
+#import "FileSelectionViewController.h"
 
 //@import CoreBluetooth;
 //@import QuartzCore;
@@ -63,7 +64,7 @@ DeviceRWData *RWData = nil;
 
 
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <FileSelectionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *Button1;
 @property (weak, nonatomic) IBOutlet UIButton *Button2;
