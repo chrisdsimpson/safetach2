@@ -147,6 +147,7 @@
     {
         /* Tell the child view controller that this is its delegate */
         FileSelectionViewController *controller = [segue destinationViewController];
+        controller.FileListingMode = FileListingMode;
         controller.delegate = self;
     }
 }
@@ -229,7 +230,7 @@
 - (void) onReportPressed
 {
     
-    
+    FileListingMode = FILE_LISTING_MODE_REPORT;
     NSLog(@"Report Button Pressed");
     
     //if(RWData != nil)
@@ -249,12 +250,11 @@
 
 - (void) onFilePressed
 {
-    
+    FileListingMode = FILE_LISTING_MODE_EDIT;
     NSLog(@"File Button Pressed");
     
     //DeviceRWData *RWData = [[DeviceRWData alloc] init];
-    
-    
+     
     /* Temp test ride data file */
     [RWData createRideDataFile];
     [RWData writeLineRideDataFile:(NSString *)@"00085, 00016, 00425, 01000, 00037, Parking, Hydro, Car 20, Test User, Test Notes"]; /* Header sample */

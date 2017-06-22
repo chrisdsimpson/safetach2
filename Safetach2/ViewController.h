@@ -59,6 +59,7 @@ UIButton *Button05;
 UIButton *Button06;
 
 int MenuState;
+int FileListingMode;
 
 DeviceRWData *RWData = nil;
 
