@@ -75,7 +75,7 @@
                                 <state key="normal" backgroundImage="ic_folder_open_white_24pt"/>
                                 <connections>
                                     <action selector="didTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6XJ-Yz-I3j"/>
-                                    <segue destination="z4d-D0-RIj" kind="show" id="QJX-CG-Gbc"/>
+                                    <segue destination="z4d-D0-RIj" kind="show" identifier="FileSelectionViewController" id="QJX-CG-Gbc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPO-33-VgR" userLabel="Button6">
@@ -730,11 +730,11 @@
         <image name="main_screen_1_sw800dp" width="2560" height="1190"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="L2A-fh-Nag"/>
         <segue reference="bEq-QB-EZn"/>
+        <segue reference="QJX-CG-Gbc"/>
+        <segue reference="Jt4-Jw-xSI"/>
         <segue reference="mDu-JA-7oe"/>
         <segue reference="MNo-Nk-Dif"/>
-        <segue reference="sXw-HN-2va"/>
-        <segue reference="Jt4-Jw-xSI"/>
-        <segue reference="L2A-fh-Nag"/>
     </inferredMetricsTieBreakers>
 </document>
