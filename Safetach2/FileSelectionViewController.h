@@ -59,9 +59,9 @@
 
 @property (nonatomic) int FileListingMode;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *HelpButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *EditButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *DeleteButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *HelpButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *EditButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *DeleteButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *FileListingsTableView;
 

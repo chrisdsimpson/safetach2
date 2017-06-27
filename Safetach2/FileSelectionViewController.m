@@ -38,6 +38,7 @@
 
 #import "FileSelectionViewController.h"
 #import "FileSelectionTableViewCell.h"
+#import "ReportViewController.h"
 #import "DeviceRWData.h"
 #import "Constants.h"
 
@@ -63,15 +64,27 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     self.FileListingsTableView.allowsMultipleSelection = true;
     NumSelectedRows = 1;
     
-    NSLog(@"Log - FileListingMode = %d", self.FileListingMode);
+    //NSMutableArray *toolbarButtons = [self.navigationItem.rightBarButtonItems mutableCopy];
+    
+    
+    //NSLog(@"Log - FileListingMode = %d", self.FileListingMode);
     
     if(self.FileListingMode == FILE_LISTING_MODE_EDIT)
     {
         NumSelectableRows = 1;
+        self.title = NSLocalizedString(@"title_activity_display_file_select", nil);
+          
     }
     else
     {
         NumSelectableRows = 8;
+        self.title = NSLocalizedString(@"title_activity_report_file_select", nil);
+        
+        self.DeleteButton.enabled = NO;
+        self.DeleteButton.tintColor = [UIColor clearColor];
+        
+        self.EditButton.enabled = NO;
+        self.EditButton.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_description_black_24pt"]];
     }
     
     [self buildFileList];
@@ -96,6 +109,13 @@ static NSString *CellIdentifier = @"FileSelectionCell";
         break;
             
         case 2: /* Edit button */
+            
+            if(self.FileListingMode == FILE_LISTING_MODE_REPORT)
+            {
+                ReportViewController *report = [self.storyboard instantiateViewControllerWithIdentifier:@"ReportViewController"];
+                report.ReportFiles = SelectedFiles;
+                [self.navigationController pushViewController:report animated:YES];
+            }
             
         break;
             
@@ -162,12 +182,23 @@ static NSString *CellIdentifier = @"FileSelectionCell";
         /* Return to calling view controller */
         [self.navigationController popViewControllerAnimated:YES];
     }
+    
+    if(self.FileListingMode == FILE_LISTING_MODE_REPORT && NumSelectedRows > 1)
+    {
+        self.EditButton.enabled = YES;
+    }
 }
 
 
 - (void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NumSelectedRows--;
+    
+    if(self.FileListingMode == FILE_LISTING_MODE_REPORT && NumSelectedRows <= 1)
+    {
+        self.EditButton.enabled = NO;
+    }
+
 }
 
 
