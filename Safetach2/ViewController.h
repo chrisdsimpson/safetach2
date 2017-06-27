@@ -40,8 +40,6 @@
 #import "DeviceRWData.h"
 #import "FileSelectionViewController.h"
 
-//@import CoreBluetooth;
-//@import QuartzCore;
 @import Charts;
 
 
@@ -73,6 +71,10 @@ DeviceRWData *RWData = nil;
 @property (weak, nonatomic) IBOutlet UIButton *Button4;
 @property (weak, nonatomic) IBOutlet UIButton *Button5;
 @property (weak, nonatomic) IBOutlet UIButton *Button6;
+
+@property (weak, nonatomic) IBOutlet UIImageView *MainScreen1;
+@property (weak, nonatomic) IBOutlet LineChartView *lineChartView;
+
 
 - (IBAction)didTouchUp:(id)sender;
 
