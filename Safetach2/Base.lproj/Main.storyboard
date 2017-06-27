@@ -65,7 +65,7 @@
                                 <state key="normal" backgroundImage="ic_description_white_24pt"/>
                                 <connections>
                                     <action selector="didTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZA2-4p-wE4"/>
-                                    <segue destination="IZ2-cX-cKA" kind="show" id="6b4-Y0-ocd"/>
+                                    <segue destination="z4d-D0-RIj" kind="show" identifier="FileSelectionViewController" id="PK9-Ms-ykI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fzh-M9-fCM" userLabel="Button5">
@@ -483,7 +483,7 @@
         <!--Report-->
         <scene sceneID="DQ6-WY-UOr">
             <objects>
-                <viewController id="IZ2-cX-cKA" customClass="ReportViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReportViewController" id="IZ2-cX-cKA" customClass="ReportViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dEL-d6-4hw"/>
                         <viewControllerLayoutGuide type="bottom" id="mef-rZ-NQL"/>
@@ -730,11 +730,10 @@
         <image name="main_screen_1_sw800dp" width="2560" height="1190"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="L2A-fh-Nag"/>
         <segue reference="bEq-QB-EZn"/>
-        <segue reference="QJX-CG-Gbc"/>
-        <segue reference="Jt4-Jw-xSI"/>
+        <segue reference="DuX-6x-cho"/>
+        <segue reference="PKJ-FJ-idm"/>
+        <segue reference="PK9-Ms-ykI"/>
         <segue reference="mDu-JA-7oe"/>
-        <segue reference="MNo-Nk-Dif"/>
     </inferredMetricsTieBreakers>
 </document>
