@@ -42,6 +42,8 @@
 
 @interface ReportViewController : UIViewController
 
+@property (nonatomic) NSArray *ReportFiles;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *HelpButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *EmailButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *PrintButton;

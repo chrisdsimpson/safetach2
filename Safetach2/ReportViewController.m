@@ -69,6 +69,13 @@
 }
 
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    /* This will take us back to the main screen */
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
 - (IBAction)didTouchUp:(id)sender
 {
     UIButton *button = sender;
@@ -106,6 +113,13 @@
     NSArray *arrayPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path = [arrayPaths objectAtIndex:0];
     NSString* pdfFileName = [path stringByAppendingPathComponent:REPORT_FILE_NAME];
+    
+    /* Loop through the ride data files for the report detail */
+    for(NSString *filename in self.ReportFiles)
+    {
+        
+    }
+    
     
     NSString* textToDraw = @"                Safetach2 Report";
     CFStringRef stringRef = (__bridge CFStringRef)textToDraw;
