@@ -231,7 +231,7 @@
 {
     
     FileListingMode = FILE_LISTING_MODE_REPORT;
-    NSLog(@"Report Button Pressed");
+    //NSLog(@"Report Button Pressed");
     
     //if(RWData != nil)
     //{
@@ -244,14 +244,13 @@
     //    }
     //}
     
-    
 }
 
 
 - (void) onFilePressed
 {
     FileListingMode = FILE_LISTING_MODE_EDIT;
-    NSLog(@"File Button Pressed");
+    //NSLog(@"File Button Pressed");
     
     //DeviceRWData *RWData = [[DeviceRWData alloc] init];
      
