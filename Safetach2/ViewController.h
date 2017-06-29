@@ -57,12 +57,16 @@ UIButton *Button05;
 UIButton *Button06;
 
 int MenuState;
+int SubMenuState;
 int FileListingMode;
 
-NSMutableArray *AudioData;
 NSMutableArray *XAxisData;
 NSMutableArray *YAxisData;
 NSMutableArray *ZAxisData;
+NSMutableArray *AudioSPLData;
+NSMutableArray *AudioFREQDatal;
+
+NSMutableArray *RideData;
 
 DeviceRWData *RWData = nil;
 
