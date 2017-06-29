@@ -208,6 +208,8 @@
     self.MainScreen1.hidden = YES;
     
     
+    [self.lineChartView fitScreen];
+    
     if(SubMenuState == SUB_MENU_STATE_ACCELERATION)
     {
         self.lineChartView.chartDescription.enabled = YES;
@@ -375,9 +377,7 @@
     self.MainScreen1.hidden = YES;
     
     
-    [self.lineChartView.data notifyDataChanged];
-    [self.lineChartView notifyDataSetChanged];
-    
+    [self.lineChartView fitScreen];
     self.lineChartView.chartDescription.enabled = YES;
     self.lineChartView.chartDescription.xOffset = 195.0;
     self.lineChartView.chartDescription.yOffset = 215.0;
@@ -486,17 +486,17 @@
     //DeviceRWData *RWData = [[DeviceRWData alloc] init];
      
     /* Temp test ride data file */
-    //[RWData createRideDataFile];
-    //[RWData writeLineRideDataFile:(NSString *)@"00085, 00016, 00425, 01000, 00037, Parking, Hydro, Car 20, Test User, Test Notes"]; /* Header sample */
-    //[RWData writeLineRideDataFile:(NSString *)@"16383, 16383, 16383, 10500, 00067"]; /* Calibration sample */
-    //[RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"]; /* Data */
-    //[RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
-    //[RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
-    //[RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
-    //[RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
-    //[RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
-    //[RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
-    //[RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData createRideDataFile];
+    [RWData writeLineRideDataFile:(NSString *)@"00085, 00016, 00425, 01000, 00037, Parking, Hydro, Car 20, Test User, Test Notes"]; /* Header sample */
+    [RWData writeLineRideDataFile:(NSString *)@"16383, 16383, 16383, 10500, 00067"]; /* Calibration sample */
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"]; /* Data */
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
+    [RWData writeLineRideDataFile:(NSString *)@"00000, 00000, 00000, 00000, 00000"];
     
     [self onHomePressed];
 }
