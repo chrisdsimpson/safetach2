@@ -213,8 +213,8 @@
     if(SubMenuState == SUB_MENU_STATE_ACCELERATION)
     {
         self.lineChartView.chartDescription.enabled = YES;
-        self.lineChartView.chartDescription.xOffset = 225.0;
-        self.lineChartView.chartDescription.yOffset = 215.0;
+        //self.lineChartView.chartDescription.xOffset = 225.0;
+        //self.lineChartView.chartDescription.yOffset = 215.0;
         self.lineChartView.chartDescription.font = [UIFont systemFontOfSize:16.f];
         self.lineChartView.chartDescription.text = @"Acceleration";
     
@@ -379,8 +379,8 @@
     
     [self.lineChartView fitScreen];
     self.lineChartView.chartDescription.enabled = YES;
-    self.lineChartView.chartDescription.xOffset = 195.0;
-    self.lineChartView.chartDescription.yOffset = 215.0;
+    //self.lineChartView.chartDescription.xOffset = 195.0;
+    //self.lineChartView.chartDescription.yOffset = 215.0;
     self.lineChartView.chartDescription.font = [UIFont systemFontOfSize:16.f];
     self.lineChartView.chartDescription.text = @"Sound Pressure Level";
     
