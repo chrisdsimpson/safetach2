@@ -164,28 +164,31 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     NSMutableArray *selectedFiles = [[NSMutableArray alloc] init];;
     NSArray *selectedRows = [tableView indexPathsForSelectedRows];
     
-    NumSelectedRows++;
-    
-    for(NSIndexPath *index in selectedRows)
+    if(FormattedRowData.count > 0)
     {
-         NSString *filename = [FormattedRowData objectAtIndex:index.row][@"key_filename"];
-        [selectedFiles addObject:filename];
-    }
+        NumSelectedRows++;
     
-    SelectedFiles = selectedFiles;
+        for(NSIndexPath *index in selectedRows)
+        {
+            NSString *filename = [FormattedRowData objectAtIndex:index.row][@"key_filename"];
+            [selectedFiles addObject:filename];
+        }
     
-    if(self.FileListingMode == FILE_LISTING_MODE_EDIT)
-    {
-        /* Pass the file name back to the calling view controoler */
-        [self.delegate addItem1ViewController:self didFinishEnteringItem:[SelectedFiles objectAtIndex:0]];
+        SelectedFiles = selectedFiles;
+    
+        if(self.FileListingMode == FILE_LISTING_MODE_EDIT)
+        {
+            /* Pass the file name back to the calling view controoler */
+            [self.delegate addItem1ViewController:self didFinishEnteringItem:[SelectedFiles objectAtIndex:0]];
         
-        /* Return to calling view controller */
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+            /* Return to calling view controller */
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     
-    if(self.FileListingMode == FILE_LISTING_MODE_REPORT && NumSelectedRows > 1)
-    {
-        self.EditButton.enabled = YES;
+        if(self.FileListingMode == FILE_LISTING_MODE_REPORT && NumSelectedRows > 1)
+        {
+            self.EditButton.enabled = YES;
+        }
     }
 }
 
@@ -230,24 +233,25 @@ static NSString *CellIdentifier = @"FileSelectionCell";
     NSArray *filepaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory  error:nil];
     NSArray *rundatafiles = [filepaths filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH '.csv'"]];
     
-    
-    /* Sort by creation date */
-    NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[rundatafiles count]];
-    
-    for(NSString* file in rundatafiles)
+    if(rundatafiles.count > 0)
     {
-        NSString* filePath = [documentsDirectory stringByAppendingPathComponent:file];
-        NSDictionary* properties = [[NSFileManager defaultManager]attributesOfItemAtPath:filePath error:&error];
-        NSDate* modDate = [properties objectForKey:NSFileModificationDate];
-        
-        if(error == nil)
-        {
-            [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:file, @"path", modDate, @"fileCreationDate", nil]];
-        }
-    }
+        /* Sort by creation date */
+        NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[rundatafiles count]];
     
-    /* Sort using a block and order inverted as we want latest date first */
-    NSArray *sortedFiles = [filesAndProperties sortedArrayUsingComparator:^(id path1, id path2)
+        for(NSString* file in rundatafiles)
+        {
+            NSString* filePath = [documentsDirectory stringByAppendingPathComponent:file];
+            NSDictionary* properties = [[NSFileManager defaultManager]attributesOfItemAtPath:filePath error:&error];
+            NSDate* modDate = [properties objectForKey:NSFileModificationDate];
+        
+            if(error == nil)
+            {
+                [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:file, @"path", modDate, @"fileCreationDate", nil]];
+            }
+        }
+    
+        /* Sort using a block and order inverted as we want latest date first */
+        NSArray *sortedFiles = [filesAndProperties sortedArrayUsingComparator:^(id path1, id path2)
         {
             /* Do the compare */
             NSComparisonResult comp = [[path1 objectForKey:@"fileCreationDate"] compare:[path2 objectForKey:@"fileCreationDate"]];
@@ -266,63 +270,65 @@ static NSString *CellIdentifier = @"FileSelectionCell";
         }];
     
     
-    /* Sorted files */
-    NSArray *sortedrundatafiles = [sortedFiles valueForKey:@"path"];
+        /* Sorted files */
+        NSArray *sortedrundatafiles = [sortedFiles valueForKey:@"path"];
     
-    /* Create a instance of the ride data file read/write class */
-    DeviceRWData *rwdata = [[DeviceRWData alloc] init];
+        /* Create a instance of the ride data file read/write class */
+        DeviceRWData *rwdata = [[DeviceRWData alloc] init];
     
-    for(NSString *filename in sortedrundatafiles)
-    {
-        /* Open the file and read the lines */
-        NSArray *lines = [rwdata readLineRideDataFile:filename];
+        for(NSString *filename in sortedrundatafiles)
+        {
+            /* Open the file and read the lines */
+            NSArray *lines = [rwdata readLineRideDataFile:filename];
   
-        /* Get the header line from the ride data file */
-        NSString *header = [lines objectAtIndex:0];
+            /* Get the header line from the ride data file */
+            NSString *header = [lines objectAtIndex:0];
         
-        /* Split the header into seperate strings */
-        NSArray *headerparts = [header componentsSeparatedByString:@","];
+            /* Split the header into seperate strings */
+            NSArray *headerparts = [header componentsSeparatedByString:@","];
         
-        /* Get the packet mode info */
-        NSString *packetmode = TRIM([headerparts objectAtIndex:5]);
+            /* Get the packet mode info */
+            NSString *packetmode = TRIM([headerparts objectAtIndex:5]);
         
-        /* Strip the run direction from the packet mode */
-        int pm = [packetmode intValue];
+            /* Strip the run direction from the packet mode */
+            int pm = [packetmode intValue];
         
-        pm = pm & 0x0030;
+            pm = pm & 0x0030;
         
-        /* Get the correct text for the direction */
-        if(pm == 0x0010)
-        {
-            direction = @"UP";
-        }
-        else
-        {
-            direction = @"DOWN";
-        }
+            /* Get the correct text for the direction */
+            if(pm == 0x0010)
+            {
+                direction = @"UP";
+            }
+            else
+            {
+                direction = @"DOWN";
+            }
         
-        /* Get the job refferenc and the elevator name if available */
-        if([headerparts count] > 6)
-        {
-            jobref = TRIM([headerparts objectAtIndex:6]);
-            elevatorname = TRIM([headerparts objectAtIndex:8]);
-        }
+            /* Get the job refferenc and the elevator name if available */
+            if([headerparts count] > 6)
+            {
+                jobref = TRIM([headerparts objectAtIndex:6]);
+                elevatorname = TRIM([headerparts objectAtIndex:8]);
+            }
         
-        /* Get the string version of the ride data file date and time */
-        filedatetime = [rwdata getRideDataFileDateTime:filename];
+            /* Get the string version of the ride data file date and time */
+            filedatetime = [rwdata getRideDataFileDateTime:filename];
         
-        /* Add the values to a dictionary */
-        NSDictionary *cellvalues = [NSDictionary dictionaryWithObjectsAndKeys:filename, @"key_filename",
+            /* Add the values to a dictionary */
+            NSDictionary *cellvalues = [NSDictionary dictionaryWithObjectsAndKeys:filename, @"key_filename",
                                                                               filedatetime, @"key_filedatetime",
                                                                               direction, @"key_direction",
                                                                               jobref, @"key_jobref",
                                                                               elevatorname, @"key_elevatorname", nil];
         
-        /* Add each record set to the array */
-        [rundatafilenames addObject:cellvalues];
-    }
+            /* Add each record set to the array */
+            [rundatafilenames addObject:cellvalues];
+        }
 
-    FormattedRowData = rundatafilenames;
+        FormattedRowData = rundatafilenames;
+    }
+    
 }
 
 @end
