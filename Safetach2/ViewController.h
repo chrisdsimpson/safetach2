@@ -59,6 +59,11 @@ UIButton *Button06;
 int MenuState;
 int FileListingMode;
 
+NSMutableArray *AudioData;
+NSMutableArray *XAxisData;
+NSMutableArray *YAxisData;
+NSMutableArray *ZAxisData;
+
 DeviceRWData *RWData = nil;
 
 
