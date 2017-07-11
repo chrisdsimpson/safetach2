@@ -21,6 +21,7 @@
 		A762CB211EF3448E0046A785 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A762CB201EF3448E0046A785 /* MessageUI.framework */; };
 		A762CB241EF45D480046A785 /* FileSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A762CB231EF45D480046A785 /* FileSelectionViewController.m */; };
 		A763AC5E1EFB137D002BB5BE /* FileSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A763AC5D1EFB137D002BB5BE /* FileSelectionTableViewCell.m */; };
+		A766E6691F1409400066C316 /* DevieInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A766E6681F1409400066C316 /* DevieInformationModel.m */; };
 		A77017381EE8B59800443F5C /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A77017331EE8B50600443F5C /* Charts.framework */; };
 		A77017391EE8B59800443F5C /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A77017331EE8B50600443F5C /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A77017421EE9C58600443F5C /* CBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A770173F1EE9C58600443F5C /* CBManager.m */; };
@@ -30,6 +31,7 @@
 		A770174C1EEB146D00443F5C /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = A770174B1EEB146D00443F5C /* UIView+Toast.m */; };
 		A775B0A41EE0C7D100264C4E /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A775B0A31EE0C7D100264C4E /* SetupViewController.m */; };
 		A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A775B0A61EE0C8F400264C4E /* InfoViewController.m */; };
+		A79FED7A1F044F390055CA36 /* DateValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A79FED791F044F390055CA36 /* DateValueFormatter.m */; };
 		A7E3C1A81ED6016A0018E17F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1A71ED6016A0018E17F /* CoreBluetooth.framework */; };
 		A7E3C1AA1ED601880018E17F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1A91ED601880018E17F /* CoreGraphics.framework */; };
 		A7E3C1AC1ED601960018E17F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E3C1AB1ED601960018E17F /* CoreFoundation.framework */; };
@@ -113,6 +115,8 @@
 		A762CB231EF45D480046A785 /* FileSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSelectionViewController.m; sourceTree = "<group>"; };
 		A763AC5C1EFB137D002BB5BE /* FileSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSelectionTableViewCell.h; sourceTree = "<group>"; };
 		A763AC5D1EFB137D002BB5BE /* FileSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSelectionTableViewCell.m; sourceTree = "<group>"; };
+		A766E6671F1409400066C316 /* DevieInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevieInformationModel.h; sourceTree = "<group>"; };
+		A766E6681F1409400066C316 /* DevieInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevieInformationModel.m; sourceTree = "<group>"; };
 		A770172C1EE8B50500443F5C /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../Charts-3.0.0/Charts.xcodeproj"; sourceTree = "<group>"; };
 		A770173E1EE9C58600443F5C /* CBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBManager.h; sourceTree = "<group>"; };
 		A770173F1EE9C58600443F5C /* CBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBManager.m; sourceTree = "<group>"; };
@@ -128,6 +132,8 @@
 		A775B0A31EE0C7D100264C4E /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupViewController.m; sourceTree = "<group>"; };
 		A775B0A51EE0C8F400264C4E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		A775B0A61EE0C8F400264C4E /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
+		A79FED781F044F390055CA36 /* DateValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateValueFormatter.h; sourceTree = "<group>"; };
+		A79FED791F044F390055CA36 /* DateValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateValueFormatter.m; sourceTree = "<group>"; };
 		A7E3C1A71ED6016A0018E17F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		A7E3C1A91ED601880018E17F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A7E3C1AB1ED601960018E17F /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -183,6 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				A7E3C1B51ED762990018E17F /* Constants.h */,
+				A79FED781F044F390055CA36 /* DateValueFormatter.h */,
+				A79FED791F044F390055CA36 /* DateValueFormatter.m */,
 				A762CB161EF0AADF0046A785 /* DeviceRWData.h */,
 				A762CB191EF0ADDC0046A785 /* DeviceRWData.m */,
 				A770174A1EEB146D00443F5C /* UIView+Toast.h */,
@@ -197,6 +205,8 @@
 				A77017451EE9ECCF00443F5C /* DeviceScanViewController.m */,
 				A77017461EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.h */,
 				A77017471EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m */,
+				A766E6671F1409400066C316 /* DevieInformationModel.h */,
+				A766E6681F1409400066C316 /* DevieInformationModel.m */,
 				A770173E1EE9C58600443F5C /* CBManager.h */,
 				A770173F1EE9C58600443F5C /* CBManager.m */,
 				A77017401EE9C58600443F5C /* CBPeripheralExt.h */,
@@ -401,6 +411,8 @@
 				A775B0A41EE0C7D100264C4E /* SetupViewController.m in Sources */,
 				A719EC301ED386FB008BF6AC /* ViewController.m in Sources */,
 				A719EC2D1ED386FB008BF6AC /* AppDelegate.m in Sources */,
+				A766E6691F1409400066C316 /* DevieInformationModel.m in Sources */,
+				A79FED7A1F044F390055CA36 /* DateValueFormatter.m in Sources */,
 				A762CB1A1EF0ADDC0046A785 /* DeviceRWData.m in Sources */,
 				A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */,
 				A762CB241EF45D480046A785 /* FileSelectionViewController.m in Sources */,
