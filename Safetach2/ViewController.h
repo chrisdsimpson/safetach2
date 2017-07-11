@@ -39,6 +39,8 @@
 #import <UIKit/UIKit.h>
 #import "DeviceRWData.h"
 #import "FileSelectionViewController.h"
+#import "CBManager.h"
+#import "CBPeripheralExt.h"
 
 @import Charts;
 
@@ -69,10 +71,12 @@ NSMutableArray *AudioFREQDatal;
 NSMutableArray *RideData;
 
 DeviceRWData *RWData = nil;
+NSUserDefaults *DefaultValues;
 
 
+@interface ViewController : UIViewController <FileSelectionViewControllerDelegate, cbDiscoveryManagerDelegate>
 
-@interface ViewController : UIViewController <FileSelectionViewControllerDelegate>
+
 
 @property (weak, nonatomic) IBOutlet UIButton *Button1;
 @property (weak, nonatomic) IBOutlet UIButton *Button2;
@@ -83,7 +87,8 @@ DeviceRWData *RWData = nil;
 
 @property (weak, nonatomic) IBOutlet UIImageView *MainScreen1;
 @property (weak, nonatomic) IBOutlet LineChartView *lineChartView;
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *BluetoothMenuButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *BatteryMenuButton;
 
 - (IBAction)didTouchUp:(id)sender;
 

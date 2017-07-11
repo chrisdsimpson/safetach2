@@ -41,13 +41,41 @@
 #import "UIView+Toast.h"
 #import "DeviceRWData.h"
 #import "DateValueFormatter.h"
-
+#import "DevieInformationModel.h"
 
 @interface ViewController ()
+{
+    BOOL isDeviceConnected;
+    BOOL isBluetoothON;
+    DevieInformationModel *deviceInfoModel;
+}
 
 @end
 
 @implementation ViewController
+
+
+-(void)bluetoothStateUpdatedToState:(BOOL)state
+{
+    NSLog(@"Log - BLE is On = %@", state ? @"Yes" : @"No");
+    isBluetoothON = state;
+}
+
+
+-(void)discoveryDidRefresh
+{
+    /* Stop the BLE device scan */
+    [[CBManager sharedManager] stopScanning];
+    
+    /* Get the device name from the default values */
+    NSString *devicename = [DefaultValues stringForKey:SETUP_DEVICE_NAME_KEY];
+    
+    if(devicename != nil && isBluetoothON)
+    {
+        /* Connect to the device/node */
+        [self connectPeripheral:devicename];
+    }
+}
 
 
 /* Do any additional setup after loading the view, typically from a nib */
@@ -111,9 +139,25 @@
     Button04.backgroundColor = [UIColor ColorBlue];
     Button05.backgroundColor = [UIColor ColorBlue];
     Button06.backgroundColor = [UIColor ColorGreen];
+    
+    /* Hide the battery button */
+    self.BatteryMenuButton.enabled = NO;
+    self.BatteryMenuButton.tintColor = [UIColor clearColor];
    
+    /* Set the bluetooth button to disconnected */
+    self.BluetoothMenuButton.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_bluetooth_disabled_black_24pt"]];
+    
     /* Set the startup screen to the home screen */
     [self onHomePressed];
+    
+    /* Get the user defaults */
+    DefaultValues = [NSUserDefaults standardUserDefaults];
+    
+    /* Connect to device if available and get the device info */
+    [[CBManager sharedManager] setCbDiscoveryDelegate:self];
+    
+    // Start scanning for devices
+    [[CBManager sharedManager] startScanning];
     
 }
 
@@ -174,6 +218,39 @@
             
         case 6:
             [self onResetPressed];
+        break;
+            
+        case 7:
+            
+            NSLog(@"Bluetooth Connection Button Pressed");
+            
+            if(isDeviceConnected)
+            {
+                isDeviceConnected = false;
+                
+                /* Display the disconnected message to the user */
+                [self.view makeToast:[NSString stringWithFormat:@"%@ %@", LOCALIZEDSTRING(@"bluetooth_disconnected"), [[CBManager sharedManager] myPeripheral]]];
+
+                
+                /* Disconnect from the device */
+                [[CBManager sharedManager] disconnectPeripheral:[[CBManager sharedManager] myPeripheral]];
+                
+                /* Hide the battery button */
+                self.BatteryMenuButton.enabled = NO;
+                self.BatteryMenuButton.tintColor = [UIColor clearColor];
+                
+                /* Set the bluetooth button to disconnected */
+                self.BluetoothMenuButton.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_bluetooth_disabled_black_24pt"]];
+                
+                
+            }
+            else
+            {
+                // Start scanning for devices
+                [[CBManager sharedManager] startScanning];
+            }
+            
+
         break;
     }
 }
@@ -551,5 +628,90 @@
     ZAxisData = nil;
     AudioSPLData = nil;
 }
+
+
+
+/*!
+ *  @method initDeviceInfoModel
+ *
+ *  @discussion Method to Discover the specified characteristic of a service.
+ *
+ */
+-(void) initDeviceInfoModel
+{
+    deviceInfoModel = [[DevieInformationModel alloc] init];
+    [deviceInfoModel startDiscoverChar:^(BOOL success, NSError *error) {
+        
+        if (success)
+        {
+            @synchronized(deviceInfoModel){
+                // Get the characteristic value if the required characteristic is found
+                //[self updateUI];
+            }
+        }
+    }];
+}
+
+
+-(void)connectPeripheral:(NSString *)name
+{
+    CBPeripheralExt *selectedBLE;
+    
+    if ([[CBManager sharedManager] foundPeripherals].count != 0)
+    {
+        
+        for(CBPeripheralExt *selecteddevice in [[CBManager sharedManager] foundPeripherals])
+        {
+           if([selecteddevice.mPeripheral.name isEqualToString:name])
+           {
+               selectedBLE = selecteddevice;
+           }
+        }
+        
+        if(selectedBLE != nil)
+        {
+            [[CBManager sharedManager] connectPeripheral:selectedBLE.mPeripheral CompletionBlock:^(BOOL success, NSError *error)
+            {
+                //[[ProgressHandler sharedInstance] hideProgressView];
+             
+                if(success)
+                {
+                    isDeviceConnected = true;
+                    
+                    /* Display the connected message to the user */
+                    [self.view makeToast:[NSString stringWithFormat:@"%@ %@", LOCALIZEDSTRING(@"bluetooth_connected"), selectedBLE.mPeripheral.name]];
+                    
+                    /* Set the bluetooth button to show connected */
+                    self.BluetoothMenuButton.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_bluetooth_black_24pt"]];
+                    
+                    /* Show the battery button */
+                    self.BatteryMenuButton.enabled = YES;
+                    self.BatteryMenuButton.tintColor = [UIColor ColorBlack];
+                    
+                    NSLog(@"Log - Conecting to : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
+                }
+                else
+                {
+                    if(error)
+                    {
+                        NSString *errorString = [error.userInfo valueForKey:NSLocalizedDescriptionKey];
+                     
+                        if(errorString.length)
+                        {
+                            NSLog(@"Log - User Alert - %@", errorString);
+                            [self.view makeToast:errorString];
+                        }
+                        else
+                        {
+                            NSLog(@"Log - User Alert - Unknown Error");
+                            [self.view makeToast:LOCALIZEDSTRING(@"Unknown Error")];
+                        }
+                    }
+                }
+            }];
+        }
+    }
+}
+
 
 @end
