@@ -112,22 +112,30 @@
                                     <segue destination="BNL-W5-huU" kind="show" id="PKJ-FJ-idm"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem tag="3" image="ic_settings_black_24pt" id="Lu1-j6-6OH">
+                            <barButtonItem image="ic_settings_black_24pt" id="Lu1-j6-6OH">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <segue destination="qpu-Xk-79T" kind="show" id="DuX-6x-cho"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem tag="2" image="ic_save_black_24pt" id="6SS-Sa-Reh">
+                            <barButtonItem image="ic_save_black_24pt" id="6SS-Sa-Reh">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </barButtonItem>
-                            <barButtonItem tag="1" image="ic_bluetooth_disabled_black_24pt" id="2cG-dR-ZOx">
+                            <barButtonItem tag="7" image="ic_bluetooth_disabled_black_24pt" id="2cG-dR-ZOx" userLabel="Bluetooth Menu Button">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="didTouchUp:" destination="BYZ-38-t0r" id="GJR-aW-u6o"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="ic_battery_black_24pt" id="bXo-tE-uL9">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="BatteryMenuButton" destination="bXo-tE-uL9" id="4on-ih-zmb"/>
+                        <outlet property="BluetoothMenuButton" destination="2cG-dR-ZOx" id="So1-MF-DIx"/>
                         <outlet property="MainScreen1" destination="sGQ-M4-HOk" id="UnH-X0-xK3"/>
                         <outlet property="lineChartView" destination="1TW-9V-LCz" id="o92-DB-m62"/>
                     </connections>
@@ -345,7 +353,7 @@
                                         <rect key="frame" x="0.0" y="28" width="667" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F35-4U-zZA" id="kbC-jv-Cq4">
-                                            <rect key="frame" x="0.0" y="0.0" width="667" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="667" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CustomCell" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gxm-BB-H4L">
@@ -600,7 +608,7 @@
                                         <rect key="frame" x="0.0" y="28" width="667" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ree-qL-zCp" id="VZj-5H-YX9">
-                                            <rect key="frame" x="0.0" y="0.0" width="667" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="667" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="datetime" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbn-hx-aW6">
@@ -740,6 +748,7 @@
     <resources>
         <image name="ic_assessment_white_24pt" width="24" height="24"/>
         <image name="ic_autorenew_white_24pt" width="24" height="24"/>
+        <image name="ic_battery_black_24pt" width="24" height="24"/>
         <image name="ic_bluetooth_disabled_black_24pt" width="24" height="24"/>
         <image name="ic_delete_24pt" width="24" height="24"/>
         <image name="ic_description_white_24pt" width="24" height="24"/>
