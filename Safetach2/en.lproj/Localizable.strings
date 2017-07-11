@@ -53,3 +53,6 @@
 "title_activity_delete_file_select" = "File Delete Selection";
 "title_activity_run_name" = "Run:&#160;";
 "title_activity_ota_update" = "Node OTA Firmware Upgrade";
+
+"bluetooth_connected" = "Connected to device";
+"bluetooth_disconnected = Disconnected from device";
