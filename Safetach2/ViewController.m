@@ -229,7 +229,7 @@
                 isDeviceConnected = false;
                 
                 /* Display the disconnected message to the user */
-                [self.view makeToast:[NSString stringWithFormat:@"%@ %@", LOCALIZEDSTRING(@"bluetooth_disconnected"), [[CBManager sharedManager] myPeripheral]]];
+                //[self.view makeToast:[NSString stringWithFormat:@"%@ %@", LOCALIZEDSTRING(@"bluetooth_disconnected"), [[CBManager sharedManager] myPeripheral]]];
 
                 
                 /* Disconnect from the device */
