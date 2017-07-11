@@ -328,6 +328,9 @@
     //[[LoggerHandler LogManager] LogData:[NSString stringWithFormat:@"[%@] %@",peripheral.name,DISCONNECTED]];
     
     [self clearDevices];
+    
+    /* This is to auto reconnect */
+    [centralManager connectPeripheral:peripheral options:nil];
 }
 
 /*!
