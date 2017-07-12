@@ -319,7 +319,13 @@
             cbCommunicationHandler(NO,disconnectionError);
         }
         else
+        {
             cbCommunicationHandler(NO,error);
+            NSLog(@"Log - %@", [NSString stringWithFormat:@"[%@] %@ by Node",peripheral.name, DISCONNECTED]);
+            
+            /* This is to auto reconnect */
+            [centralManager connectPeripheral:peripheral options:nil];
+        }
     }
 
     [self redirectToRootviewcontroller];
@@ -329,8 +335,7 @@
     
     [self clearDevices];
     
-    /* This is to auto reconnect */
-    [centralManager connectPeripheral:peripheral options:nil];
+    
 }
 
 /*!
@@ -467,6 +472,20 @@
         //[Utilities logDataWithService:[ResourceHandler getServiceNameForUUID:descriptor.characteristic.service.UUID] characteristic:[ResourceHandler getCharacteristicNameForUUID:descriptor.characteristic.UUID] descriptor:[Utilities getDiscriptorNameForUUID:descriptor.UUID] operation:[NSString stringWithFormat:@"%@- %@%@",READ_RESPONSE,READ_ERROR,[error.userInfo objectForKey:NSLocalizedDescriptionKey]]];
     }
     [cbCharacteristicDelegate peripheral:peripheral didUpdateValueForDescriptor:descriptor error:error];
+}
+
+
+-(void)peripheral:(CBPeripheral *)peripheral didReadRSSI:(nonnull NSNumber *)RSSI error:(nullable NSError *)error
+{
+    if(error)
+    {
+        NSLog(@"Log - %@", [NSString stringWithFormat:@"%@- %@%@",READ_RESPONSE,
+                            READ_ERROR,[error.userInfo objectForKey:NSLocalizedDescriptionKey]]);
+    }
+    else
+    {
+        NSLog(@"Log - RSSI Level = %@", RSSI);
+    }
 }
 
 
