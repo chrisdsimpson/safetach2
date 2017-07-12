@@ -228,10 +228,6 @@
             {
                 isDeviceConnected = false;
                 
-                /* Display the disconnected message to the user */
-                //[self.view makeToast:[NSString stringWithFormat:@"%@ %@", LOCALIZEDSTRING(@"bluetooth_disconnected"), [[CBManager sharedManager] myPeripheral]]];
-
-                
                 /* Disconnect from the device */
                 [[CBManager sharedManager] disconnectPeripheral:[[CBManager sharedManager] myPeripheral]];
                 
@@ -692,18 +688,32 @@
                 }
                 else
                 {
+                    isDeviceConnected = false;
+                    
+                    /* Display the dis-connected message to the user */
+                    [self.view makeToast:[NSString stringWithFormat:@"%@ %@", LOCALIZEDSTRING(@"bluetooth_disconnected"), selectedBLE.mPeripheral.name]];
+                    
+                    /* Set the bluetooth button to disconnected */
+                    self.BluetoothMenuButton.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_bluetooth_disabled_black_24pt"]];
+                    
+                    /* Hide the battery button */
+                    self.BatteryMenuButton.enabled = NO;
+                    self.BatteryMenuButton.tintColor = [UIColor clearColor];
+                    
+                    NSLog(@"Log - Disconnecting from : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
+                    
                     if(error)
                     {
                         NSString *errorString = [error.userInfo valueForKey:NSLocalizedDescriptionKey];
                      
                         if(errorString.length)
                         {
-                            NSLog(@"Log - User Alert - %@", errorString);
+                            NSLog(@"Log - %@", errorString);
                             [self.view makeToast:errorString];
                         }
                         else
                         {
-                            NSLog(@"Log - User Alert - Unknown Error");
+                            NSLog(@"Log - Unknown Error");
                             [self.view makeToast:LOCALIZEDSTRING(@"Unknown Error")];
                         }
                     }
