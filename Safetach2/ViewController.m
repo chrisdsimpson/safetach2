@@ -138,7 +138,10 @@
     Button03.backgroundColor = [UIColor ColorBlue];
     Button04.backgroundColor = [UIColor ColorBlue];
     Button05.backgroundColor = [UIColor ColorBlue];
-    Button06.backgroundColor = [UIColor ColorGreen];
+    
+    /* Disable the reset button */
+    Button06.enabled = NO;
+    Button06.backgroundColor = [UIColor ColorLightGrey];
     
     /* Hide the battery button */
     self.BatteryMenuButton.enabled = NO;
@@ -580,6 +583,8 @@
     NSLog(@"Reset Button Pressed");
     [self clearGraphData];
     [self onHomePressed];
+    
+    [self initDeviceInfoModel];
 }
 
 
@@ -635,17 +640,46 @@
  */
 -(void) initDeviceInfoModel
 {
-    deviceInfoModel = [[DevieInformationModel alloc] init];
-    [deviceInfoModel startDiscoverChar:^(BOOL success, NSError *error) {
-        
-        if (success)
+    CBService *myService;
+    
+    /* Find the device info service */
+    for (CBService *service in [[CBManager sharedManager] foundServices])
+    {
+        if([service.UUID isEqual:DEVICE_INFO_SERVICE_UUID])
         {
-            @synchronized(deviceInfoModel){
-                // Get the characteristic value if the required characteristic is found
-                //[self updateUI];
-            }
+            myService = service;
+            break;
         }
-    }];
+    }
+    
+    /* If we find the service get the characteristic values for it */
+    if(myService != nil)
+    {
+        [[CBManager sharedManager] setMyService:myService] ;
+    
+        deviceInfoModel = [[DevieInformationModel alloc] init];
+        [deviceInfoModel startDiscoverChar:^(BOOL success, NSError *error)
+        {
+            if (success)
+            {
+                @synchronized(deviceInfoModel)
+                {
+                    /* Get the characteristic value if the required characteristic is found */
+                    [deviceInfoModel discoverCharacteristicValues:^(BOOL success, NSError *error)
+                    {
+                        if (success)
+                        {
+                            for(NSString *value in deviceInfoModel.deviceInfoCharValueDictionary.allValues)
+                            {
+                                NSLog(@"Log - Device info values %@", value);
+                            }
+                            
+                        }
+                    }];
+                }
+            }
+        }];
+    }
 }
 
 
@@ -684,6 +718,10 @@
                     self.BatteryMenuButton.enabled = YES;
                     self.BatteryMenuButton.tintColor = [UIColor ColorBlack];
                     
+                    /* Set the reset button to enabled */
+                    Button06.enabled = YES;
+                    Button06.backgroundColor = [UIColor ColorGreen];
+                    
                     NSLog(@"Log - Conecting to : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
                 }
                 else
@@ -699,6 +737,11 @@
                     /* Hide the battery button */
                     self.BatteryMenuButton.enabled = NO;
                     self.BatteryMenuButton.tintColor = [UIColor clearColor];
+                    
+                    /* Disable the reset button */
+                    Button06.enabled = NO;
+                    Button06.backgroundColor = [UIColor ColorLightGrey];
+
                     
                     NSLog(@"Log - Disconnecting from : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
                     
