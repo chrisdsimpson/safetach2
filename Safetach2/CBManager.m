@@ -380,8 +380,11 @@
         for (CBService *service in peripheral.services)
         {
 
-            if (![foundServices containsObject:service]) {
+            if (![foundServices containsObject:service])
+            {
                 [foundServices addObject:service];
+                
+                NSLog(@"Log - Services = %@", service.UUID);
                 
                 //if([service.UUID isEqual:CAPSENSE_SERVICE_UUID])
                 //{
