@@ -1,14 +1,49 @@
-//
-//  InfoViewController.m
-//  Safetach2
-//
-//  Created by Chris Simpson on 6/1/17.
-//  Copyright © 2017 Chris Simpson. All rights reserved.
-//
+/*
+ * File Name:	InfoViewController.m
+ *
+ * Version      1.0.0
+ *
+ * Date:		07/13/2017
+ *
+ * Description:
+ *   This is info view controller for the iOS Safetach2 project.
+ *
+ * Notes:
+ *
+ * Related Document:
+ *
+ * Code Tested With:
+ *   1. Xcode 8.2.1
+ *
+ * Author:		Christopher D. Simpson
+ *
+ * Company:		Maxton Manufacturing Company
+ *				1728 Orbit Way
+ *				Minden, NV  89423
+ *				www.maxtonvalve.com
+ *
+ * Copyright (c) 2017 Maxton Manufacturing Company
+ * All rights reserved.
+ * Claim of copyright does not imply waiver of other rights.
+ *
+ * NOTICE OF PROPRIETARY RIGHTS.
+ *
+ * This program is a confidential trade secret and the property of
+ * Maxton Manufacturing Company. Use, examination, reproduction,
+ * disassembly, decompiling, transfer and/or disclosure to others of all
+ * or any part of this software program are strictly prohibited except by
+ * express written agreement with Maxton Manufacturing Company.
+ */
+
 
 #import "InfoViewController.h"
+#import "CBManager.h"
+#import "DevieInformationModel.h"
 
 @interface InfoViewController ()
+{
+    DevieInformationModel *deviceInfoModel;
+}
 
 @end
 
@@ -16,7 +51,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    
+    [self initDeviceInfoModel];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +61,67 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+/*!
+ *  @method initDeviceInfoModel
+ *
+ *  @discussion Method to Discover the specified characteristic of a service.
+ *
+ */
+-(void) initDeviceInfoModel
+{
+    CBService *myService;
+    
+    /* Find the device info service */
+    for (CBService *service in [[CBManager sharedManager] foundServices])
+    {
+        if([service.UUID isEqual:DEVICE_INFO_SERVICE_UUID])
+        {
+            myService = service;
+            break;
+        }
+    }
+    
+    /* If we find the service get the characteristic values for it */
+    if(myService != nil)
+    {
+        [[CBManager sharedManager] setMyService:myService] ;
+        
+        deviceInfoModel = [[DevieInformationModel alloc] init];
+        [deviceInfoModel startDiscoverChar:^(BOOL success, NSError *error)
+         {
+             if (success)
+             {
+                 @synchronized(deviceInfoModel)
+                 {
+                     /* Get the characteristic value if the required characteristic is found */
+                     [deviceInfoModel discoverCharacteristicValues:^(BOOL success, NSError *error)
+                      {
+                          if (success)
+                          {
+                              
+                              for(NSString *key in deviceInfoModel.deviceInfoCharValueDictionary.allKeys)
+                              {
+                                  if([key isEqualToString:MODEL_NUMBER])
+                                  {
+                                      self.ModelNumberLabel.text = [deviceInfoModel.deviceInfoCharValueDictionary objectForKey:key];
+                                      //[deviceInfoModel.deviceInfoCharValueDictionary getObject:firmwareRevisionString];
+                                  }
+                              }
+                                  
+                              for(NSString *value in deviceInfoModel.deviceInfoCharValueDictionary.allValues)
+                              {
+                                  NSLog(@"Log - Device info values %@", value);
+                              }
+                              
+                          }
+                      }];
+                 }
+             }
+         }];
+    }
 }
-*/
+
 
 @end
