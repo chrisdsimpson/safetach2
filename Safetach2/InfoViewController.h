@@ -40,6 +40,8 @@
 
 @interface InfoViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *AppNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *SoftwareVersionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ModelNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *SerialNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *HardwareLabel;

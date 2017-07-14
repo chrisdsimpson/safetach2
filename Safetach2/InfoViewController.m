@@ -39,6 +39,7 @@
 #import "InfoViewController.h"
 #import "CBManager.h"
 #import "DevieInformationModel.h"
+#import "Constants.h"
 
 @interface InfoViewController ()
 {
@@ -52,6 +53,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.AppNameLabel.text = APP_NAME;
+    self.SoftwareVersionLabel.text = APP_VERSION;
     
     [self initDeviceInfoModel];
 }
