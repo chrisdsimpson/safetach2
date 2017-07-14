@@ -106,7 +106,18 @@
                                   if([key isEqualToString:MODEL_NUMBER])
                                   {
                                       self.ModelNumberLabel.text = [deviceInfoModel.deviceInfoCharValueDictionary objectForKey:key];
-                                      //[deviceInfoModel.deviceInfoCharValueDictionary getObject:firmwareRevisionString];
+                                  }
+                                  else if([key isEqualToString:SERIAL_NUMBER])
+                                  {
+                                      self.SerialNumberLabel.text = [deviceInfoModel.deviceInfoCharValueDictionary objectForKey:key];
+                                  }
+                                  else if([key isEqualToString:HARDWARE_REVISION])
+                                  {
+                                      self.HardwareLabel.text = [deviceInfoModel.deviceInfoCharValueDictionary objectForKey:key];
+                                  }
+                                  else if([key isEqualToString:FIRMWARE_REVISION])
+                                  {
+                                      self.FirmwareLabel.text = [deviceInfoModel.deviceInfoCharValueDictionary objectForKey:key];
                                   }
                               }
                                   
