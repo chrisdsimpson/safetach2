@@ -42,12 +42,14 @@
 #import "DeviceRWData.h"
 #import "DateValueFormatter.h"
 #import "DevieInformationModel.h"
+#import "BatteryServiceModel.h"
 
 @interface ViewController ()
 {
     BOOL isDeviceConnected;
     BOOL isBluetoothON;
     DevieInformationModel *deviceInfoModel;
+    BatteryServiceModel *batteryModel;
 }
 
 @end
@@ -683,6 +685,49 @@
 }
 
 
+/*!
+ *  @method initBatteryModel
+ *
+ *  @discussion Method to Initialize model
+ *
+ */
+
+-(void)initBatteryModel:(NSTimer *)timer
+{
+    //[self initBatteryUI];
+    
+    CBService *myService;
+    
+    /* Find the device info service */
+    for (CBService *service in [[CBManager sharedManager] foundServices])
+    {
+        if([service.UUID isEqual:BATTERY_SERVICE_UUID])
+        {
+            myService = service;
+            break;
+        }
+    }
+    
+    /* If we find the service get the characteristic values for it */
+    if(myService != nil)
+    {
+        [[CBManager sharedManager] setMyService:myService] ;
+
+        batteryModel = [[BatteryServiceModel alloc] init];
+        batteryModel.delegate = self;
+    
+        [batteryModel startDiscoverCharacteristicsWithCompletionHandler:^(BOOL success, NSError *error)
+        {
+            if(success)
+            {
+                [batteryModel readBatteryLevel];
+            }
+        }];
+    }
+}
+
+
+
 -(void)connectPeripheral:(NSString *)name
 {
     CBPeripheralExt *selectedBLE;
@@ -721,6 +766,9 @@
                     /* Set the reset button to enabled */
                     Button06.enabled = YES;
                     Button06.backgroundColor = [UIColor ColorGreen];
+                    
+                    [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(initBatteryModel:) userInfo:nil repeats:YES];
+                    //[self initBatteryModel];
                     
                     NSLog(@"Log - Conecting to : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
                 }
