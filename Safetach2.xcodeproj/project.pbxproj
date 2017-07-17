@@ -22,6 +22,7 @@
 		A762CB241EF45D480046A785 /* FileSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A762CB231EF45D480046A785 /* FileSelectionViewController.m */; };
 		A763AC5E1EFB137D002BB5BE /* FileSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A763AC5D1EFB137D002BB5BE /* FileSelectionTableViewCell.m */; };
 		A766E6691F1409400066C316 /* DevieInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A766E6681F1409400066C316 /* DevieInformationModel.m */; };
+		A766E66E1F195EF80066C316 /* BatteryServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A766E66D1F195EF80066C316 /* BatteryServiceModel.m */; };
 		A77017381EE8B59800443F5C /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A77017331EE8B50600443F5C /* Charts.framework */; };
 		A77017391EE8B59800443F5C /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A77017331EE8B50600443F5C /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A77017421EE9C58600443F5C /* CBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A770173F1EE9C58600443F5C /* CBManager.m */; };
@@ -117,6 +118,8 @@
 		A763AC5D1EFB137D002BB5BE /* FileSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSelectionTableViewCell.m; sourceTree = "<group>"; };
 		A766E6671F1409400066C316 /* DevieInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevieInformationModel.h; sourceTree = "<group>"; };
 		A766E6681F1409400066C316 /* DevieInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevieInformationModel.m; sourceTree = "<group>"; };
+		A766E66C1F195EF80066C316 /* BatteryServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryServiceModel.h; sourceTree = "<group>"; };
+		A766E66D1F195EF80066C316 /* BatteryServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatteryServiceModel.m; sourceTree = "<group>"; };
 		A770172C1EE8B50500443F5C /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../Charts-3.0.0/Charts.xcodeproj"; sourceTree = "<group>"; };
 		A770173E1EE9C58600443F5C /* CBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBManager.h; sourceTree = "<group>"; };
 		A770173F1EE9C58600443F5C /* CBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBManager.m; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 				A77017451EE9ECCF00443F5C /* DeviceScanViewController.m */,
 				A77017461EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.h */,
 				A77017471EE9ECCF00443F5C /* ScannedPeripheralTableViewCell.m */,
+				A766E66C1F195EF80066C316 /* BatteryServiceModel.h */,
+				A766E66D1F195EF80066C316 /* BatteryServiceModel.m */,
 				A766E6671F1409400066C316 /* DevieInformationModel.h */,
 				A766E6681F1409400066C316 /* DevieInformationModel.m */,
 				A770173E1EE9C58600443F5C /* CBManager.h */,
@@ -417,6 +422,7 @@
 				A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */,
 				A762CB241EF45D480046A785 /* FileSelectionViewController.m in Sources */,
 				A762CB1F1EF301BE0046A785 /* ReportViewController.m in Sources */,
+				A766E66E1F195EF80066C316 /* BatteryServiceModel.m in Sources */,
 				A719EC2A1ED386FB008BF6AC /* main.m in Sources */,
 				A770174C1EEB146D00443F5C /* UIView+Toast.m in Sources */,
 				A763AC5E1EFB137D002BB5BE /* FileSelectionTableViewCell.m in Sources */,
