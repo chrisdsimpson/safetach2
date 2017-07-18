@@ -184,6 +184,8 @@
     }
     
     [self.batteryServiceDict setValue:levelString forKey:[NSString stringWithFormat:@"%@",characteristic.service]];
+    
+    NSLog(@"Log - Battry Level = %@", levelString);
 }
 
 
