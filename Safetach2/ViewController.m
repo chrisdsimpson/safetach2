@@ -233,6 +233,21 @@
             {
                 isDeviceConnected = false;
                 
+                /* Kill the rssi timer */
+                if(RSSITimer)
+                {
+                    [RSSITimer invalidate];
+                    RSSITimer = nil;
+                }
+                
+                
+                /* Kill the battery timer */
+                if(BatteryTimer)
+                {
+                    [BatteryTimer invalidate];
+                    BatteryTimer = nil;
+                }
+                
                 /* Disconnect from the device */
                 [[CBManager sharedManager] disconnectPeripheral:[[CBManager sharedManager] myPeripheral]];
                 
@@ -685,13 +700,25 @@
 }
 
 
+
+/*!
+ *  @method readRSSILevel
+ *
+ *  @discussion Method to read the peripheral RSSI
+ *
+ */
+-(void)readRSSILevel:(NSTimer *)timer
+{
+    [[CBManager sharedManager] readRSSI];
+}
+
+
 /*!
  *  @method initBatteryModel
  *
  *  @discussion Method to Initialize model
  *
  */
-
 -(void)initBatteryModel:(NSTimer *)timer
 {
     //[self initBatteryUI];
@@ -747,8 +774,6 @@
         {
             [[CBManager sharedManager] connectPeripheral:selectedBLE.mPeripheral CompletionBlock:^(BOOL success, NSError *error)
             {
-                //[[ProgressHandler sharedInstance] hideProgressView];
-             
                 if(success)
                 {
                     isDeviceConnected = true;
@@ -767,8 +792,17 @@
                     Button06.enabled = YES;
                     Button06.backgroundColor = [UIColor ColorGreen];
                     
-                    [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(initBatteryModel:) userInfo:nil repeats:YES];
-                    //[self initBatteryModel];
+                    /* Read battery level every 60 seconds */
+                    BatteryTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(initBatteryModel:) userInfo:nil repeats:YES];
+                    
+                    /* Read the battery level when first connected */
+                    [BatteryTimer fire];
+                    
+                    /* Read the device RSSI every 10 seconds */
+                    RSSITimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(readRSSILevel:) userInfo:nil repeats:YES];
+                    
+                    /* Read the RSSI level when first connected */
+                    [RSSITimer fire];
                     
                     NSLog(@"Log - Conecting to : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
                 }
@@ -776,6 +810,20 @@
                 {
                     isDeviceConnected = false;
                     
+                    /* Kill the rssi timer */
+                    if(RSSITimer)
+                    {
+                        [RSSITimer invalidate];
+                        RSSITimer = nil;
+                    }
+                    
+                    /* Kill the battery timer */
+                    if(BatteryTimer)
+                    {
+                        [BatteryTimer invalidate];
+                        BatteryTimer = nil;
+                    }
+                                       
                     /* Display the dis-connected message to the user */
                     [self.view makeToast:[NSString stringWithFormat:@"%@ %@", LOCALIZEDSTRING(@"bluetooth_disconnected"), selectedBLE.mPeripheral.name]];
                     
@@ -789,7 +837,6 @@
                     /* Disable the reset button */
                     Button06.enabled = NO;
                     Button06.backgroundColor = [UIColor ColorLightGrey];
-
                     
                     NSLog(@"Log - Disconnecting from : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
                     

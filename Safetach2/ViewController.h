@@ -72,6 +72,8 @@ NSMutableArray *RideData;
 
 DeviceRWData *RWData = nil;
 NSUserDefaults *DefaultValues;
+NSTimer *BatteryTimer;
+NSTimer *RSSITimer;
 
 
 @interface ViewController : UIViewController <FileSelectionViewControllerDelegate, cbDiscoveryManagerDelegate>
