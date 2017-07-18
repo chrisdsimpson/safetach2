@@ -272,4 +272,14 @@
 - (void) disconnectPeripheral:(CBPeripheral*)peripheral;
 
 
+/*!
+ *  @method readRSSI:
+ *
+ *  @discussion	 Reads the RSSI value from the connected peripheral.
+ *
+ */
+-(void)readRSSI;
+
+
+
 @end

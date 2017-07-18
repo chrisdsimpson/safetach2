@@ -478,6 +478,15 @@
 }
 
 
+-(void)readRSSI
+{
+    if(myPeripheral)
+    {
+        [myPeripheral readRSSI];
+    }
+}
+
+
 -(void)peripheral:(CBPeripheral *)peripheral didReadRSSI:(nonnull NSNumber *)RSSI error:(nullable NSError *)error
 {
     if(error)
