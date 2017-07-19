@@ -185,7 +185,9 @@
     
     [self.batteryServiceDict setValue:levelString forKey:[NSString stringWithFormat:@"%@",characteristic.service]];
     
-    NSLog(@"Log - Battry Level = %@", levelString);
+    NSDictionary *batterydata = [NSDictionary dictionaryWithObject:levelString forKey:@"batterylevel"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BATTERY_TYPE" object:self userInfo:batterydata];
+    //NSLog(@"Log - Battry Level = %@", levelString);
 }
 
 
