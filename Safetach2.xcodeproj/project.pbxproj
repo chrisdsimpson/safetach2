@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A716F09D1F20052200AEA141 /* XYZLFModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A716F09C1F20052200AEA141 /* XYZLFModel.m */; };
+		A716F0A21F20142100AEA141 /* CTRLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A716F0A11F20142100AEA141 /* CTRLModel.m */; };
 		A719EC2A1ED386FB008BF6AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A719EC291ED386FB008BF6AC /* main.m */; };
 		A719EC2D1ED386FB008BF6AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A719EC2C1ED386FB008BF6AC /* AppDelegate.m */; };
 		A719EC301ED386FB008BF6AC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A719EC2F1ED386FB008BF6AC /* ViewController.m */; };
@@ -94,6 +95,8 @@
 /* Begin PBXFileReference section */
 		A716F09B1F20052200AEA141 /* XYZLFModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZLFModel.h; sourceTree = "<group>"; };
 		A716F09C1F20052200AEA141 /* XYZLFModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYZLFModel.m; sourceTree = "<group>"; };
+		A716F0A01F20142100AEA141 /* CTRLModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTRLModel.h; sourceTree = "<group>"; };
+		A716F0A11F20142100AEA141 /* CTRLModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTRLModel.m; sourceTree = "<group>"; };
 		A719EC251ED386FB008BF6AC /* Safetach2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Safetach2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A719EC291ED386FB008BF6AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A719EC2B1ED386FB008BF6AC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -217,6 +220,8 @@
 				A766E6681F1409400066C316 /* DevieInformationModel.m */,
 				A716F09B1F20052200AEA141 /* XYZLFModel.h */,
 				A716F09C1F20052200AEA141 /* XYZLFModel.m */,
+				A716F0A01F20142100AEA141 /* CTRLModel.h */,
+				A716F0A11F20142100AEA141 /* CTRLModel.m */,
 				A770173E1EE9C58600443F5C /* CBManager.h */,
 				A770173F1EE9C58600443F5C /* CBManager.m */,
 				A77017401EE9C58600443F5C /* CBPeripheralExt.h */,
@@ -424,6 +429,7 @@
 				A766E6691F1409400066C316 /* DevieInformationModel.m in Sources */,
 				A79FED7A1F044F390055CA36 /* DateValueFormatter.m in Sources */,
 				A716F09D1F20052200AEA141 /* XYZLFModel.m in Sources */,
+				A716F0A21F20142100AEA141 /* CTRLModel.m in Sources */,
 				A762CB1A1EF0ADDC0046A785 /* DeviceRWData.m in Sources */,
 				A775B0A71EE0C8F400264C4E /* InfoViewController.m in Sources */,
 				A762CB241EF45D480046A785 /* FileSelectionViewController.m in Sources */,
