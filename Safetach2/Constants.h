@@ -80,6 +80,12 @@
 
 #define PACKET_TRANSFER_TIMEOUT_COUNT          5
 
+#define BATTERY_WERNING_LEVEL                  15
+#define SIGNAL_STRENGTH_TIMEOUT                6
+#define SIGNAL_STRENGTH_LEVEL                  -80
+#define SIGNAL_STRENGTH_MIN                    -90
+#define SIGNAL_STRENGTH_MAX                    -50
+
 
 
 /* BLE device connection/scan time out */
