@@ -80,7 +80,7 @@
 
 #define PACKET_TRANSFER_TIMEOUT_COUNT          5
 
-#define BATTERY_WERNING_LEVEL                  15
+#define BATTERY_WARNING_LEVEL                  15
 #define SIGNAL_STRENGTH_TIMEOUT                6
 #define SIGNAL_STRENGTH_LEVEL                  -80
 #define SIGNAL_STRENGTH_MIN                    -90
