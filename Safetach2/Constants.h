@@ -80,6 +80,7 @@
 
 #define PACKET_TRANSFER_TIMEOUT_COUNT          5
 
+/* Levels status limits */
 #define BATTERY_WARNING_LEVEL                  15
 #define SIGNAL_STRENGTH_TIMEOUT                6
 #define SIGNAL_STRENGTH_LEVEL                  -80
@@ -87,6 +88,43 @@
 #define SIGNAL_STRENGTH_MAX                    -50
 
 
+/* Packet transfer messages and node control commands */
+#define CTRL_TX_IDLE                           0x00 /* Status message from the server that the device is in idle mode */
+#define CTRL_RX_TRIGGER                        0x01 /* Command message from client to run in trigger mode */
+#define CTRL_RX_FREERUN                        0x02 /* Command message from client to run in free run mode */
+#define CTRL_RX_RESET                          0x03 /* Command message from client to reset the node */
+#define CTRL_RX_REPORT                         0x04 /* Command message from client to report the node status */
+#define CTRL_TX_WARMUP                         0x05 /* Status message from server that the device is warmed up */
+#define CTRL_TX_PACKETREADY                    0x06 /* Status message from server that a run packet is ready to send */
+#define CTRL_TX_PACKETSENT                     0x07 /* Status message from server that the run packet was sent */
+#define CTRL_RX_STOP                           0x08 /* Command message from client to stop the run */
+#define CTRL_RX_PACKETRESEND                   0x10 /* Command message from client to resend the packet */
+#define CTRL_TX_TRIGGERED                      0x11 /* Status message from server that the device had a trigger event */
+#define CTRL_TX_ARMED                          0x12 /* Status message from server that the device is waiting for a trigger */
+#define CTRL_RX_PACKETRECEIVED                 0x13 /* Command message from client that the packet was received OK */
+#define CTRL_RX_PACKETRESEND_25                0x14 /* Command message from client to resend 25% of the packet */
+#define CTRL_RX_PACKETRESEND_50                0x15 /* Command message from client to resend 50% of the packet */
+#define CTRL_RX_PACKETRESEND_75                0x16 /* Command message from client to resend 75% of the packet */
+#define CTRL_RX_PACKETRESEND_99                0x17 /* Command message from client to resend 100% of the packet */
+#define CTRL_RX_PACKETRESEND_100               0x18 /* Command message from client to resend 100% of the packet */
+#define CTRL_RX_PACKETHEADERSEND               0x19 /* Command message from client to sent the packet header */
+#define CTRL_RX_CANCEL                         0x20 /* Command message from client to cancel packet capture/transfer */
+#define CTRL_RX_XFERPAUSE                      0x21 /* Command message from client to pause the packet transfer */
+#define CTRL_RX_XFERRUN                        0x22 /* Command message from client to resume the packet transfer */
+#define CTRL_TX_CAPTUREERROR                   0x23 /* Status message from server that the capture failed */
+#define CTRL_RX_PROGRAM                        0x24 /* Command message from client to program the node with new firmware */
+#define CTRL_RX_RUNTYPE_HYDRO                  0x25 /* Command message from client to capture data in hydro mode */
+#define CTRL_RX_RUNTYPE_TRACTION               0x26 /* Command message from client to capture data in traction mode */
+
+#define CTRL_INT_PACKET_ERROR                  0x30 /* Internal command indicating that the packet transfer had a error */
+#define CTRL_INT_PACKET_WD_RESET               0x40 /* Internal command to reset the packet transfer watchdog timer */
+#define CTRL_INT_PACKET_WD_CANCEL              0x45 /* Internal command to clear the packet transfer watchdog timer */
+#define CTRL_INT_PACKET_TRANSFER               0x50 /* Internal command to report packet transfer status updates */
+#define CTRL_INT_PACKET_COMPLETE               0x60 /* Internal command indicating that the packet transfer was completed */
+
+/* Packet Identifers */
+#define PACKET_ID                              0x55 /* The beginning of the packet */
+#define PACKET_EOP                             0xAA /* The end of packet */
 
 /* BLE device connection/scan time out */
 #define DEVICE_CONNECTION_TIMEOUT              10.0
