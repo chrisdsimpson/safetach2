@@ -478,6 +478,12 @@
 }
 
 
+/*!
+ *  @method readRSSI
+ *
+ *  @discussion	 Method to read the peripheral rssi level.
+ *
+ */
 -(void)readRSSI
 {
     if(myPeripheral)
@@ -487,6 +493,12 @@
 }
 
 
+/*!
+ *  @method didReadRSSI
+ *
+ *  @discussion	Calback method to get the peripheral rssi level.
+ *
+ */
 -(void)peripheral:(CBPeripheral *)peripheral didReadRSSI:(nonnull NSNumber *)RSSI error:(nullable NSError *)error
 {
     if(error)
@@ -496,7 +508,9 @@
     }
     else
     {
-        NSLog(@"Log - RSSI Level = %@", RSSI);
+        NSDictionary *rssidata = [NSDictionary dictionaryWithObject:RSSI forKey:@"rssilevel"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RSSI_TYPE" object:self userInfo:rssidata];
+        //NSLog(@"Log - RSSI Level = %@", RSSI);
     }
 }
 
