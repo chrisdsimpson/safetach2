@@ -43,18 +43,107 @@
 #import "DateValueFormatter.h"
 #import "DevieInformationModel.h"
 #import "BatteryServiceModel.h"
+#import "XYZLFModel.h"
+#import "CTRLModel.h"
 
 @interface ViewController ()
 {
+    int SignalStrengthCount;
     BOOL isDeviceConnected;
     BOOL isBluetoothON;
     DevieInformationModel *deviceInfoModel;
     BatteryServiceModel *batteryModel;
+    XYZLFModel *xyzlfModel;
+    CTRLModel *ctrlModel;
 }
 
 @end
 
 @implementation ViewController
+
+
+/*!
+ *  @method receiveNotifications
+ *
+ *  @discussion Method to receive notifications from the different BLE models.
+ *
+ */
+-(void)receiveNotifications:(NSNotification *)notification
+{
+    if([[notification name] isEqualToString:@"RSSI_TYPE"])
+    {
+        NSDictionary *data = notification.userInfo;
+        NSString *line = [data objectForKey:@"rssilevel"];
+        
+        int db = (int)[line integerValue];
+        int percent;
+        
+        /* Get the signal level percent from the RSSI value */
+        if(db <= SIGNAL_STRENGTH_MIN)
+        {
+            percent = 0;
+        }
+        else if(db >= SIGNAL_STRENGTH_MAX)
+        {
+            percent = 100;
+        }
+        else
+        {
+            percent = 2 * (db + 100);
+        }
+        
+        //NSLog(@"Log - RSSI Level = %@", line);
+        NSLog(@"log - Signal Strenght = %d%%", percent);
+        
+        /* If the signa strength falls low for a set numner of samples report it to the user */
+        if(db < SIGNAL_STRENGTH_LEVEL)
+        {
+            SignalStrengthCount++;
+            
+            if(SignalStrengthCount > SIGNAL_STRENGTH_TIMEOUT)
+            {
+                SignalStrengthCount = 0;
+                [self.view makeToast:[NSString stringWithFormat:@"%@ %@dB", LOCALIZEDSTRING(@"connection_weak"), line]];
+            }
+        }
+        else
+        {
+            SignalStrengthCount = 0;
+        }
+    }
+    else if([[notification name] isEqualToString:@"BATTERY_TYPE"])
+    {
+        NSDictionary *data = notification.userInfo;
+        NSString *line = [data objectForKey:@"batterylevel"];
+        NSLog(@"Log - Battery Level = %@%%", line);
+        
+        /* If the battery level falls below a set level report battery low to the user */
+        if([line integerValue] < BATTERY_WARNING_LEVEL)
+        {
+            /* Display the battery low message to the user */
+            [self.view makeToast:[NSString stringWithFormat:@"%@ %@%%", LOCALIZEDSTRING(@"battery_low"), line]];
+        }
+    }
+    else if([[notification name] isEqualToString:@"CTRL_TYPE"])
+    {
+        NSDictionary *data = notification.userInfo;
+        NSString *line = [data objectForKey:@"ctrlvalue"];
+        NSLog(@"Log - CTRL Value = %@", line);
+        
+        
+        
+    }
+    else if([[notification name] isEqualToString:@"XYZLF_TYPE"])
+    {
+        NSDictionary *data = notification.userInfo;
+        NSString *line = [data objectForKey:@"xyzlfvalue"];
+        NSLog(@"Log - XYZLF Value = %@", line);
+        
+        
+        
+    }
+
+}
 
 
 -(void)bluetoothStateUpdatedToState:(BOOL)state
@@ -92,6 +181,8 @@
         [self.view makeToast:[NSString stringWithFormat:@" Application Version : %@", APP_VERSION]];
     }
     
+    /* Register the notification receiver for all BLE notifications */
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotifications:) name:nil object:nil];
     
     /* Create the DeviceRWData class */
     RWData = [[DeviceRWData alloc] init];
@@ -754,6 +845,79 @@
 }
 
 
+/*!
+ *  @method initXYZLFModel
+ *
+ *  @discussion Method to Discover the specified characteristics of a service.
+ *
+ */
+-(void)initXYZLFModel
+{
+    xyzlfModel = [[XYZLFModel alloc] init];
+    [xyzlfModel startDiscoverChar:^(BOOL success, NSError *error)
+    {
+        if(success)
+        {
+            /* Get characteristic value if the characteristic is successfully found */
+            //isCharacteristicsFound = YES;
+            //[self startXYZLFUpdateChar];
+             
+            [xyzlfModel updateCharacteristicWithHandler:^(BOOL success, NSError *error)
+            {
+                if(success)
+                {
+                    NSLog(@"Log - Turn on notify for XYZLF char");
+                }
+            }];
+        }
+    }];
+    
+    
+    ctrlModel = [[CTRLModel alloc] init];
+    [ctrlModel startDiscoverChar:^(BOOL success, NSError *error)
+    {
+        if(success)
+        {
+            /* Get characteristic value if the characteristic is successfully found */
+            //isCharacteristicsFound = YES;
+            //[self startXYZLFUpdateChar];
+             
+            [ctrlModel updateCharacteristicWithHandler:^(BOOL success, NSError *error)
+            {
+                if(success)
+                {
+                    NSLog(@"Log - Turn on notify for CTRL char");
+                }
+            }];
+            
+            [ctrlModel writeValueForCTRLchar:CTRL_RX_REPORT];
+            NSLog(@"Log - Write value for CTRL char");
+        }
+    }];
+    
+}
+
+
+/*!
+ *  @method startUpdateChar
+ *
+ *  @discussion Method to assign completion handler to get call back once the block has completed execution.
+ *
+ */
+-(void)startXYZLFUpdateChar
+{
+    [xyzlfModel updateCharacteristicWithHandler:^(BOOL success, NSError *error)
+     {
+         if(success)
+         {
+             //@synchronized(xyzlfModel)
+             //{
+                 // Update and log the data received
+             //}
+         }
+     }];
+}
+
 
 -(void)connectPeripheral:(NSString *)name
 {
@@ -803,6 +967,9 @@
                     
                     /* Read the RSSI level when first connected */
                     [RSSITimer fire];
+                    
+                    /* Start the XYZLF char notifying */
+                    [self initXYZLFModel];
                     
                     NSLog(@"Log - Conecting to : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
                 }
