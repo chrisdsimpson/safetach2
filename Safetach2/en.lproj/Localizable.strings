@@ -57,5 +57,5 @@
 "bluetooth_connected" = "Connected to device";
 "bluetooth_disconnected = Disconnected from device";
 
-"battery_low" = "Safetach2 Node Battery Low"
-"connection_weak" = "Safetach2 Node Connection Weak"
+"battery_low" = "Safetach2 Node Battery Low";
+"connection_weak" = "Safetach2 Node Connection Weak";
