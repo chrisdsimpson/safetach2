@@ -6,7 +6,7 @@
  * Date:		06/27/2017
  *
  * Description:
- *   All the localized strings fro english.
+ *   All the localized strings for english.
  *
  * Notes:
  *
@@ -56,3 +56,6 @@
 
 "bluetooth_connected" = "Connected to device";
 "bluetooth_disconnected = Disconnected from device";
+
+"battery_low" = "Safetach2 Node Battery Low"
+"connection_weak" = "Safetach2 Node Connection Weak"
