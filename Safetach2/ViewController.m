@@ -43,8 +43,7 @@
 #import "DateValueFormatter.h"
 #import "DevieInformationModel.h"
 #import "BatteryServiceModel.h"
-#import "XYZLFModel.h"
-#import "CTRLModel.h"
+#import "RideServiceModel.h"
 
 @interface ViewController ()
 {
@@ -53,8 +52,7 @@
     BOOL isBluetoothON;
     DevieInformationModel *deviceInfoModel;
     BatteryServiceModel *batteryModel;
-    XYZLFModel *xyzlfModel;
-    CTRLModel *ctrlModel;
+    RideServiceModel *rideserviceModel;
 }
 
 @end
@@ -128,7 +126,7 @@
     {
         NSDictionary *data = notification.userInfo;
         NSString *line = [data objectForKey:@"ctrlvalue"];
-        NSLog(@"Log - CTRL Value = %@", line);
+        NSLog(@"Log - CTRL Notify Value = %@", line);
         
         
         
@@ -137,7 +135,7 @@
     {
         NSDictionary *data = notification.userInfo;
         NSString *line = [data objectForKey:@"xyzlfvalue"];
-        NSLog(@"Log - XYZLF Value = %@", line);
+        NSLog(@"Log - XYZLF Notify Value = %@", line);
         
         
         
@@ -692,7 +690,18 @@
     [self clearGraphData];
     [self onHomePressed];
     
-    [self initDeviceInfoModel];
+    //[self initDeviceInfoModel];
+    
+    //[rideserviceModel writeValueForCTRL:CTRL_RX_REPORT];
+    
+    [rideserviceModel writeValueForCTRL:CTRL_RX_TRIGGER With:^(BOOL success, NSError *error)
+    {
+        if(success)
+        {
+            //NSLog(@"Log = Write success");
+        }
+    }];
+    
 }
 
 
@@ -846,76 +855,18 @@
 
 
 /*!
- *  @method initXYZLFModel
+ *  @method initRideServiceModel
  *
  *  @discussion Method to Discover the specified characteristics of a service.
  *
  */
--(void)initXYZLFModel
+-(void)initRideServiceModel
 {
-    xyzlfModel = [[XYZLFModel alloc] init];
-    [xyzlfModel startDiscoverChar:^(BOOL success, NSError *error)
+    rideserviceModel = [[RideServiceModel alloc] init];
+    [rideserviceModel updateCharacteristicWithHandler:^(BOOL success, NSError *error)
     {
-        if(success)
-        {
-            /* Get characteristic value if the characteristic is successfully found */
-            //isCharacteristicsFound = YES;
-            //[self startXYZLFUpdateChar];
-             
-            [xyzlfModel updateCharacteristicWithHandler:^(BOOL success, NSError *error)
-            {
-                if(success)
-                {
-                    NSLog(@"Log - Turn on notify for XYZLF char");
-                }
-            }];
-        }
+    
     }];
-    
-    
-    ctrlModel = [[CTRLModel alloc] init];
-    [ctrlModel startDiscoverChar:^(BOOL success, NSError *error)
-    {
-        if(success)
-        {
-            /* Get characteristic value if the characteristic is successfully found */
-            //isCharacteristicsFound = YES;
-            //[self startXYZLFUpdateChar];
-             
-            [ctrlModel updateCharacteristicWithHandler:^(BOOL success, NSError *error)
-            {
-                if(success)
-                {
-                    NSLog(@"Log - Turn on notify for CTRL char");
-                }
-            }];
-            
-            [ctrlModel writeValueForCTRLchar:CTRL_RX_REPORT];
-            NSLog(@"Log - Write value for CTRL char");
-        }
-    }];
-    
-}
-
-
-/*!
- *  @method startUpdateChar
- *
- *  @discussion Method to assign completion handler to get call back once the block has completed execution.
- *
- */
--(void)startXYZLFUpdateChar
-{
-    [xyzlfModel updateCharacteristicWithHandler:^(BOOL success, NSError *error)
-     {
-         if(success)
-         {
-             //@synchronized(xyzlfModel)
-             //{
-                 // Update and log the data received
-             //}
-         }
-     }];
 }
 
 
@@ -968,8 +919,8 @@
                     /* Read the RSSI level when first connected */
                     [RSSITimer fire];
                     
-                    /* Start the XYZLF char notifying */
-                    [self initXYZLFModel];
+                    /* Start the ride service chars notifying */
+                    [self initRideServiceModel];
                     
                     NSLog(@"Log - Conecting to : %@ %@", selectedBLE.mPeripheral.name, selectedBLE.mPeripheral.identifier);
                 }
