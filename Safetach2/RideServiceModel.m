@@ -223,13 +223,13 @@
     {
         isWriteSuccess = NO ;
         cbWriteCharacteristicHandler(NO,error);
-        NSLog(@"Log - CTRL Write Failed");
+        //NSLog(@"Log - CTRL Write Failed");
     }
     else
     {
         isWriteSuccess = YES ;
         cbWriteCharacteristicHandler(YES,error);
-        NSLog(@"Log - CTRL Write Completed");
+        //NSLog(@"Log - CTRL Write Completed");
     }
 }
 
