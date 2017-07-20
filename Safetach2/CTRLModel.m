@@ -73,12 +73,12 @@
  */
 -(void) writeValueForCTRLchar:(int)ctrlvalue
 {
-    NSLog(@"Log - CTRL Write Value = %d", ctrlvalue);
-    
     /* The value which you want to write */
     uint8_t val = (uint8_t)ctrlvalue;
     NSData  *valData = [NSData dataWithBytes:(void*)&val length:sizeof(val)];
     [[[CBManager sharedManager] myPeripheral] writeValue:valData forCharacteristic:CTRLCharacter type:CBCharacteristicWriteWithoutResponse];
+    
+    NSLog(@"Log - CTRL Write Value = %d", ctrlvalue);
 }
 
 
