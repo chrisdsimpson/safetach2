@@ -39,6 +39,8 @@
 
 #import "RideServiceModel.h"
 #import "CBManager.h"
+#import "DeviceRWData.h"
+
 
 
 /*!
@@ -54,6 +56,7 @@
     void (^cbWriteCharacteristicHandler)(BOOL success, NSError *error);
     CBCharacteristic *xyzlfCharacteristics, *ctrlCharacteristics;
     BOOL isWriteSuccess;
+    DeviceRWData *rwData;
 }
 
 @end
@@ -73,6 +76,10 @@
     
     if (self)
     {
+        /* Create the DeviceRWData class */
+        rwData = [[DeviceRWData alloc] init];
+        
+        /* Start up the characteristics discovery for the ride service */
         [self startDiscoverChar];
     }
     
@@ -195,6 +202,12 @@
         isWriteSuccess = NO;
         
         NSLog(@"Log - CTRL Write Value = %ld", ctrlvalue);
+        
+        if(ctrlvalue == CTRL_RX_TRIGGER || ctrlvalue == CTRL_RX_FREERUN)
+        {
+            /* Create a new ride data file */
+            [rwData createRideDataFile];
+        }
     }
 }
 
@@ -300,8 +313,9 @@
             self.fData = reportData[4];
             
             
-            
-            
+            /* Write a line to the ride data file */
+            [rwData writeLineRideDataFile:xyzlfString];
+                        
             
             
             /* Send the xyzlf data to the main view controller */
