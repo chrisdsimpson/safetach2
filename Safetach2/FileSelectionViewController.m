@@ -274,12 +274,13 @@ static NSString *CellIdentifier = @"FileSelectionCell";
         NSArray *sortedrundatafiles = [sortedFiles valueForKey:@"path"];
     
         /* Create a instance of the ride data file read/write class */
-        DeviceRWData *rwdata = [[DeviceRWData alloc] init];
+        //DeviceRWData *rwdata = [[DeviceRWData alloc] init];
     
         for(NSString *filename in sortedrundatafiles)
         {
             /* Open the file and read the lines */
-            NSArray *lines = [rwdata readLineRideDataFile:filename];
+            NSArray *lines = [[DeviceRWData sharedDeviceRWData] readLineRideDataFile:filename];
+            //NSArray *lines = [rwdata readLineRideDataFile:filename];
   
             /* Get the header line from the ride data file */
             NSString *header = [lines objectAtIndex:0];
@@ -313,7 +314,8 @@ static NSString *CellIdentifier = @"FileSelectionCell";
             }
         
             /* Get the string version of the ride data file date and time */
-            filedatetime = [rwdata getRideDataFileDateTime:filename];
+            filedatetime = [[DeviceRWData sharedDeviceRWData] getRideDataFileDateTime:filename];
+            //filedatetime = [rwdata getRideDataFileDateTime:filename];
         
             /* Add the values to a dictionary */
             NSDictionary *cellvalues = [NSDictionary dictionaryWithObjectsAndKeys:filename, @"key_filename",
