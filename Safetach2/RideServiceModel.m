@@ -360,7 +360,7 @@
             
             NSString *RunDataStr = xyzlfString;
             
-            NSString *ctrlString;
+            NSString *ctrlString = [NSString stringWithFormat:@"%d", 0];
             
             
             /* We are receiving data so reset the packet transfer watchdog */
@@ -918,7 +918,7 @@
                 
                 break;
             }
-                  
+            
             
             
             /* Send the xyzlf data to the main view controller */
