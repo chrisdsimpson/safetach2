@@ -1,3 +1,41 @@
+/*
+ * File Name:	RideServiceModel.m
+ *
+ * Version      1.0.0
+ *
+ * Date:		07/21/2017
+ *
+ * Description:
+ *   This is Bluetooth service model for ride data for the iOS Safetach2 project.
+ *
+ * Notes:
+ *   This class is a port from the cypress cysmart application.
+ *
+ * Related Document:
+ *
+ * Code Tested With:
+ *   1. Xcode 8.2.1
+ *
+ * Author:		Christopher D. Simpson
+ *
+ * Company:		Maxton Manufacturing Company
+ *				1728 Orbit Way
+ *				Minden, NV  89423
+ *				www.maxtonvalve.com
+ *
+ * Copyright (c) 2017 Maxton Manufacturing Company
+ * All rights reserved.
+ * Claim of copyright does not imply waiver of other rights.
+ *
+ * NOTICE OF PROPRIETARY RIGHTS.
+ *
+ * This program is a confidential trade secret and the property of
+ * Maxton Manufacturing Company. Use, examination, reproduction,
+ * disassembly, decompiling, transfer and/or disclosure to others of all
+ * or any part of this software program are strictly prohibited except by
+ * express written agreement with Maxton Manufacturing Company.
+ */
+
 
 #import "RideServiceModel.h"
 #import "CBManager.h"
@@ -22,10 +60,11 @@
 
 @implementation RideServiceModel
 
-@synthesize  redColor;
-@synthesize  greenColor;
-@synthesize  blueColor;
-@synthesize  intensity;
+@synthesize xData;
+@synthesize yData;
+@synthesize zData;
+@synthesize lData;
+@synthesize fData;
 
 
 - (instancetype)init
@@ -246,17 +285,21 @@
         if(([characteristic.UUID isEqual:XYZLF_DATA_CHAR_UUID]) && characteristic.value)
         {
             NSData *data = [characteristic value];
-            const uint8_t *reportData = [data bytes];
+            const uint16_t *reportData = [data bytes];
             
-            self.redColor =  reportData[0];
-            self.greenColor =  reportData[1];
-            self.blueColor =  reportData[2];
-            self.intensity =  reportData[3];
+            self.xData = reportData[0];
+            self.yData = reportData[1];
+            self.zData = reportData[2];
+            self.lData = reportData[3];
+            self.fData = reportData[4];
             
-            NSLog(@"Log - XYZLF Notify value = %@, %@, %@, %@", [NSString stringWithFormat:@"%d",reportData[0]],
-                                                                [NSString stringWithFormat:@"%d",reportData[1]],
-                                                                [NSString stringWithFormat:@"%d",reportData[2]],
-                                                                [NSString stringWithFormat:@"%d",reportData[3]]);
+            
+            
+            NSLog(@"Log - XYZLF Notify value = %@, %@, %@, %@, %@", [NSString stringWithFormat:@"%05d",reportData[0]],
+                                                                    [NSString stringWithFormat:@"%05d",reportData[1]],
+                                                                    [NSString stringWithFormat:@"%05d",reportData[2]],
+                                                                    [NSString stringWithFormat:@"%05d",reportData[3]],
+                                                                    [NSString stringWithFormat:@"%05d",reportData[4]]);
             
             cbCharacteristicHandler(YES,nil);
         }
