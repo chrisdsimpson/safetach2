@@ -70,7 +70,7 @@ NSMutableArray *AudioFREQDatal;
 
 NSMutableArray *RideData;
 
-DeviceRWData *RWData = nil;
+//DeviceRWData *RWData = nil;
 NSUserDefaults *DefaultValues;
 NSTimer *BatteryTimer;
 NSTimer *RSSITimer;

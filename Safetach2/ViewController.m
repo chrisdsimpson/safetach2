@@ -183,7 +183,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotifications:) name:nil object:nil];
     
     /* Create the DeviceRWData class */
-    RWData = [[DeviceRWData alloc] init];
+    //RWData = [[DeviceRWData alloc] init];
     
     
     /* Get handles to all the objects in the view */
