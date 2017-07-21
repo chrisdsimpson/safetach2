@@ -287,6 +287,12 @@
             NSData *data = [characteristic value];
             const uint16_t *reportData = [data bytes];
             
+            NSString *xyzlfString = [NSString stringWithFormat:@"%05d, %05d, %05d, %05d, %05d", reportData[0],
+                                                                                                reportData[1],
+                                                                                                reportData[2],
+                                                                                                reportData[3],
+                                                                                                reportData[4]];
+            
             self.xData = reportData[0];
             self.yData = reportData[1];
             self.zData = reportData[2];
@@ -295,11 +301,14 @@
             
             
             
-            NSLog(@"Log - XYZLF Notify value = %@, %@, %@, %@, %@", [NSString stringWithFormat:@"%05d",reportData[0]],
-                                                                    [NSString stringWithFormat:@"%05d",reportData[1]],
-                                                                    [NSString stringWithFormat:@"%05d",reportData[2]],
-                                                                    [NSString stringWithFormat:@"%05d",reportData[3]],
-                                                                    [NSString stringWithFormat:@"%05d",reportData[4]]);
+            
+            
+            
+            /* Send the xyzlf data to the main view controller */
+            NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:xyzlfString forKey:@"xyzlfvalue"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"XYZLF_TYPE" object:self userInfo:ctrldata];
+            
+            //NSLog(@"Log - XYZLF Notify Value = %@", xyzlfString);
             
             cbCharacteristicHandler(YES,nil);
         }
@@ -309,10 +318,11 @@
             const uint8_t *reportData = [data bytes];
             NSString *ctrlString = [NSString stringWithFormat:@"%d",reportData[0]];
             
+            /* Send the ctrl data to the main view controller */
             NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
+            
             //NSLog(@"Log - CTRL Notify Value = %@", ctrlString);
-            //NSLog(@"Log - CTRL Notify Value = %@", [NSString stringWithFormat:@"%d",reportData[0]]);
             
             cbCharacteristicHandler(YES,nil);
         }
