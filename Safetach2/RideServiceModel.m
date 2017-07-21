@@ -77,7 +77,7 @@
     if (self)
     {
         /* Create the DeviceRWData class */
-        rwData = [[DeviceRWData alloc] init];
+        //rwData = [[DeviceRWData alloc] init];
         
         /* Start up the characteristics discovery for the ride service */
         [self startDiscoverChar];
@@ -206,7 +206,8 @@
         if(ctrlvalue == CTRL_RX_TRIGGER || ctrlvalue == CTRL_RX_FREERUN)
         {
             /* Create a new ride data file */
-            [rwData createRideDataFile];
+            [[DeviceRWData sharedDeviceRWData] createRideDataFile];
+            //[rwData createRideDataFile];
         }
     }
 }
@@ -314,7 +315,8 @@
             
             
             /* Write a line to the ride data file */
-            [rwData writeLineRideDataFile:xyzlfString];
+            [[DeviceRWData sharedDeviceRWData] writeLineRideDataFile:xyzlfString];
+            //[rwData writeLineRideDataFile:xyzlfString];
                         
             
             
