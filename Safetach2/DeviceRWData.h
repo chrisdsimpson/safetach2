@@ -51,6 +51,8 @@
 @property (nonatomic, retain) NSString *FileName;
 @property (nonatomic, retain) NSString *FilePath;
 
++(instancetype)sharedDeviceRWData;
+
 -(NSString *) getDocumentsDirectory;
 -(void) writeToStringFile:(NSMutableString *)textToWrite;
 -(NSString *) readFromFile;

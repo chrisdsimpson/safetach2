@@ -39,10 +39,25 @@
 #import "Constants.h"
 
 @implementation DeviceRWData
+
+
 @synthesize FileManager;
 @synthesize HomeDir;
 @synthesize FileName;
 @synthesize FilePath;
+
+
++(instancetype)sharedDeviceRWData
+{
+    static DeviceRWData *sharedInstance = nil;
+    
+    if(!sharedInstance)
+    {
+        sharedInstance = [[DeviceRWData alloc] init];
+    }
+    
+    return sharedInstance;
+}
 
 
 -(NSString *) setFileName
