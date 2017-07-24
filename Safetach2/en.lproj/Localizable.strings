@@ -59,3 +59,4 @@
 
 "battery_low" = "Safetach2 Node Battery Low";
 "connection_weak" = "Safetach2 Node Connection Weak";
+"capture_error" = "Safetach2 Node Data Capture Error";
