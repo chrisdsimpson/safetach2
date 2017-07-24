@@ -53,6 +53,10 @@
     DevieInformationModel *deviceInfoModel;
     BatteryServiceModel *batteryModel;
     RideServiceModel *rideserviceModel;
+    int RunState;
+    NSTimer *TransferRunTimer;
+    BOOL HeaderMessageSendFlag;
+    BOOL ReadDataFlag;
 }
 
 @end
@@ -128,14 +132,371 @@
         NSString *line = [data objectForKey:@"ctrlvalue"];
         NSLog(@"Log - CTRL Notify Value = %@", line);
         
-        
-        
+        /* Switch on the CTRL data command responses and messages */
+        switch([line integerValue])
+        {
+            /* Response from the node (server) that the CTRL_RX_PROGRAM command was received */
+            case CTRL_RX_PROGRAM:
+                
+                NSLog(@"Debug - Program command response received from server");
+                
+            break;
+                
+            /* Message from the node (server) that the unit is in warm up mode */
+            case CTRL_TX_WARMUP:
+                /* During this state the node (server) can NOT request that a run be started */
+             break;
+                
+            /* Message from the node (server) that the unit isn in idle mode */
+            case CTRL_TX_IDLE:
+                
+            break;
+                
+            /* Message from the node (server) that it is waiting for a trigger event */
+            case CTRL_TX_ARMED:
+                
+                if(RunState != RUN_STATE_IDLE)
+                {
+                    
+                    
+                }
+                
+            break;
+                
+            /* Message from the node (server) that a run trigger event was fired */
+            case CTRL_TX_TRIGGERED:
+                
+                //Toast.makeText(getApplicationContext(), "CTRL_TX_TRIGGERED message received", Toast.LENGTH_SHORT).show();
+                
+                RunState = RUN_STATE_CAPTURE;
+                //showUpDownCall(false);
+                //FadeSpinnerView(true);
+                
+                /* Start the packet capture watchdog timer */
+                [self resetPacketTransferWatchdog:WATCHDOG_CAPTURE_TIMEOUT];
+                
+            break;
+                
+            /* Message from the node (server) that the packet is ready to send */
+            case CTRL_TX_PACKETREADY:
+                
+                /*
+                 * If the client was in the middle of a run and connection was lost and the regained
+                 * and the node state was packet ready then request that it be resent.
+                 */
+                if(RunState != RUN_STATE_IDLE && RunState != RUN_STATE_ERROR)
+                {
+                    /* Send the command to resend the run packet */
+                    if(HeaderMessageSendFlag == false)
+                    {
+                        [rideserviceModel writeValueForCTRL:CTRL_RX_PACKETHEADERSEND With:^(BOOL success, NSError *error)
+                        {
+                            if(success)
+                            {
+                                //NSLog(@"Log = Write success");
+                            }
+                        }];
+                        
+                        HeaderMessageSendFlag = true;
+                    }
+                }
+                else if(RunState == RUN_STATE_ERROR /* || RunState == RUN_STATE_IDLE */)
+                {
+                    /* Hide the run type label text */
+                    //showRunType(false);
+                    
+                    /* If there is a valid packet on the node make it available for download */
+                    //ImageButtonPacketDownload.setVisibility(View.VISIBLE);
+                }
+                
+                
+            break;
+                
+            /* Message from the node (server) that the packet was sent correctly */
+            case CTRL_TX_PACKETSENT:
+                
+            break;
+                
+            /* Response from the node (Server) that the CTRL_RX_FREERUN command was received */
+            case CTRL_RX_FREERUN:
+                
+                //Toast.makeText(getApplicationContext(), "CTRL_RX_FREERUN command received", Toast.LENGTH_SHORT).show();
+                
+                RunState = RUN_STATE_CAPTURE;
+                
+                //ImageButton6.setBackgroundColor(ColorRed);
+                //blinkImage(ImageButton6, false);
+                
+                /* Show the cancel button */
+                //ImageButtonCancel.setVisibility(View.VISIBLE);
+                
+                /* Disable the menu buttons */
+                //ImageButton1.setEnabled(false);
+                //ImageButton2.setEnabled(false);
+                //ImageButton3.setEnabled(false);
+                //ImageButton4.setEnabled(false);
+                //ImageButton5.setEnabled(false);
+                
+                //ImageButtonPacketDownload.setVisibility(View.GONE);
+                
+                //showErrorIco(false);
+                [self onHomePressed];
+                
+                //showMeasuredValues(false);
+                //clearGraph();
+                //FadeSpinnerView(true);
+                
+                /* Show the run type label text */
+                //showRunType(true);
+                
+                ReadDataFlag = true;
+                
+            break;
+                
+            /* Response from the node (server) that the CTRL_RX_TRIGGER command was received */
+            case CTRL_RX_TRIGGER:
+                
+                //Toast.makeText(getApplicationContext(), "CTRL_RX_TRIGGER command received", Toast.LENGTH_SHORT).show();
+                
+                RunState = RUN_STATE_TRIGGER;
+                
+                
+                //ImageButton6.setBackgroundColor(ColorRed);
+                //blinkImage(ImageButton6, false);
+                
+                /* Show the cancel button */
+                //ImageButtonCancel.setVisibility(View.VISIBLE);
+                
+                /* Disable the menu buttons */
+                //ImageButton1.setEnabled(false);
+                //ImageButton2.setEnabled(false);
+                //ImageButton3.setEnabled(false);
+                //ImageButton4.setEnabled(false);
+                //ImageButton5.setEnabled(false);
+                
+                //ImageButtonPacketDownload.setVisibility(View.GONE);
+                
+                //showErrorIco(false);
+                [self onHomePressed];
+                //showMeasuredValues(false);
+                //clearGraph();
+                //showUpDownCall(true);
+                
+                /* Show the run type label text */
+                //showRunType(true);
+                
+                ReadDataFlag = false;
+                
+                /* Start the packet transfer watchdog timer */
+                [self resetPacketTransferWatchdog:WATCHDOG_TRIGGER_TIMEOUT];
+                
+                HeaderMessageSendFlag = false;
+                
+            break;
+                
+            /* Response from the node (Server) that the CTRL_RX_STOP command was received */
+            case CTRL_RX_STOP:
+                
+                //Toast.makeText(getApplicationContext(), "CTRL_RX_STOP command received", Toast.LENGTH_SHORT).show();
+                
+                ReadDataFlag = false;
+                RunState = RUN_STATE_TRANSFER;
+                //ImageButton6.setBackgroundColor(ColorGrey);
+                //ImageButton6.setEnabled(false);
+                
+                /* Hide the cancel button */
+                //ImageButtonCancel.setVisibility(View.GONE);
+                
+                /* Start the packet transfer watchdog timer */
+                [self resetPacketTransferWatchdog:WATCHDOG_TRANSFER_TIMEOUT];
+                
+            break;
+                
+            /* Response from node (server) that the CTRL_RX_PACKETRESEND command was received */
+            case CTRL_RX_PACKETRESEND:
+                
+                if(RunState == RUN_STATE_IDLE)
+                {
+                    /* Set the state to transferring the packet */
+                    RunState = RUN_STATE_TRANSFER;
+                    
+                    //showMeasuredValues(false);
+                    //clearGraph();
+                    //FadeSpinnerView(true);
+                }
+                
+                /* Once the resend request is received hide the button */
+                //ImageButtonPacketDownload.setVisibility(View.GONE);
+                
+                /* Show the run type label text */
+                //showRunType(true);
+                
+            break;
+                
+            /* Response from node (server) that the CTRL_RX_REPORT command was received */
+            case CTRL_RX_REPORT:
+                
+                //NSLog(@"Debug - Report message received from server");
+                
+            break;
+                
+            /* Response from the node that the capture/transfer was canceled */
+            case CTRL_RX_CANCEL:
+                
+                //Toast.makeText(getApplicationContext(), "CTRL_RX_CANCEL received", Toast.LENGTH_SHORT).show();
+                
+                /* Reset the packet transfer state */
+                [rideserviceModel resetPacketTransfer];
+                
+                //NSLog(@"Debug - Cancel message received from server");
+                
+            break;
+                
+            /* Message from the node (server) that the capture had an error */
+            case CTRL_TX_CAPTUREERROR:
+                
+                if(RunState != RUN_STATE_IDLE)
+                {
+                    [self.view makeToast:[NSString stringWithFormat:@"%@", LOCALIZEDSTRING(@"capture_error")]];
+                    
+                    RunState = RUN_STATE_ERROR;
+                    
+                    /* Cancel the packet transfer watchdog timer */
+                    [self cancelPacketTransferWatchdog];
+                    
+                    //showUpDownCall(false);
+                    //FadeSpinnerView(false);
+                    //showErrorIco(true);
+                    
+                    //ImageButton6.setEnabled(true);
+                    //ImageButton6.setBackgroundColor(ColorRed);
+                    
+                    /* Hide the cancel button */
+                    //ImageButtonCancel.setVisibility(View.GONE);
+                    
+                    /* Re enable the menu buttons */
+                    //ImageButton1.setEnabled(true);
+                    //ImageButton2.setEnabled(true);
+                    //ImageButton3.setEnabled(true);
+                    //ImageButton4.setEnabled(true);
+                    //ImageButton5.setEnabled(true);
+                    
+                    NSLog(@"Error - Node unable to capture run packet data");
+                }
+                
+            break;
+                
+            /* Internal response from the BluetoothLeService service that the packet was received and processed correctly */
+            case CTRL_INT_PACKET_COMPLETE:
+                
+                //Toast.makeText(getApplicationContext(), "CTRL_INT_PACKET_COMPLETE received", Toast.LENGTH_SHORT).show();
+                
+                /* Cancel the packet transfer watchdog timer */
+                [self cancelPacketTransferWatchdog];
+                
+                //FadeSpinnerView(false);
+                //showErrorIco(false);
+                //showUpDownCall(false);
+                //clearDisplayValues();
+                //ImageButton6.setEnabled(true);
+                
+                
+                //ImageButton6.setBackgroundColor(ColorGreen);
+                
+                /* Hide the cancel button */
+                //ImageButtonCancel.setVisibility(View.GONE);
+                
+                /* Re enable the menu buttons */
+                //ImageButton1.setEnabled(true);
+                //ImageButton2.setEnabled(true);
+                //ImageButton3.setEnabled(true);
+                //ImageButton4.setEnabled(true);
+                //ImageButton5.setEnabled(true);
+                
+                /* Only process the run if we are in a active run state */
+                if(RunState != RUN_STATE_IDLE)
+                {
+                    RunState = RUN_STATE_IDLE;
+                    /* Get the current ride data */
+                    //RideData = new ProcessRideData(getApplicationContext());
+                    
+                    [self onHomePressed];
+                    
+                    //showMeasuredValues(true);
+                    
+                    /* Update the action menu title */
+                    //getActionBar().setTitle(getResources().getString(R.string.title_activity_run_name) + DeviceRWData.getRideDataFileDateTime(DeviceRWData.getRideDataFileName()));
+                    
+                    /* Build the file list and load up the newest run file at startup */
+                    //String filename = DeviceRWData.getNextRideDataFile(DeviceRWData.FILE_MODE_NEW, DeviceRWData.RECORD_RESET);
+                }
+                
+            break;
+                
+            /* Internal response from the RideServiceModel service that the packet was not processed correctly */
+            case CTRL_INT_PACKET_ERROR:
+                
+                //Toast.makeText(getApplicationContext(), "CTRL_INT_PACKET_ERROR received", Toast.LENGTH_SHORT).show();
+                
+                RunState = RUN_STATE_ERROR;
+                
+                /* Cancel the packet transfer watchdog timer */
+                [self cancelPacketTransferWatchdog];
+                
+                //showUpDownCall(false);
+                //FadeSpinnerView(false);
+                //showErrorIco(true);
+                
+                //ImageButton6.setEnabled(true);
+                //ImageButton6.setBackgroundColor(ColorRed);
+                
+                /* Hide the cancel button */
+                //ImageButtonCancel.setVisibility(View.GONE);
+                
+                /* Re enable the menu buttons */
+                //ImageButton1.setEnabled(true);
+                //ImageButton2.setEnabled(true);
+                //ImageButton3.setEnabled(true);
+                //ImageButton4.setEnabled(true);
+                //ImageButton5.setEnabled(true);
+                
+                NSLog(@"Error - Unable to retrieve node run packet data");
+                
+            break;
+                
+            /* Internal response from from BluetoothLeService to reset the packet transfer watchdog */
+            case CTRL_INT_PACKET_WD_RESET:
+                
+                [self resetPacketTransferWatchdog:WATCHDOG_TRANSFER_TIMEOUT];
+            
+            break;
+                
+            /* Internal response from from BluetoothLeService to cancel the packet transfer watchdog */
+            case CTRL_INT_PACKET_WD_CANCEL:
+                
+                [self cancelPacketTransferWatchdog];
+            
+            break;
+                
+            /* Internal message for the BluetoothLeServcie to report packet transfer status */
+            case CTRL_INT_PACKET_TRANSFER:
+                
+                //NSString *percent = intent.getStringExtra("transferpercent");
+                //XferPercent.setText(percent + "%");
+                
+            break;
+        }
+     
     }
     else if([[notification name] isEqualToString:@"XYZLF_TYPE"])
     {
         NSDictionary *data = notification.userInfo;
         NSString *line = [data objectForKey:@"xyzlfvalue"];
-        NSLog(@"Log - XYZLF Notify Value = %@", line);
+        
+        if(DEBUG_DISPLAY_INFO)
+        {
+            NSLog(@"Log - XYZLF Notify Value = %@", line);
+        }
         
         
         
@@ -240,6 +601,11 @@
    
     /* Set the bluetooth button to disconnected */
     self.BluetoothMenuButton.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_bluetooth_disabled_black_24pt"]];
+    
+    /* Set the inital run state vars and flags */
+    RunState = RUN_STATE_IDLE;
+    HeaderMessageSendFlag = false;
+    ReadDataFlag = false;
     
     /* Set the startup screen to the home screen */
     [self onHomePressed];
@@ -868,6 +1234,12 @@
 }
 
 
+/*!
+ *  @method connectPeripheral:name
+ *
+ *  @discussion Method to Discover to connect to the node.
+ *
+ */
 -(void)connectPeripheral:(NSString *)name
 {
     CBPeripheralExt *selectedBLE;
@@ -974,6 +1346,67 @@
                 }
             }];
         }
+    }
+}
+
+
+/*!
+ *  @method onWatchdogTimedout:timer
+ *
+ *  @discussion Method will be called when the watchdog timer fires.
+ *
+ */
+-(void)onWatchdogTimedout:(NSTimer *)timer
+{
+    /* Cancel the packet transfer here */
+    RunState = RUN_STATE_ERROR;
+    
+    //showUpDownCall(false);
+    
+    //FadeSpinnerView(false);
+    
+    //showErrorIco(true);
+    
+    //ImageButton6.setEnabled(true);
+    //ImageButton6.setBackgroundColor(ColorRed);
+    
+    NSLog(@"Error - WatchDog timeout during retrieval of node run packet data");
+}
+
+
+/*!
+ *  @method resetPacketTransferWatchdog:timeout
+ *
+ *  @discussion Method will start the packet transfer watchdog timer the given timeout period.
+ *
+ */
+-(void)resetPacketTransferWatchdog:(long)timeout
+{
+    if(TransferRunTimer != nil)
+    {
+        [TransferRunTimer invalidate];
+        TransferRunTimer = nil;
+    }
+    
+    if(TransferRunTimer == nil)
+    {
+        TransferRunTimer = [NSTimer scheduledTimerWithTimeInterval:timeout target:self selector:@selector(onWatchdogTimedout) repeats:NO];
+    }
+}
+
+
+/*!
+ *  @method cancelPacketTransferWatchdog
+ *
+ *  @discussion Method will cencelthe packet transfer watchdog timer.
+ *
+ */
+-(void)cancelPacketTransferWatchdog
+{
+    if(TransferRunTimer != nil)
+    {
+        [TransferRunTimer invalidate];
+        TransferRunTimer = nil;
     }
 }
 
