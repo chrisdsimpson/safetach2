@@ -70,6 +70,18 @@
 #define FILE_LISTING_MODE_EDIT                 1
 #define FILE_LISTING_MODE_REPORT               2
 
+/* Application run state */
+#define RUN_STATE_IDLE                         1
+#define RUN_STATE_TRIGGER                      2
+#define RUN_STATE_CAPTURE                      3
+#define RUN_STATE_TRANSFER                     4
+#define RUN_STATE_ERROR                        5
+
+/* Node data capture and xfer watchdog timers */
+#define WATCHDOG_TRIGGER_TIMEOUT               180000 /* 3 minutes */
+#define WATCHDOG_CAPTURE_TIMEOUT               120000 /* 2 minutes */
+#define WATCHDOG_TRANSFER_TIMEOUT              120000 /* 2 minutes */
+
 /* Ride data packet transfer states */
 #define PACKET_STATE_IDLE                      0
 #define PACKET_STATE_GET_HEADER                1
@@ -170,6 +182,73 @@
 #define CUSTOM_BOOT_LOADER_SERVICE_UUID        [CBUUID UUIDWithString:@"00060000-F8CE-11E4-ABF4-0002A5D5C51B"]
 #define BOOT_LOADER_CHARACTERISTIC_UUID        [CBUUID UUIDWithString:@"00060001-F8CE-11E4-ABF4-0002A5D5C51B"]
 
+/* Ride data file processing constants */
+#define READY_STATE                            0
+#define START_STATE                            1
+#define ACCEL_STATE                            2
+#define HISPEED_STATE                          3
+#define DECEL_STATE                            4
+#define LVSPEED_STATE                          5
+#define STOP_STATE                             6
+#define FINISH_STATE                           7
+
+#define RIDE_TYPE_NONE                         0
+#define RIDE_TYPE_HYDRO                        1
+#define RIDE_TYPE_TRACTION                     2
+#define RIDE_TYPE_SLOWSPEED                    3
+
+#define RIDE_DIRECTION_UP                      1
+#define RIDE_DIRECTION_DOWN                    0
+
+#define RIDE_MODE_TRIGGERED                    0
+#define RIDE_MODE_FREERUN                      1
+
+/* Color ranges for the run */
+#define HYDRO_LV_BELOW_BOTTOM                  8.0
+#define HYDRO_LV_BELOW_TOP                     8.0
+#define HYDRO_LV_ABOVE_BOTTOM                  12.0
+#define HYDRO_LV_ABOVE_TOP                     12.0
+
+#define HYDRO_LT_BELOW_BOTTOM                  2.0
+#define HYDRO_LT_BELOW_TOP                     3.0
+#define HYDRO_LT_ABOVE_BOTTOM                  4.0
+#define HYDRO_LT_ABOVE_TOP                     5.0
+
+#define HYDRO_JERK_ABOVE                       0.6
+#define HYDRO_JERK_BELOW                       0.4
+
+#define HYDRO_SA_BELOW_BOTTOM                  0.00
+#define HYDRO_SA_BELOW_TOP                     0.01
+#define HYDRO_SA_ABOVE_BOTTOM                  0.07
+#define HYDRO_SA_ABOVE_TOP                     0.08
+
+#define HYDRO_HA_BELOW_BOTTOM                  0.01
+#define HYDRO_HA_BELOW_TOP                     0.02
+#define HYDRO_HA_ABOVE_BOTTOM                  0.07
+#define HYDRO_HA_ABOVE_TOP                     0.08
+
+#define HYDRO_DA_BELOW_BOTTOM                  0.01
+#define HYDRO_DA_BELOW_TOP                     0.02
+#define HYDRO_DA_ABOVE_BOTTOM                  0.07
+#define HYDRO_DA_ABOVE_TOP                     0.08
+
+#define HYDRO_LA_BELOW_BOTTOM                  0.00
+#define HYDRO_LA_BELOW_TOP                     0.01
+#define HYDRO_LA_ABOVE_BOTTOM                  0.03
+#define HYDRO_LA_ABOVE_TOP                     0.04
+
+#define HYDRO_XA_ABOVE                         0.04
+#define HYDRO_XA_BELOW                         0.03
+
+#define HYDRO_YA_ABOVE                         0.04
+#define HYDRO_YA_BELOW                         0.03
+
+#define HYDRO_SPL_ABOVE                        85.0
+#define HYDRO_SPL_BELOW                        80.0
+
+#define RANGE_OK                               0
+#define RANGE_LOW                              1
+#define RANGE_HI                               2
 
 
 /* User default keys and default values */
