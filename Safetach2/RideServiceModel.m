@@ -94,7 +94,7 @@
         //rwData = [[DeviceRWData alloc] init];
         
         /* Init all vars */
-        PacketState = PACKET_STATE_IDLE;
+        PacketState = PACKET_STATE_DATA_REALTIME;
         NumSamplesSent = 0;
         NumSamples = 0;
         SampleCount = 0;
@@ -247,13 +247,6 @@
         isWriteSuccess = NO;
         
         NSLog(@"Log - CTRL Write Value = %ld", ctrlvalue);
-        
-        //if(ctrlvalue == CTRL_RX_TRIGGER || ctrlvalue == CTRL_RX_FREERUN)
-        //{
-            /* Create a new ride data file */
-            //[[DeviceRWData sharedDeviceRWData] createRideDataFile];
-            //[rwData createRideDataFile];
-        //}
     }
 }
 
@@ -271,6 +264,20 @@
 {
     if([service.UUID isEqual:RIDE_QUALITY_DATA_SERVICE_UUID])
     {
+        
+        /* If the node connection was lost during packet transfer request the packet be resent */
+        if(PacketXferInProgress == true)
+        {
+            /* Set the packet state to watch for the header after the node connection */
+            PacketState = PACKET_STATE_GET_HEADER;
+        }
+        else
+        {
+            /* If no transfer is in progress reset the capture state to default */
+            PacketState = PACKET_STATE_DATA_REALTIME;
+        }
+       
+        
         for(CBCharacteristic *aChar in service.characteristics)
         {
             if([aChar.UUID isEqual:XYZLF_DATA_CHAR_UUID])
@@ -360,10 +367,10 @@
             
             NSString *RunDataStr = xyzlfString;
             
-            NSString *ctrlString = [NSString stringWithFormat:@"%d", 0];
-            
-            
             /* We are receiving data so reset the packet transfer watchdog */
+            NSString *ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_WD_RESET];
+            NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
             //resetWatchDog();
             
             /* We are receiving data so set the packet transfer flag to true */
@@ -458,7 +465,9 @@
                             }];
                             
                             /* Notify the main activity that the run data file is ready to process */
-                            ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_COMPLETE];
+                            NSString *ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_COMPLETE];
+                            NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
                             
                             NSLog(@"Debug - Packet received realtime OK");
                         }
@@ -615,7 +624,9 @@
                             PacketXferInProgress = false;
                             
                             /* Notify the main activity that the run data file header transfer failed */
-                            ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_ERROR];
+                            NSString *ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_ERROR];
+                            NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
                             
                             NSLog(@"Debug - Error Packet header not received (1) (Retries timed out)");
                         }
@@ -694,8 +705,10 @@
                             }];
                            
                             /* Notify the main activity that the run data file is ready to process */
-                            ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_COMPLETE];
-
+                            NSString *ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_COMPLETE];
+                            NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
+                            
                             /*
                              * After the packet is received and written to the run data file reset
                              * the packet state to watch for the next run packet.
@@ -730,7 +743,9 @@
                                 PacketXferPauseFlag = false;
                                 
                                 /* Notify the main activity that the run data file transfer failed */
-                                ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_ERROR];
+                                NSString *ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_ERROR];
+                                NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
                                 
                                 NSLog(@"Debug - Error Packet not received (2) (Retries timed out)");
                             }
@@ -797,8 +812,10 @@
                                 }];
                                 
                                 /* Notify the main activity that the run data file is ready to process */
-                                ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_COMPLETE];
-                               
+                                NSString *ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_COMPLETE];
+                                NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
+                                
                                 /*
                                  * After the packet is rebuilt and written to the run data file reset
                                  * the packet state to watch for the next run packet.
@@ -857,7 +874,9 @@
                             PacketXferInProgress = false;
                             
                             /* Notify the main activity that the run data file transfer failed */
-                            ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_ERROR];
+                            NSString *ctrlString = [NSString stringWithFormat:@"%d", CTRL_INT_PACKET_ERROR];
+                            NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
                             
                             NSLog(@"Debug - Error Packet not received (3) (Retries timed out)");
                         }
@@ -896,7 +915,10 @@
                         }
                         
                         /* Notify the main activity the percent of the current run packet transfer received */
-                        ctrlString = [NSString stringWithFormat:@"%d %d", CTRL_INT_PACKET_TRANSFER, percentreceived];
+                        NSString *ctrlString = [NSString stringWithFormat:@"%d %d", CTRL_INT_PACKET_TRANSFER, percentreceived];
+                        NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
+                        
                         //intent.putExtra(EXTRA_DATA_TYPE, CTRL_TYPE.toString());
                         //intent.putExtra(EXTRA_DATA, String.valueOf(DeviceControlActivity.CTRL_INT_PACKET_TRANSFER));
                         //intent.putExtra("transferpercent", String.valueOf(percentreceived));
@@ -920,15 +942,9 @@
             }
             
             
-            
             /* Send the xyzlf data to the main view controller */
             NSDictionary *xyzlfdata = [NSDictionary dictionaryWithObject:xyzlfString forKey:@"xyzlfvalue"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"XYZLF_TYPE" object:self userInfo:xyzlfdata];
-            
-            /* Send the CTRL data to the main view controller */
-            NSDictionary *ctrldata = [NSDictionary dictionaryWithObject:ctrlString forKey:@"ctrlvalue"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CTRL_TYPE" object:self userInfo:ctrldata];
-            
             
             //NSLog(@"Log - XYZLF Notify Value = %@", xyzlfString);
             

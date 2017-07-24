@@ -41,6 +41,15 @@
 
 @interface RideServiceModel : NSObject
 
+
+/*!
+ *  @method resetPacketrTransfer
+ *
+ *  @discussion Resets the state of the packet transfer.
+ */
+-(void)resetPacketTransfer;
+
+
 /*!
  *  @method updateCharacteristicWithHandler:
  *
