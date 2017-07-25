@@ -6,10 +6,7 @@
  * Date:		07/24/2017
  *
  * Description:
- *   This is Bluetooth service model for ride data for the iOS Safetach2 project.
- *
- * Notes:
- *   This class is a port from the cypress cysmart application.
+ *   This is class that processes the data from the ride data file for the iOS Safetach2 project.
  *
  * Related Document:
  *
@@ -159,13 +156,17 @@
     int HiAccelerationMGRange;
     int DecelAccelerationMGRange;
     int StopAccelerationMGRange;
+    
+    NSString *JobRef;
+    NSString *ElevatorType;
+    NSString *ElevatorNum;
+    NSString *UserName;
+    NSString *Notes;
 }
 
 @end
 
 @implementation ProcessRideData
-
-@synthesize xData;
 
 
 - (instancetype)init
@@ -233,11 +234,20 @@
         HiAccelerationMGRange = RANGE_OK;
         DecelAccelerationMGRange = RANGE_OK;
         StopAccelerationMGRange = RANGE_OK;
+        
+        
+        /* Load the ride data */
+        [self loadRideData];
+        
+        /* Set the color ranges for the run */
+        [self setRideDataColor];
+        
+        /* Set the speed range for the run */
+        [self setRideDataRange];
     }
     
     return self;
 }
-
 
 
 /* Getters and setters for necessary class vars */
@@ -397,1192 +407,1106 @@
     return HiAcceleration;
 }
 
-    public String getDecelAccelerationStr()
-    {
-        return String.format("%.02f", DecelAcceleration);
-    }
-
-    public String getDecelAccelerationMGStr()
-    {
-        return String.format("%.0f", DecelAcceleration * 1000);
-    }
-
-    public double getDecelAcceleration()
-    {
-        return DecelAcceleration;
-    }
-
-    public void setDecelAcceleration(double Acceleration)
-    {
-        DecelAcceleration = Acceleration;
-    }
-
-    public String getStopAccelerationStr()
-    {
-        return String.format("%.02f", StopAcceleration);
-    }
-
-    public String getStopAccelerationMGStr()
-    {
-        return String.format("%.0f", StopAcceleration * 1000);
-    }
-
-    public double getStopAcceleration()
-    {
-        return StopAcceleration;
-    }
-
-    public void setStopAcceleration(double Acceleration)
-    {
-        StopAcceleration = Acceleration;
-    }
-
-    public String getTotalRunTimeStr()
-    {
-        return String.format("%.01f", TotalRunTime);
-    }
-
-    public double getTotalRunTime()
-    {
-        return TotalRunTime;
-    }
-
-    public void setTotalRunTime(double Time)
-    {
-        TotalRunTime = Time;
-    }
-
-    public String getJerkVelocityIMPStr()
-    {
-        return String.format("%.02f", JerkVelocityIMP);
-    }
-
-    public double getJerkVelocityIMP()
-    {
-        return JerkVelocityIMP;
-    }
-
-    public void setJerkVelocityIMP(double Velocity)
-    {
-        JerkVelocityIMP = Velocity;
-    }
-
-    public String getJerkVelocityMETStr()
-    {
-        return String.format("%.02f", JerkVelocityMET);
-    }
-
-    public double getJerkVelocityMET()
-    {
-        return JerkVelocityMET;
-    }
-
-    public void setJerkVelocityMET(double Velocity)
-    {
-        JerkVelocityMET = Velocity;
-    }
-
-    public void setPeakStartJerkIMP(double Jerk)
-    {
-        PeakStartJerkIMP = Jerk;
-    }
-
-    public double getPeakStartJerkIMP()
-    {
-        return PeakStartJerkIMP;
-    }
-
-    public String getPeakStartJerkIMPStr()
-    {
-        return String.format("%.02f", PeakStartJerkIMP);
-    }
-
-    public double getMaxZJerk()
-    {
-        return MaxZJerk;
-    }
-
-    public String getMaxZJerkStr()
-    {
-        return String.format("%.02f", MaxZJerk);
-    }
-
-    public double getMinZJerk()
-    {
-        return MinZJerk;
-    }
-
-    public String getMinZJerkStr()
-    {
-        return String.format("%.02f", MinZJerk);
-    }
-
-    public void setMaxZJerk(double Jerk)
-    {
-       MaxZJerk = Jerk;
-    }
-
-    public String getHiXAccelerationStr()
-    {
-        return String.format("%.02f", HiXAcceleration * 0.001);
-    }
-
-    public String getHiXAccelerationMGStr()
-    {
-        return String.format("%.0f", HiXAcceleration);
-    }
-
-    public double getHiXAcceleration()
-    {
-        return HiXAcceleration;
-    }
-
-    public void setHiXAcceleration(double Acceleration)
-    {
-        HiXAcceleration = Acceleration;
-    }
-
-    public String getHiYAccelerationStr()
-    {
-        return String.format("%.02f", HiYAcceleration * 0.001);
-    }
-
-    public String getHiYAccelerationMGStr()
-    {
-        return String.format("%.0f", HiYAcceleration);
-    }
-
-    public double getHiYAcceleration()
-    {
-        return HiYAcceleration;
-    }
-
-    public void setHiYAcceleration(double Acceleration)
-    {
-        HiYAcceleration = Acceleration;
-    }
-
-    public double getMaxSPLdBValue()
-    {
-        return MaxSPLdBValue;
-    }
-
-    public String getMaxSPLdBValueStr()
-    {
-        return String.format("%.0f", MaxSPLdBValue);
-    }
-
-    public void setMaxSPLdBValue(double SPLdBValue)
-    {
-        MaxSPLdBValue = SPLdBValue;
-    }
-
-    public double getMaxSPLFrequency()
-    {
-        return MaxSPLFrequency;
-    }
-
-    public String getMaxSPLFrequencyStr()
-    {
-        return String.format("%.0f", MaxSPLFrequency);
-    }
-
-    public void setMaxSPLFrequency(double SPLFrequency)
-    {
-        MaxSPLFrequency = SPLFrequency;
-    }
-
-    public int getRunLength()
-    {
-        return RunLength;
-    }
-
-    public boolean getRunDirectionUp()
-    {
-        return RunDirectionUp;
-    }
-
-    public int getRideMode()
-    {
-        return RideMode;
-    }
-
-    public int getRideDirection()
-    {
-        return RideDirection;
-    }
-
-    public int getRideSize()
-    {
-        return RideSize;
-    }
-
-    public int getRideType()
-    {
-        return RideType;
-    }
-
-    public int getRideId()
-    {
-        return RideId;
-    }
-
-    public Date getRideDate()
-    {
-        return RideDate;
-    }
-
-    public double getXCalibrationVal()
-    {
-        return XCalibrationVal;
-    }
-
-    public double getYCalibrationVal()
-    {
-        return YCalibrationVal;
-    }
-
-    public double getZCalibrationVal()
-    {
-        return ZCalibrationVal;
-    }
-
-    public double getMinX()
-    {
-        return MinX;
-    }
-
-    public double getMaxX()
-    {
-        return MaxX;
-    }
-
-    public double getMinY()
-    {
-        return MinY;
-    }
-
-    public double getMaxY()
-    {
-        return MaxY;
-    }
-
-    public double getMinZ()
-    {
-        return MinZ;
-    }
-
-    public double getMaxZ()
-    {
-        return MaxZ;
-    }
-
-    public double getMinZVelocityIMP()
-    {
-        return MinZVelocityIMP;
-    }
-
-    public double getMaxZVelocityIMP()
-    {
-        return MaxZVelocityIMP;
-    }
-
-    public double getMinZVelocityMET()
-    {
-        return MinZVelocityMET;
-    }
-
-    public double getMaxZVelocityMET()
-    {
-        return MaxZVelocityMET;
-    }
-
-    public String getJobRef()
-    {
-        return JobRef;
-    }
-
-    public void setJobRef(String str)
-    {
-        JobRef = str;
-    }
-
-    public String getElevatorNum()
-    {
-        return ElevatorNum;
-    }
-
-    public void setElevatorNum(String str)
-    {
-        ElevatorNum = str;
-    }
-
-    public String getElevatorType()
-    {
-        return ElevatorType;
-    }
-
-    public void setElevatorType(String str)
-    {
-        ElevatorType = str;
-    }
-
-    public String getUserName()
-    {
-        return UserName;
-    }
-
-    public void setUserName(String str)
-    {
-        UserName = str;
-    }
-
-    public String getNotes()
-    {
-        return Notes;
-    }
-
-    public void setNotes(String str)
-    {
-        Notes = str;
-    }
-
-    public int getHiSpeedVelocityColor()
-    {
-        return HiSpeedVelocityColor;
-    }
-
-    public int getHiSpeedTimeColor()
-    {
-        return HiSpeedTimeColor;
-    }
-
-    public int getLvSpeedVelocityColor()
-    {
-        return LvSpeedVelocityColor;
-    }
-
-    public int getLvSpeedTimeColor()
-    {
-        return LvSpeedTimeColor;
-    }
-
-    public int getStartAccelerationColor()
-    {
-        return StartAccelerationColor;
-    }
-
-    public int getStartAccelerationMGColor()
-    {
-        return StartAccelerationMGColor;
-    }
-
-    public int getHiAccelerationColor()
-    {
-        return HiAccelerationColor;
-    }
-
-    public int getHiAccelerationMGColor()
-    {
-        return HiAccelerationMGColor;
-    }
-
-    public int getDecelAccelerationColor()
-    {
-        return DecelAccelerationColor;
-    }
-
-    public int getDecelAccelerationMGColor()
-    {
-        return DecelAccelerationMGColor;
-    }
-
-    public int getStopAccelerationColor()
-    {
-        return StopAccelerationColor;
-    }
-
-    public int getStopAccelerationMGColor()
-    {
-        return StopAccelerationMGColor;
-    }
-
-    public int getTotalRunTimeColor()
-    {
-        return TotalRunTimeColor;
-    }
-
-    public int getJerkVelocityColor()
-    {
-        return JerkVelocityColor;
-    }
-
-    public int getMaxSPLdBValueColor()
-    {
-        return MaxSPLdBValueColor;
-    }
-
-    public int getMaxSPLFrequencyColor()
-    {
-        return MaxSPLFrequencyColor;
-    }
-
-    public int getHiXAccelerationColor()
-    {
-        return HiXAccelerationColor;
-    }
-
-    public int getHiYAccelerationColor()
-    {
-        return HiYAccelerationColor;
-    }
-
-    public int getHiSpeedVelocityRange()
-    {
-        return HiSpeedVelocityRange;
-    }
-
-    public int getHiSpeedTimeRange()
-    {
-        return HiSpeedTimeRange;
-    }
-
-    public int getLvSpeedVelocityRange()
-    {
-        return LvSpeedVelocityRange;
-    }
-
-    public int getLvSpeedTimeRange()
-    {
-        return LvSpeedTimeRange;
-    }
-
-    public int getStartAccelerationRange()
-    {
-        return StartAccelerationRange;
-    }
-
-    public int getStartAccelerationMGRange()
-    {
-        return StartAccelerationMGRange;
-    }
-
-    public int getHiAccelerationRange()
-    {
-        return HiAccelerationRange;
-    }
-
-    public int getHiAccelerationMGRange()
-    {
-        return HiAccelerationMGRange;
-    }
-
-    public int getDecelAccelerationRange()
-    {
-        return DecelAccelerationRange;
-    }
-
-    public int getDecelAccelerationMGRange()
-    {
-        return DecelAccelerationMGRange;
-    }
-
-    public int getStopAccelerationRange()
-    {
-        return StopAccelerationRange;
-    }
-
-    public int getStopAccelerationMGRange()
-    {
-        return StopAccelerationMGRange;
-    }
-
-    public int getTotalRunTimeRange()
-    {
-        return TotalRunTimeRange;
-    }
-
-    public int getJerkVelocityRange()
-    {
-        return JerkVelocityRange;
-    }
-
-    public int getMaxSPLdBValueRange()
-    {
-        return MaxSPLdBValueRange;
-    }
-
-    public int getMaxSPLFrequencyRange()
-    {
-        return MaxSPLFrequencyRange;
-    }
-
-    public int getHiXAccelerationRange()
-    {
-        return HiXAccelerationRange;
-    }
-
-    public int getHiYAccelerationRange()
-    {
-        return HiYAccelerationRange;
-    }
-
-
-
-    /* Class Constructor */
-    public ProcessRideData(Context context)
-    {
-        this.context = context;
-
-        /* Load the ride data */
-        loadRideData();
-
-        /* Set the color ranges for the run */
-        setRideDataColor();
-
-        /* Set the speed range for the run */
-        setRideDataRange();
-    }
-
-
-
-    public void setRideDataColor()
-    {
-        int red = ContextCompat.getColor(context, R.color.red);
-        int orange = ContextCompat.getColor(context, R.color.orange);
-        int green = ContextCompat.getColor(context, R.color.green);
-        double val = 0.0;
-
-        if(RideType == RIDE_TYPE_HYDRO)
+-(NSString *) getDecelAccelerationStr
+{
+    return [NSString stringWithFormat:@"%.02f", DecelAcceleration];
+}
+
+-(NSString *) getDecelAccelerationMGStr
+{
+    return [NSString stringWithFormat:@"%.0f", DecelAcceleration * 1000];
+}
+
+-(double) getDecelAcceleration
+{
+    return DecelAcceleration;
+}
+
+-(NSString *) getStopAccelerationStr
+{
+    return [NSString stringWithFormat:@"%.02f", StopAcceleration];
+}
+
+-(NSString *) getStopAccelerationMGStr
+{
+    return [NSString stringWithFormat:@"%.0f", StopAcceleration * 1000];
+}
+
+-(double) getStopAcceleration
+{
+    return StopAcceleration;
+}
+
+-(NSString *) getTotalRunTimeStr
+{
+    return [NSString stringWithFormat:@"%.01f", TotalRunTime];
+}
+
+-(double) getTotalRunTime
+{
+    return TotalRunTime;
+}
+
+-(NSString *) getJerkVelocityIMPStr
+{
+    return [NSString stringWithFormat:@"%.02f", JerkVelocityIMP];
+}
+
+-(double) getJerkVelocityIMP
+{
+    return JerkVelocityIMP;
+}
+
+-(NSString *) getJerkVelocityMETStr
+{
+    return [NSString stringWithFormat:@"%.02f", JerkVelocityMET];
+}
+
+-(double) getJerkVelocityMET
+{
+    return JerkVelocityMET;
+}
+
+-(double) getPeakStartJerkIMP
+{
+    return PeakStartJerkIMP;
+}
+
+-(NSString *) getPeakStartJerkIMPStr
+{
+    return [NSString stringWithFormat:@"%.02f", PeakStartJerkIMP];
+}
+
+-(double) getMaxZJerk
+{
+    return MaxZJerk;
+}
+
+-(NSString *) getMaxZJerkStr
+{
+    return [NSString stringWithFormat:@"%.02f", MaxZJerk];
+}
+
+-(double) getMinZJerk
+{
+    return MinZJerk;
+}
+
+-(NSString *) getMinZJerkStr
+{
+    return [NSString stringWithFormat:@"%.02f", MinZJerk];
+}
+
+-(NSString *) getHiXAccelerationStr
+{
+    return [NSString stringWithFormat:@"%.02f", HiXAcceleration * 0.001];
+}
+
+-(NSString *) getHiXAccelerationMGStr
+{
+    return [NSString stringWithFormat:@"%.0f", HiXAcceleration];
+}
+
+-(double) getHiXAcceleration
+{
+    return HiXAcceleration;
+}
+
+-(NSString *) getHiYAccelerationStr
+{
+    return [NSString stringWithFormat:@"%.02f", HiYAcceleration * 0.001];
+}
+
+-(NSString *) getHiYAccelerationMGStr
+{
+    return [NSString stringWithFormat:@"%.0f", HiYAcceleration];
+}
+
+-(double) getHiYAcceleration
+{
+    return HiYAcceleration;
+}
+
+-(double) getMaxSPLdBValue
+{
+    return MaxSPLdBValue;
+}
+
+-(NSString *) getMaxSPLdBValueStr
+{
+    return [NSString stringWithFormat:@"%.0f", MaxSPLdBValue];
+}
+
+-(double) getMaxSPLFrequency
+{
+    return MaxSPLFrequency;
+}
+
+-(NSString *) getMaxSPLFrequencyStr
+{
+    return [NSString stringWithFormat:@"%.0f", MaxSPLFrequency];
+}
+
+-(int) getRunLength
+{
+    return RunLength;
+}
+
+-(BOOL) getRunDirectionUp
+{
+    return RunDirectionUp;
+}
+
+-(int) getRideMode
+{
+    return RideMode;
+}
+
+-(int) getRideDirection
+{
+    return RideDirection;
+}
+
+-(int) getRideSize
+{
+    return RideSize;
+}
+
+-(int) getRideType
+{
+    return RideType;
+}
+
+-(int) getRideId
+{
+    return RideId;
+}
+
+-(NSDate *) getRideDate
+{
+    return RideDate;
+}
+
+-(double) getXCalibrationVal
+{
+    return XCalibrationVal;
+}
+
+-(double) getYCalibrationVal
+{
+    return YCalibrationVal;
+}
+
+-(double) getZCalibrationVal
+{
+    return ZCalibrationVal;
+}
+
+-(double) getMinX
+{
+    return MinX;
+}
+
+-(double) getMaxX
+{
+    return MaxX;
+}
+
+-(double) getMinY
+{
+    return MinY;
+}
+
+-(double) getMaxY
+{
+    return MaxY;
+}
+
+-(double) getMinZ
+{
+    return MinZ;
+}
+
+-(double) getMaxZ
+{
+    return MaxZ;
+}
+
+-(double) getMinZVelocityIMP
+{
+    return MinZVelocityIMP;
+}
+
+-(double) getMaxZVelocityIMP
+{
+    return MaxZVelocityIMP;
+}
+
+-(double) getMinZVelocityMET
+{
+    return MinZVelocityMET;
+}
+
+-(double) getMaxZVelocityMET
+{
+    return MaxZVelocityMET;
+}
+
+-(NSString *) getJobRef
+{
+    return JobRef;
+}
+
+-(NSString *) getElevatorNum
+{
+    return ElevatorNum;
+}
+
+-(NSString *) getElevatorType
+{
+    return ElevatorType;
+}
+
+-(NSString *) getUserName
+{
+    return UserName;
+}
+
+-(NSString *) getNotes
+{
+    return Notes;
+}
+
+-(UIColor *) getHiSpeedVelocityColor
+{
+    return HiSpeedVelocityColor;
+}
+
+-(UIColor *) getHiSpeedTimeColor
+{
+    return HiSpeedTimeColor;
+}
+
+-(UIColor *) getLvSpeedVelocityColor
+{
+    return LvSpeedVelocityColor;
+}
+
+-(UIColor *) getLvSpeedTimeColor
+{
+    return LvSpeedTimeColor;
+}
+
+-(UIColor *) getStartAccelerationColor
+{
+    return StartAccelerationColor;
+}
+
+-(UIColor *) getStartAccelerationMGColor
+{
+    return StartAccelerationMGColor;
+}
+
+-(UIColor *) getHiAccelerationColor
+{
+    return HiAccelerationColor;
+}
+
+-(UIColor *) getHiAccelerationMGColor
+{
+    return HiAccelerationMGColor;
+}
+
+-(UIColor *) getDecelAccelerationColor
+{
+    return DecelAccelerationColor;
+}
+
+-(UIColor *) getDecelAccelerationMGColor
+{
+    return DecelAccelerationMGColor;
+}
+
+-(UIColor *) getStopAccelerationColor
+{
+    return StopAccelerationColor;
+}
+
+-(UIColor *) getStopAccelerationMGColor
+{
+    return StopAccelerationMGColor;
+}
+
+-(UIColor *) getTotalRunTimeColor
+{
+    return TotalRunTimeColor;
+}
+
+-(UIColor *) getJerkVelocityColor
+{
+    return JerkVelocityColor;
+}
+
+-(UIColor *) getMaxSPLdBValueColor
+{
+    return MaxSPLdBValueColor;
+}
+
+-(UIColor *) getMaxSPLFrequencyColor
+{
+    return MaxSPLFrequencyColor;
+}
+
+-(UIColor *) getHiXAccelerationColor
+{
+    return HiXAccelerationColor;
+}
+
+-(UIColor *) getHiYAccelerationColor
+{
+    return HiYAccelerationColor;
+}
+
+-(int) getHiSpeedVelocityRange
+{
+    return HiSpeedVelocityRange;
+}
+
+-(int) getHiSpeedTimeRange
+{
+    return HiSpeedTimeRange;
+}
+
+-(int) getLvSpeedVelocityRange
+{
+    return LvSpeedVelocityRange;
+}
+
+-(int) getLvSpeedTimeRange
+{
+    return LvSpeedTimeRange;
+}
+
+-(int) getStartAccelerationRange
+{
+    return StartAccelerationRange;
+}
+
+-(int) getStartAccelerationMGRange
+{
+    return StartAccelerationMGRange;
+}
+
+-(int) getHiAccelerationRange
+{
+    return HiAccelerationRange;
+}
+
+-(int) getHiAccelerationMGRange
+{
+    return HiAccelerationMGRange;
+}
+
+-(int) getDecelAccelerationRange
+{
+    return DecelAccelerationRange;
+}
+
+-(int) getDecelAccelerationMGRange
+{
+    return DecelAccelerationMGRange;
+}
+
+-(int) getStopAccelerationRange
+{
+    return StopAccelerationRange;
+}
+
+-(int) getStopAccelerationMGRange
+{
+    return StopAccelerationMGRange;
+}
+
+-(int) getTotalRunTimeRange
+{
+    return TotalRunTimeRange;
+}
+
+-(int) getJerkVelocityRange
+{
+    return JerkVelocityRange;
+}
+
+-(int) getMaxSPLdBValueRange
+{
+    return MaxSPLdBValueRange;
+}
+
+-(int) getMaxSPLFrequencyRange
+{
+    return MaxSPLFrequencyRange;
+}
+
+-(int) getHiXAccelerationRange
+{
+    return HiXAccelerationRange;
+}
+
+-(int) getHiYAccelerationRange
+{
+    return HiYAccelerationRange;
+}
+
+
+/*!
+ *  @method setRideDataColor
+ *
+ *  @discussion Sets the colors for the different ride values of the run.
+ */
+-(void) setRideDataColor
+{
+    UIColor *red = [UIColor ColorRed];
+    UIColor *orange = [UIColor ColorOrange];
+    UIColor *green = [UIColor ColorGreen];
+    double val = 0.0;
+
+    if(RideType == RIDE_TYPE_HYDRO)
+    {
+        /* Get the rounded version of the number */
+        val = [[self getLvSpeedVelocityIMPStr] doubleValue];
+
+        /* Set the color range for the leveling velocity */
+        if((val > HYDRO_LV_ABOVE_TOP) || (val < HYDRO_LV_BELOW_BOTTOM))
         {
-            /* Get the rounded version of the number */
-            val = new Double(getLvSpeedVelocityIMPStr());
-
-            /* Set the color range for the leveling velocity */
-            if((val > HYDRO_LV_ABOVE_TOP) || (val < HYDRO_LV_BELOW_BOTTOM))
-            {
-                LvSpeedVelocityColor = red;
-            }
-            else if((val > HYDRO_LV_BELOW_TOP) && (val < HYDRO_LV_ABOVE_BOTTOM))
-            {
-                LvSpeedVelocityColor = green;
-            }
-            else
-            {
-                LvSpeedVelocityColor = orange;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getLvSpeedTimeStr());
-
-            /* Set the color range for the leveling time */
-            if((val > HYDRO_LT_ABOVE_TOP) || (val < HYDRO_LT_BELOW_BOTTOM))
-            {
-                LvSpeedTimeColor = red;
-            }
-            else if((val > HYDRO_LT_BELOW_TOP) && (val < HYDRO_LT_ABOVE_BOTTOM))
-            {
-                LvSpeedTimeColor = green;
-            }
-            else
-            {
-                LvSpeedTimeColor = orange;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getJerkVelocityIMPStr());
-
-            /* Set the color range for the jerk */
-            if(val > HYDRO_JERK_ABOVE)
-            {
-                JerkVelocityColor = red;
-            }
-            else if(val < HYDRO_JERK_BELOW)
-            {
-                JerkVelocityColor = green;
-            }
-            else
-            {
-                JerkVelocityColor = orange;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getStartAccelerationStr());
-
-            /* Set the color range for the start acceleration */
-            if((val > HYDRO_SA_ABOVE_TOP) || (val < HYDRO_SA_BELOW_BOTTOM))
-            {
-                StartAccelerationColor = red;
-            }
-            else if((val > HYDRO_SA_BELOW_TOP) && (val < HYDRO_SA_ABOVE_BOTTOM))
-            {
-                StartAccelerationColor = green;
-            }
-            else
-            {
-                StartAccelerationColor = orange;
-            }
-
-            /* Get the rounded version of the number */
-            val = new Double(getStartAccelerationMGStr());
-
-            /* Set the color range for the start acceleration */
-            if((val > HYDRO_SA_ABOVE_TOP * 1000) || (val < HYDRO_SA_BELOW_BOTTOM * 1000))
-            {
-                StartAccelerationMGColor = red;
-            }
-            else if((val > HYDRO_SA_BELOW_TOP * 1000) && (val < HYDRO_SA_ABOVE_BOTTOM * 1000))
-            {
-                StartAccelerationMGColor = green;
-            }
-            else
-            {
-                StartAccelerationMGColor = orange;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getHiAccelerationStr());
-
-            /* Set the color range for the high acceleration */
-            if((val > HYDRO_HA_ABOVE_TOP) || (val < HYDRO_HA_BELOW_BOTTOM))
-            {
-                HiAccelerationColor = red;
-            }
-            else if((val > HYDRO_HA_BELOW_TOP) && (val < HYDRO_HA_ABOVE_BOTTOM))
-            {
-                HiAccelerationColor = green;
-            }
-            else
-            {
-                HiAccelerationColor = orange;
-            }
-
-            /* Get the rounded version of the number */
-            val = new Double(getHiAccelerationMGStr());
-
-            /* Set the color range for the high acceleration */
-            if((val > HYDRO_HA_ABOVE_TOP * 1000) || (val < HYDRO_HA_BELOW_BOTTOM * 1000))
-            {
-                HiAccelerationMGColor = red;
-            }
-            else if((val > HYDRO_HA_BELOW_TOP * 1000) && (val < HYDRO_HA_ABOVE_BOTTOM * 1000))
-            {
-                HiAccelerationMGColor = green;
-            }
-            else
-            {
-                HiAccelerationMGColor = orange;
-            }
-
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getDecelAccelerationStr());
-
-            /* Set the color range for the decel acceleration */
-            if((val > HYDRO_DA_ABOVE_TOP) || (val < HYDRO_DA_BELOW_BOTTOM))
-            {
-                DecelAccelerationColor = red;
-            }
-            else if((val > HYDRO_DA_BELOW_TOP) && (val < HYDRO_DA_ABOVE_BOTTOM))
-            {
-                DecelAccelerationColor = green;
-            }
-            else
-            {
-                DecelAccelerationColor = orange;
-            }
-
-            /* Get the rounded version of the number */
-            val = new Double(getDecelAccelerationMGStr());
-
-            /* Set the color range for the decel acceleration */
-            if((val > HYDRO_DA_ABOVE_TOP * 1000) || (val < HYDRO_DA_BELOW_BOTTOM * 1000))
-            {
-                DecelAccelerationMGColor = red;
-            }
-            else if((val > HYDRO_DA_BELOW_TOP * 1000) && (val < HYDRO_DA_ABOVE_BOTTOM * 1000))
-            {
-                DecelAccelerationMGColor = green;
-            }
-            else
-            {
-                DecelAccelerationMGColor = orange;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getStopAccelerationStr());
-
-            /* Set the color range for the stop acceleration */
-            if((val > HYDRO_LA_ABOVE_TOP) || (val < HYDRO_LA_BELOW_BOTTOM))
-            {
-                StopAccelerationColor = red;
-            }
-            else if((val > HYDRO_LA_BELOW_TOP) && (val < HYDRO_LA_ABOVE_BOTTOM))
-            {
-                StopAccelerationColor = green;
-            }
-            else
-            {
-                StopAccelerationColor = orange;
-            }
-
-            /* Get the rounded version of the number */
-            val = new Double(getStopAccelerationMGStr());
-
-            /* Set the color range for the stop acceleration */
-            if((val > HYDRO_LA_ABOVE_TOP * 1000) || (val < HYDRO_LA_BELOW_BOTTOM * 1000))
-            {
-                StopAccelerationMGColor = red;
-            }
-            else if((val > HYDRO_LA_BELOW_TOP * 1000) && (val < HYDRO_LA_ABOVE_BOTTOM * 1000))
-            {
-                StopAccelerationMGColor = green;
-            }
-            else
-            {
-                StopAccelerationMGColor = orange;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getHiXAccelerationStr());
-
-            /* Set the color range for the X axis vibration */
-            if(val > HYDRO_XA_ABOVE)
-            {
-                HiXAccelerationColor = red;
-            }
-            else if(val < HYDRO_XA_BELOW)
-            {
-                HiXAccelerationColor = green;
-            }
-            else
-            {
-                HiXAccelerationColor = orange;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getHiYAccelerationStr());
-
-            /* Set the color range for the Y axis vibration */
-            if(val > HYDRO_YA_ABOVE)
-            {
-                HiYAccelerationColor = red;
-            }
-            else if(val < HYDRO_YA_BELOW)
-            {
-                HiYAccelerationColor = green;
-            }
-            else
-            {
-                HiYAccelerationColor = orange;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getMaxSPLdBValueStr());
-
-            /* Set the color range for the audio SPL */
-            if(val > HYDRO_SPL_ABOVE)
-            {
-                MaxSPLdBValueColor = red;
-            }
-            else if(val < HYDRO_SPL_BELOW)
-            {
-                MaxSPLdBValueColor = green;
-            }
-            else
-            {
-                MaxSPLdBValueColor = orange;
-            }
-
+            LvSpeedVelocityColor = red;
         }
-        else if(RideType == RIDE_TYPE_TRACTION)
+        else if((val > HYDRO_LV_BELOW_TOP) && (val < HYDRO_LV_ABOVE_BOTTOM))
         {
-            HiSpeedVelocityColor = Color.BLACK;
-            HiSpeedTimeColor = Color.BLACK;
-            LvSpeedVelocityColor = Color.BLACK;
-            LvSpeedTimeColor = Color.BLACK;
-            StartAccelerationColor = Color.BLACK;
-            StartAccelerationMGColor = Color.BLACK;
-            HiAccelerationColor = Color.BLACK;
-            HiAccelerationMGColor = Color.BLACK;
-            DecelAccelerationColor = Color.BLACK;
-            DecelAccelerationMGColor = Color.BLACK;
-            StopAccelerationColor = Color.BLACK;
-            StopAccelerationMGColor = Color.BLACK;
-            TotalRunTimeColor = Color.BLACK;
-            JerkVelocityColor = Color.BLACK;
-            MaxSPLdBValueColor = Color.BLACK;
-            MaxSPLFrequencyColor = Color.BLACK;
-            HiXAccelerationColor = Color.BLACK;
-            HiYAccelerationColor = Color.BLACK;
-        }
-        else if(RideType == RIDE_TYPE_SLOWSPEED)
-        {
-            HiSpeedVelocityColor = Color.BLACK;
-            HiSpeedTimeColor = Color.BLACK;
-            LvSpeedVelocityColor = Color.BLACK;
-            LvSpeedTimeColor = Color.BLACK;
-            StartAccelerationColor = Color.BLACK;
-            StartAccelerationMGColor = Color.BLACK;
-            HiAccelerationColor = Color.BLACK;
-            HiAccelerationMGColor = Color.BLACK;
-            DecelAccelerationColor = Color.BLACK;
-            DecelAccelerationMGColor = Color.BLACK;
-            StopAccelerationColor = Color.BLACK;
-            StopAccelerationMGColor = Color.BLACK;
-            TotalRunTimeColor = Color.BLACK;
-            JerkVelocityColor = Color.BLACK;
-            MaxSPLdBValueColor = Color.BLACK;
-            MaxSPLFrequencyColor = Color.BLACK;
-            HiXAccelerationColor = Color.BLACK;
-            HiYAccelerationColor = Color.BLACK;
+            LvSpeedVelocityColor = green;
         }
         else
         {
-            HiSpeedVelocityColor = Color.BLACK;
-            HiSpeedTimeColor = Color.BLACK;
-            LvSpeedVelocityColor = Color.BLACK;
-            LvSpeedTimeColor = Color.BLACK;
-            StartAccelerationColor = Color.BLACK;
-            StartAccelerationMGColor = Color.BLACK;
-            HiAccelerationColor = Color.BLACK;
-            HiAccelerationMGColor = Color.BLACK;
-            DecelAccelerationColor = Color.BLACK;
-            DecelAccelerationMGColor = Color.BLACK;
-            StopAccelerationColor = Color.BLACK;
-            StopAccelerationMGColor = Color.BLACK;
-            TotalRunTimeColor = Color.BLACK;
-            JerkVelocityColor = Color.BLACK;
-            MaxSPLdBValueColor = Color.BLACK;
-            MaxSPLFrequencyColor = Color.BLACK;
-            HiXAccelerationColor = Color.BLACK;
-            HiYAccelerationColor = Color.BLACK;
+            LvSpeedVelocityColor = orange;
         }
-    }
 
 
-    public void setRideDataRange()
-    {
-        double val = 0.0;
+        /* Get the rounded version of the number */
+        val = [[self getLvSpeedTimeStr] doubleValue];
 
-        if(RideType == RIDE_TYPE_HYDRO)
+        /* Set the color range for the leveling time */
+        if((val > HYDRO_LT_ABOVE_TOP) || (val < HYDRO_LT_BELOW_BOTTOM))
         {
-            /* Get the rounded version of the number */
-            val = new Double(getLvSpeedVelocityIMPStr());
-
-            /* Set the hi/low range for the leveling velocity */
-            if(val >= HYDRO_LV_ABOVE_BOTTOM)
-            {
-                LvSpeedVelocityRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_LV_BELOW_TOP)
-            {
-                LvSpeedVelocityRange = RANGE_LOW;
-            }
-            else
-            {
-                LvSpeedVelocityRange = RANGE_OK;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getLvSpeedTimeStr());
-
-            /* Set the hi/low range for the leveling time */
-            if(val >= HYDRO_LT_ABOVE_BOTTOM)
-            {
-                LvSpeedTimeRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_LT_BELOW_TOP)
-            {
-                LvSpeedTimeRange = RANGE_LOW;
-            }
-            else
-            {
-                LvSpeedTimeRange = RANGE_OK;
-            }
-
-
-            /* Set the hi/low range for the jerk */
-            JerkVelocityRange = RANGE_OK;
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getStartAccelerationStr());
-
-            /* Set the hi/low range for the start acceleration */
-            if(val >= HYDRO_SA_ABOVE_BOTTOM)
-            {
-                StartAccelerationRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_SA_BELOW_TOP)
-            {
-                StartAccelerationRange = RANGE_LOW;
-            }
-            else
-            {
-                StartAccelerationRange = RANGE_OK;
-            }
-
-            /* Get the rounded version of the number */
-            val = new Double(getStartAccelerationMGStr());
-
-            /* Set the hi/low range for the start acceleration */
-            if(val >= HYDRO_SA_ABOVE_BOTTOM * 1000)
-            {
-                StartAccelerationMGRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_SA_BELOW_TOP * 1000)
-            {
-                StartAccelerationMGRange = RANGE_LOW;
-            }
-            else
-            {
-                StartAccelerationMGRange = RANGE_OK;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getHiAccelerationStr());
-
-            /* Set the hi/low range for the high acceleration */
-            if(val >= HYDRO_HA_ABOVE_BOTTOM)
-            {
-                HiAccelerationRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_HA_BELOW_TOP)
-            {
-                HiAccelerationRange = RANGE_LOW;
-            }
-            else
-            {
-                HiAccelerationRange = RANGE_OK;
-            }
-
-            /* Get the rounded version of the number */
-            val = new Double(getHiAccelerationMGStr());
-
-            /* Set the hi/low range for the high acceleration */
-            if(val >= HYDRO_HA_ABOVE_BOTTOM * 1000)
-            {
-                HiAccelerationMGRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_HA_BELOW_TOP * 1000)
-            {
-                HiAccelerationMGRange = RANGE_LOW;
-            }
-            else
-            {
-                HiAccelerationMGRange = RANGE_OK;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getDecelAccelerationStr());
-
-            /* Set the hi/low  range for the decel acceleration */
-            if(val >= HYDRO_DA_ABOVE_BOTTOM)
-            {
-                DecelAccelerationRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_DA_BELOW_TOP)
-            {
-                DecelAccelerationRange = RANGE_LOW;
-            }
-            else
-            {
-                DecelAccelerationRange = RANGE_OK;
-            }
-
-            /* Get the rounded version of the number */
-            val = new Double(getDecelAccelerationMGStr());
-
-            /* Set the hi/low  range for the decel acceleration */
-            if(val >= HYDRO_DA_ABOVE_BOTTOM * 1000)
-            {
-                DecelAccelerationMGRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_DA_BELOW_TOP * 1000)
-            {
-                DecelAccelerationMGRange = RANGE_LOW;
-            }
-            else
-            {
-                DecelAccelerationMGRange = RANGE_OK;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getStopAccelerationStr());
-
-            /* Set the hi/low range for the stop acceleration */
-            if(val >= HYDRO_LA_ABOVE_BOTTOM)
-            {
-                StopAccelerationRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_LA_BELOW_TOP)
-            {
-                StopAccelerationRange = RANGE_LOW;
-            }
-            else
-            {
-                StopAccelerationRange = RANGE_OK;
-            }
-
-            /* Get the rounded version of the number */
-            val = new Double(getStopAccelerationMGStr());
-
-            /* Set the hi/low range for the stop acceleration */
-            if(val >= HYDRO_LA_ABOVE_BOTTOM * 1000)
-            {
-                StopAccelerationMGRange = RANGE_HI;
-            }
-            else if(val <= HYDRO_LA_BELOW_TOP * 1000)
-            {
-                StopAccelerationMGRange = RANGE_LOW;
-            }
-            else
-            {
-                StopAccelerationMGRange = RANGE_OK;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getHiXAccelerationStr());
-
-            /* Set the range for the X axis vibration */
-            if(val >= HYDRO_XA_BELOW)
-            {
-                HiXAccelerationRange = RANGE_HI;
-            }
-
-
-            /* Get the rounded version of the number */
-            val = new Double(getHiYAccelerationStr());
-
-            /* Set the range for the Y axis vibration */
-            if(val >= HYDRO_YA_BELOW)
-            {
-                HiYAccelerationRange = RANGE_HI;
-            }
-
-            /* Set the range for the audio SPL */
-            MaxSPLdBValueRange = RANGE_OK;
-            MaxSPLFrequencyRange = RANGE_OK;
-
+            LvSpeedTimeColor = red;
         }
-        else if(RideType == RIDE_TYPE_TRACTION)
+        else if((val > HYDRO_LT_BELOW_TOP) && (val < HYDRO_LT_ABOVE_BOTTOM))
         {
-            HiSpeedVelocityRange = RANGE_OK;
-            HiSpeedTimeRange = RANGE_OK;
-            LvSpeedVelocityRange = RANGE_OK;
-            LvSpeedTimeRange = RANGE_OK;
-            StartAccelerationRange = RANGE_OK;
-            StartAccelerationMGRange = RANGE_OK;
-            HiAccelerationRange = RANGE_OK;
-            HiAccelerationMGRange = RANGE_OK;
-            DecelAccelerationRange = RANGE_OK;
-            DecelAccelerationMGRange = RANGE_OK;
-            StopAccelerationRange = RANGE_OK;
-            StopAccelerationMGRange = RANGE_OK;
-            TotalRunTimeRange = RANGE_OK;
-            JerkVelocityRange = RANGE_OK;
-            MaxSPLdBValueRange = RANGE_OK;
-            MaxSPLFrequencyRange = RANGE_OK;
-            HiXAccelerationRange = RANGE_OK;
-            HiYAccelerationRange = RANGE_OK;
-        }
-        else if(RideType == RIDE_TYPE_SLOWSPEED)
-        {
-            HiSpeedVelocityRange = RANGE_OK;
-            HiSpeedTimeRange = RANGE_OK;
-            LvSpeedVelocityRange = RANGE_OK;
-            LvSpeedTimeRange = RANGE_OK;
-            StartAccelerationRange = RANGE_OK;
-            StartAccelerationMGRange = RANGE_OK;
-            HiAccelerationRange = RANGE_OK;
-            HiAccelerationMGRange = RANGE_OK;
-            DecelAccelerationRange = RANGE_OK;
-            DecelAccelerationMGRange = RANGE_OK;
-            StopAccelerationRange = RANGE_OK;
-            StopAccelerationMGRange = RANGE_OK;
-            TotalRunTimeRange = RANGE_OK;
-            JerkVelocityRange = RANGE_OK;
-            MaxSPLdBValueRange = RANGE_OK;
-            MaxSPLFrequencyRange = RANGE_OK;
-            HiXAccelerationRange = RANGE_OK;
-            HiYAccelerationRange = RANGE_OK;
+            LvSpeedTimeColor = green;
         }
         else
         {
-            HiSpeedVelocityRange = RANGE_OK;
-            HiSpeedTimeRange = RANGE_OK;
-            LvSpeedVelocityRange = RANGE_OK;
-            LvSpeedTimeRange = RANGE_OK;
-            StartAccelerationRange = RANGE_OK;
-            StartAccelerationMGRange = RANGE_OK;
-            HiAccelerationRange = RANGE_OK;
-            HiAccelerationMGRange = RANGE_OK;
-            DecelAccelerationRange = RANGE_OK;
-            DecelAccelerationMGRange = RANGE_OK;
-            StopAccelerationRange = RANGE_OK;
-            StopAccelerationMGRange = RANGE_OK;
-            TotalRunTimeRange = RANGE_OK;
-            JerkVelocityRange = RANGE_OK;
-            MaxSPLdBValueRange = RANGE_OK;
-            MaxSPLFrequencyRange = RANGE_OK;
-            HiXAccelerationRange = RANGE_OK;
-            HiYAccelerationRange = RANGE_OK;
+            LvSpeedTimeColor = orange;
         }
+
+
+        /* Get the rounded version of the number */
+        val = [[self getJerkVelocityIMPStr] doubleValue];
+
+        /* Set the color range for the jerk */
+        if(val > HYDRO_JERK_ABOVE)
+        {
+            JerkVelocityColor = red;
+        }
+        else if(val < HYDRO_JERK_BELOW)
+        {
+            JerkVelocityColor = green;
+        }
+        else
+        {
+            JerkVelocityColor = orange;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = [[self getStartAccelerationStr] doubleValue];
+
+        /* Set the color range for the start acceleration */
+        if((val > HYDRO_SA_ABOVE_TOP) || (val < HYDRO_SA_BELOW_BOTTOM))
+        {
+            StartAccelerationColor = red;
+        }
+        else if((val > HYDRO_SA_BELOW_TOP) && (val < HYDRO_SA_ABOVE_BOTTOM))
+        {
+            StartAccelerationColor = green;
+        }
+        else
+        {
+            StartAccelerationColor = orange;
+        }
+
+        /* Get the rounded version of the number */
+        val = [[self getStartAccelerationMGStr] doubleValue];
+
+        /* Set the color range for the start acceleration */
+        if((val > HYDRO_SA_ABOVE_TOP * 1000) || (val < HYDRO_SA_BELOW_BOTTOM * 1000))
+        {
+            StartAccelerationMGColor = red;
+        }
+        else if((val > HYDRO_SA_BELOW_TOP * 1000) && (val < HYDRO_SA_ABOVE_BOTTOM * 1000))
+        {
+            StartAccelerationMGColor = green;
+        }
+        else
+        {
+            StartAccelerationMGColor = orange;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = [[self getHiAccelerationStr] doubleValue];
+
+        /* Set the color range for the high acceleration */
+        if((val > HYDRO_HA_ABOVE_TOP) || (val < HYDRO_HA_BELOW_BOTTOM))
+        {
+            HiAccelerationColor = red;
+        }
+        else if((val > HYDRO_HA_BELOW_TOP) && (val < HYDRO_HA_ABOVE_BOTTOM))
+        {
+            HiAccelerationColor = green;
+        }
+        else
+        {
+            HiAccelerationColor = orange;
+        }
+
+        
+        /* Get the rounded version of the number */
+        val = [[self getHiAccelerationMGStr] doubleValue];
+
+        /* Set the color range for the high acceleration */
+        if((val > HYDRO_HA_ABOVE_TOP * 1000) || (val < HYDRO_HA_BELOW_BOTTOM * 1000))
+        {
+            HiAccelerationMGColor = red;
+        }
+        else if((val > HYDRO_HA_BELOW_TOP * 1000) && (val < HYDRO_HA_ABOVE_BOTTOM * 1000))
+        {
+            HiAccelerationMGColor = green;
+        }
+        else
+        {
+            HiAccelerationMGColor = orange;
+        }
+
+
+
+        /* Get the rounded version of the number */
+        val = [[self getDecelAccelerationStr] doubleValue];
+
+        /* Set the color range for the decel acceleration */
+        if((val > HYDRO_DA_ABOVE_TOP) || (val < HYDRO_DA_BELOW_BOTTOM))
+        {
+            DecelAccelerationColor = red;
+        }
+        else if((val > HYDRO_DA_BELOW_TOP) && (val < HYDRO_DA_ABOVE_BOTTOM))
+        {
+            DecelAccelerationColor = green;
+        }
+        else
+        {
+            DecelAccelerationColor = orange;
+        }
+
+        /* Get the rounded version of the number */
+        val = [[self getDecelAccelerationMGStr] doubleValue];
+
+        /* Set the color range for the decel acceleration */
+        if((val > HYDRO_DA_ABOVE_TOP * 1000) || (val < HYDRO_DA_BELOW_BOTTOM * 1000))
+        {
+            DecelAccelerationMGColor = red;
+        }
+        else if((val > HYDRO_DA_BELOW_TOP * 1000) && (val < HYDRO_DA_ABOVE_BOTTOM * 1000))
+        {
+            DecelAccelerationMGColor = green;
+        }
+        else
+        {
+            DecelAccelerationMGColor = orange;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = [[self getStopAccelerationStr] doubleValue];
+
+        /* Set the color range for the stop acceleration */
+        if((val > HYDRO_LA_ABOVE_TOP) || (val < HYDRO_LA_BELOW_BOTTOM))
+        {
+            StopAccelerationColor = red;
+        }
+        else if((val > HYDRO_LA_BELOW_TOP) && (val < HYDRO_LA_ABOVE_BOTTOM))
+        {
+            StopAccelerationColor = green;
+        }
+        else
+        {
+            StopAccelerationColor = orange;
+        }
+
+        /* Get the rounded version of the number */
+        val = [[self getStopAccelerationMGStr] doubleValue];
+
+        /* Set the color range for the stop acceleration */
+        if((val > HYDRO_LA_ABOVE_TOP * 1000) || (val < HYDRO_LA_BELOW_BOTTOM * 1000))
+        {
+            StopAccelerationMGColor = red;
+        }
+        else if((val > HYDRO_LA_BELOW_TOP * 1000) && (val < HYDRO_LA_ABOVE_BOTTOM * 1000))
+        {
+            StopAccelerationMGColor = green;
+        }
+        else
+        {
+            StopAccelerationMGColor = orange;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = [[self getHiXAccelerationStr] doubleValue];
+
+        /* Set the color range for the X axis vibration */
+        if(val > HYDRO_XA_ABOVE)
+        {
+            HiXAccelerationColor = red;
+        }
+        else if(val < HYDRO_XA_BELOW)
+        {
+            HiXAccelerationColor = green;
+        }
+        else
+        {
+            HiXAccelerationColor = orange;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = [[self getHiYAccelerationStr] doubleValue];
+
+        /* Set the color range for the Y axis vibration */
+        if(val > HYDRO_YA_ABOVE)
+        {
+            HiYAccelerationColor = red;
+        }
+        else if(val < HYDRO_YA_BELOW)
+        {
+            HiYAccelerationColor = green;
+        }
+        else
+        {
+            HiYAccelerationColor = orange;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = [[self getMaxSPLdBValueStr] doubleValue];
+
+        /* Set the color range for the audio SPL */
+        if(val > HYDRO_SPL_ABOVE)
+        {
+            MaxSPLdBValueColor = red;
+        }
+        else if(val < HYDRO_SPL_BELOW)
+        {
+            MaxSPLdBValueColor = green;
+        }
+        else
+        {
+            MaxSPLdBValueColor = orange;
+        }
+
     }
-
-
-    /*
-     *  This method reads the data from the ride data file one line at
-     *  a time, parses the line to get the time and Z axis info which
-     *  is used to create a ride profile and display it on the screen.
-     *
-     */
-    protected void loadRideData()
+    else if(RideType == RIDE_TYPE_TRACTION)
     {
-        int NumLines = 0;
-        Date LastDate = new Date();
-        double LastAccel = 0.0;
-        double AccelDelta = 0.0;
-        double Jerk = 0.0;
-        long LastTime = 0;
-        double LastVelocity = 0.0;
-        double LastVelocityMetric = 0.0;
+        HiSpeedVelocityColor = [UIColor ColorBlack];
+        HiSpeedTimeColor = [UIColor ColorBlack];
+        LvSpeedVelocityColor = [UIColor ColorBlack];
+        LvSpeedTimeColor = [UIColor ColorBlack];
+        StartAccelerationColor = [UIColor ColorBlack];
+        StartAccelerationMGColor = [UIColor ColorBlack];
+        HiAccelerationColor = [UIColor ColorBlack];
+        HiAccelerationMGColor = [UIColor ColorBlack];
+        DecelAccelerationColor = [UIColor ColorBlack];
+        DecelAccelerationMGColor = [UIColor ColorBlack];
+        StopAccelerationColor = [UIColor ColorBlack];
+        StopAccelerationMGColor = [UIColor ColorBlack];
+        TotalRunTimeColor = [UIColor ColorBlack];
+        JerkVelocityColor = [UIColor ColorBlack];
+        MaxSPLdBValueColor = [UIColor ColorBlack];
+        MaxSPLFrequencyColor = [UIColor ColorBlack];
+        HiXAccelerationColor = [UIColor ColorBlack];
+        HiYAccelerationColor = [UIColor ColorBlack];
+    }
+    else if(RideType == RIDE_TYPE_SLOWSPEED)
+    {
+        HiSpeedVelocityColor = [UIColor ColorBlack];
+        HiSpeedTimeColor = [UIColor ColorBlack];
+        LvSpeedVelocityColor = [UIColor ColorBlack];
+        LvSpeedTimeColor = [UIColor ColorBlack];
+        StartAccelerationColor = [UIColor ColorBlack];
+        StartAccelerationMGColor = [UIColor ColorBlack];
+        HiAccelerationColor = [UIColor ColorBlack];
+        HiAccelerationMGColor = [UIColor ColorBlack];
+        DecelAccelerationColor = [UIColor ColorBlack];
+        DecelAccelerationMGColor = [UIColor ColorBlack];
+        StopAccelerationColor = [UIColor ColorBlack];
+        StopAccelerationMGColor = [UIColor ColorBlack];
+        TotalRunTimeColor = [UIColor ColorBlack];
+        JerkVelocityColor = [UIColor ColorBlack];
+        MaxSPLdBValueColor = [UIColor ColorBlack];
+        MaxSPLFrequencyColor = [UIColor ColorBlack];
+        HiXAccelerationColor = [UIColor ColorBlack];
+        HiYAccelerationColor = [UIColor ColorBlack];
+    }
+    else
+    {
+        HiSpeedVelocityColor = [UIColor ColorBlack];
+        HiSpeedTimeColor = [UIColor ColorBlack];
+        LvSpeedVelocityColor = [UIColor ColorBlack];
+        LvSpeedTimeColor = [UIColor ColorBlack];
+        StartAccelerationColor = [UIColor ColorBlack];
+        StartAccelerationMGColor = [UIColor ColorBlack];
+        HiAccelerationColor = [UIColor ColorBlack];
+        HiAccelerationMGColor = [UIColor ColorBlack];
+        DecelAccelerationColor = [UIColor ColorBlack];
+        DecelAccelerationMGColor = [UIColor ColorBlack];
+        StopAccelerationColor = [UIColor ColorBlack];
+        StopAccelerationMGColor = [UIColor ColorBlack];
+        TotalRunTimeColor = [UIColor ColorBlack];
+        JerkVelocityColor = [UIColor ColorBlack];
+        MaxSPLdBValueColor = [UIColor ColorBlack];
+        MaxSPLFrequencyColor = [UIColor ColorBlack];
+        HiXAccelerationColor = [UIColor ColorBlack];
+        HiYAccelerationColor = [UIColor ColorBlack];
+    }
+ }
 
-        double UVel = 0.0;
-        double UVelMetric = 0.0;
-        double HiVelocity = 0.0;
-        double HiVelocityMetric = 0.0;
-        long HiTime = 0;
-        double LevelingVelocity = 0.0;
-        double LevelingVelocityMetric = 0.0;
-        long LevelingTime = 0;
-        double HiJerk = 0.0;
-        double HiJerkMetric = 0.0;
 
-        long TotalTime = 0;
-        long RunTime = 0;
-        double Accelmg = 0;
-        double Decelmg = 0;
-        double Startmg = 0;
-        double Stopmg = 0;
-        boolean StartFlag = false;
+/*!
+ *  @method setRideDataRange
+ *
+ *  @discussion Sets the range values for the different ride values of the run.
+ */
+-(void) setRideDataRange
+{
+    double val = 0.0;
 
-        int SCount = 0;
+    if(RideType == RIDE_TYPE_HYDRO)
+    {
+        /* Get the rounded version of the number */
+        val = new Double(getLvSpeedVelocityIMPStr());
+
+        /* Set the hi/low range for the leveling velocity */
+        if(val >= HYDRO_LV_ABOVE_BOTTOM)
+        {
+            LvSpeedVelocityRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_LV_BELOW_TOP)
+        {
+            LvSpeedVelocityRange = RANGE_LOW;
+        }
+        else
+        {
+            LvSpeedVelocityRange = RANGE_OK;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = new Double(getLvSpeedTimeStr());
+
+        /* Set the hi/low range for the leveling time */
+        if(val >= HYDRO_LT_ABOVE_BOTTOM)
+        {
+            LvSpeedTimeRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_LT_BELOW_TOP)
+        {
+            LvSpeedTimeRange = RANGE_LOW;
+        }
+        else
+        {
+            LvSpeedTimeRange = RANGE_OK;
+        }
+
+
+        /* Set the hi/low range for the jerk */
+        JerkVelocityRange = RANGE_OK;
+
+        /* Get the rounded version of the number */
+        val = new Double(getStartAccelerationStr());
+
+        /* Set the hi/low range for the start acceleration */
+        if(val >= HYDRO_SA_ABOVE_BOTTOM)
+        {
+            StartAccelerationRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_SA_BELOW_TOP)
+        {
+            StartAccelerationRange = RANGE_LOW;
+        }
+        else
+        {
+            StartAccelerationRange = RANGE_OK;
+        }
+
+        /* Get the rounded version of the number */
+        val = new Double(getStartAccelerationMGStr());
+
+        /* Set the hi/low range for the start acceleration */
+        if(val >= HYDRO_SA_ABOVE_BOTTOM * 1000)
+        {
+            StartAccelerationMGRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_SA_BELOW_TOP * 1000)
+        {
+            StartAccelerationMGRange = RANGE_LOW;
+        }
+        else
+        {
+            StartAccelerationMGRange = RANGE_OK;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = new Double(getHiAccelerationStr());
+
+        /* Set the hi/low range for the high acceleration */
+        if(val >= HYDRO_HA_ABOVE_BOTTOM)
+        {
+            HiAccelerationRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_HA_BELOW_TOP)
+        {
+            HiAccelerationRange = RANGE_LOW;
+        }
+        else
+        {
+            HiAccelerationRange = RANGE_OK;
+        }
+
+        /* Get the rounded version of the number */
+        val = new Double(getHiAccelerationMGStr());
+
+        /* Set the hi/low range for the high acceleration */
+        if(val >= HYDRO_HA_ABOVE_BOTTOM * 1000)
+        {
+            HiAccelerationMGRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_HA_BELOW_TOP * 1000)
+        {
+            HiAccelerationMGRange = RANGE_LOW;
+        }
+        else
+        {
+            HiAccelerationMGRange = RANGE_OK;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = new Double(getDecelAccelerationStr());
+
+        /* Set the hi/low  range for the decel acceleration */
+        if(val >= HYDRO_DA_ABOVE_BOTTOM)
+        {
+            DecelAccelerationRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_DA_BELOW_TOP)
+        {
+            DecelAccelerationRange = RANGE_LOW;
+        }
+        else
+        {
+            DecelAccelerationRange = RANGE_OK;
+        }
+
+        /* Get the rounded version of the number */
+        val = new Double(getDecelAccelerationMGStr());
+
+        /* Set the hi/low  range for the decel acceleration */
+        if(val >= HYDRO_DA_ABOVE_BOTTOM * 1000)
+        {
+            DecelAccelerationMGRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_DA_BELOW_TOP * 1000)
+        {
+            DecelAccelerationMGRange = RANGE_LOW;
+        }
+        else
+        {
+            DecelAccelerationMGRange = RANGE_OK;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = new Double(getStopAccelerationStr());
+
+        /* Set the hi/low range for the stop acceleration */
+        if(val >= HYDRO_LA_ABOVE_BOTTOM)
+        {
+            StopAccelerationRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_LA_BELOW_TOP)
+        {
+            StopAccelerationRange = RANGE_LOW;
+        }
+        else
+        {
+            StopAccelerationRange = RANGE_OK;
+        }
+
+        /* Get the rounded version of the number */
+        val = new Double(getStopAccelerationMGStr());
+
+        /* Set the hi/low range for the stop acceleration */
+        if(val >= HYDRO_LA_ABOVE_BOTTOM * 1000)
+        {
+            StopAccelerationMGRange = RANGE_HI;
+        }
+        else if(val <= HYDRO_LA_BELOW_TOP * 1000)
+        {
+            StopAccelerationMGRange = RANGE_LOW;
+        }
+        else
+        {
+            StopAccelerationMGRange = RANGE_OK;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = new Double(getHiXAccelerationStr());
+
+        /* Set the range for the X axis vibration */
+        if(val >= HYDRO_XA_BELOW)
+        {
+            HiXAccelerationRange = RANGE_HI;
+        }
+
+
+        /* Get the rounded version of the number */
+        val = new Double(getHiYAccelerationStr());
+
+        /* Set the range for the Y axis vibration */
+        if(val >= HYDRO_YA_BELOW)
+        {
+            HiYAccelerationRange = RANGE_HI;
+        }
+
+        /* Set the range for the audio SPL */
+        MaxSPLdBValueRange = RANGE_OK;
+        MaxSPLFrequencyRange = RANGE_OK;
+
+    }
+    else if(RideType == RIDE_TYPE_TRACTION)
+    {
+        HiSpeedVelocityRange = RANGE_OK;
+        HiSpeedTimeRange = RANGE_OK;
+        LvSpeedVelocityRange = RANGE_OK;
+        LvSpeedTimeRange = RANGE_OK;
+        StartAccelerationRange = RANGE_OK;
+        StartAccelerationMGRange = RANGE_OK;
+        HiAccelerationRange = RANGE_OK;
+        HiAccelerationMGRange = RANGE_OK;
+        DecelAccelerationRange = RANGE_OK;
+        DecelAccelerationMGRange = RANGE_OK;
+        StopAccelerationRange = RANGE_OK;
+        StopAccelerationMGRange = RANGE_OK;
+        TotalRunTimeRange = RANGE_OK;
+        JerkVelocityRange = RANGE_OK;
+        MaxSPLdBValueRange = RANGE_OK;
+        MaxSPLFrequencyRange = RANGE_OK;
+        HiXAccelerationRange = RANGE_OK;
+        HiYAccelerationRange = RANGE_OK;
+    }
+    else if(RideType == RIDE_TYPE_SLOWSPEED)
+    {
+        HiSpeedVelocityRange = RANGE_OK;
+        HiSpeedTimeRange = RANGE_OK;
+        LvSpeedVelocityRange = RANGE_OK;
+        LvSpeedTimeRange = RANGE_OK;
+        StartAccelerationRange = RANGE_OK;
+        StartAccelerationMGRange = RANGE_OK;
+        HiAccelerationRange = RANGE_OK;
+        HiAccelerationMGRange = RANGE_OK;
+        DecelAccelerationRange = RANGE_OK;
+        DecelAccelerationMGRange = RANGE_OK;
+        StopAccelerationRange = RANGE_OK;
+        StopAccelerationMGRange = RANGE_OK;
+        TotalRunTimeRange = RANGE_OK;
+        JerkVelocityRange = RANGE_OK;
+        MaxSPLdBValueRange = RANGE_OK;
+        MaxSPLFrequencyRange = RANGE_OK;
+        HiXAccelerationRange = RANGE_OK;
+        HiYAccelerationRange = RANGE_OK;
+    }
+    else
+    {
+        HiSpeedVelocityRange = RANGE_OK;
+        HiSpeedTimeRange = RANGE_OK;
+        LvSpeedVelocityRange = RANGE_OK;
+        LvSpeedTimeRange = RANGE_OK;
+        StartAccelerationRange = RANGE_OK;
+        StartAccelerationMGRange = RANGE_OK;
+        HiAccelerationRange = RANGE_OK;
+        HiAccelerationMGRange = RANGE_OK;
+        DecelAccelerationRange = RANGE_OK;
+        DecelAccelerationMGRange = RANGE_OK;
+        StopAccelerationRange = RANGE_OK;
+        StopAccelerationMGRange = RANGE_OK;
+        TotalRunTimeRange = RANGE_OK;
+        JerkVelocityRange = RANGE_OK;
+        MaxSPLdBValueRange = RANGE_OK;
+        MaxSPLFrequencyRange = RANGE_OK;
+        HiXAccelerationRange = RANGE_OK;
+        HiYAccelerationRange = RANGE_OK;
+    }
+}
+
+
+/*!
+ *  @method loadRideData
+ *
+ *  @discussion This method reads the data from the ride data file one line at
+ *              a time, parses the line to get the time and Z axis info which
+ *              is used to create a ride profile and display it on the screen.
+ *
+ */
+-(void) loadRideData
+{
+    int NumLines = 0;
+    Date LastDate = new Date();
+    double LastAccel = 0.0;
+    double AccelDelta = 0.0;
+    double Jerk = 0.0;
+    long LastTime = 0;
+    double LastVelocity = 0.0;
+    double LastVelocityMetric = 0.0;
+
+    double UVel = 0.0;
+    double UVelMetric = 0.0;
+    double HiVelocity = 0.0;
+    double HiVelocityMetric = 0.0;
+    long HiTime = 0;
+    double LevelingVelocity = 0.0;
+    double LevelingVelocityMetric = 0.0;
+    long LevelingTime = 0;
+    double HiJerk = 0.0;
+    double HiJerkMetric = 0.0;
+
+    long TotalTime = 0;
+    long RunTime = 0;
+    double Accelmg = 0;
+    double Decelmg = 0;
+    double Startmg = 0;
+    double Stopmg = 0;
+    boolean StartFlag = false;
+
+    int SCount = 0;
         double SZSum = 0;
         int ACount = 0;
         double AZSum = 0;
@@ -2377,15 +2301,15 @@
             MaxZJerk = 1.0;
         }
 
-    }
+}
 
 
-    /*
-     * This method uses data saved in the DataBuffer array to process acceleration
-     * data from back to front to get the leveling speed and the stop acceleration.
-     */
-    public void getLevelingSpeedValues()
-    {
+/*
+ * This method uses data saved in the DataBuffer array to process acceleration
+ * data from back to front to get the leveling speed and the stop acceleration.
+ */
+-(void) getLevelingSpeedValues
+{
         final int AVG_SIZE = 5;
 
         double lastvelocity = 0.0;
@@ -2509,11 +2433,12 @@
             LvSpeedVelocityMET = -LvSpeedVelocityMET;
         }
 
-    }
+}
 
 
-    public void normalizeVelocityError()
-    {
+
+-(void) normalizeVelocityError
+{
         double zaforward = 0.0;
         double zareverse = 0.0;
         double zvforward = 0.0;
@@ -2568,10 +2493,12 @@
                 }
             }
         }
-    }
+}
 
-    public void normalizeVelocityError2()
-    {
+
+
+-(void) normalizeVelocityError2
+{
         double zverror = 0.0;
         FilterAveraging FAImp = new FilterAveraging(9);
         FilterAveraging FAMet = new FilterAveraging(9);
@@ -2710,10 +2637,11 @@
                 }
             }
         }
-    }
+}
 
-    public void normalizeVelocityError3()
-    {
+
+-(void) normalizeVelocityError3
+{
         double zverror = 0.0;
         FilterAveraging FAImp = new FilterAveraging(9);
         FilterAveraging FAMet = new FilterAveraging(9);
@@ -2786,16 +2714,21 @@
                 }
             }
         }
-    }
+}
 
 
-    public double Round(double value, int places)
-    {
-        Double val = value;
-        BigDecimal bd = new BigDecimal(val.toString());
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
+/*!
+ *  @method Round:values:places
+ *
+ *  @discussion Rounds the number to the amount specified by places.
+ */
+-(double) Round:(double)value :(int)places
+{
+    Double val = value;
+    BigDecimal bd = new BigDecimal(val.toString());
+    bd = bd.setScale(places, RoundingMode.HALF_UP);
+    return bd.doubleValue();
+}
 
 
 @end
