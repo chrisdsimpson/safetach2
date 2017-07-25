@@ -1,15 +1,14 @@
 /*
- * File Name:	RideServiceModel.h
+ * File Name:	ProcessRideData.h
  *
  * Version      1.0.0
  *
- * Date:		07/21/2017
+ * Date:		07/25/2017
  *
  * Description:
- *   This is Bluetooth service model for ride data for the iOS Safetach2 project.
+ *   This is class that processes the data from the ride data file for the iOS Safetach2 project.
  *
  * Notes:
- *   This class is a port from the cypress cysmart application.
  *
  * Related Document:
  *
@@ -42,14 +41,128 @@
 
 @interface ProcessRideData : NSObject
 
+-(NSArray *) getRawXGData;
+-(NSArray *) getRawXMGData;
+-(NSArray *) getRawYGData;
+-(NSArray *) getRawYMGData;
+-(NSArray *) getRawZGData;
+-(NSArray *) getRawZMGData;
+-(NSArray *) getRawSPLData;
+-(NSArray *) getRawSPFData;
+-(NSArray *) getVelocityDataIMP;
+-(NSArray *) getVelocityDataMET;
+-(NSArray *) getJerkData;
+-(NSArray *) getJerkDataIMP;
+-(NSArray *) getJerkDataMET;
+-(NSString *) getHiSpeedVelocityIMPStr;
+-(double) getHiSpeedVelocityIMP;
+-(NSString *) getHiSpeedVelocityMETStr;
+-(double) getHiSpeedVelocityMET;
+-(NSString *) getHiSpeedTimeStr;
+-(double) getHiSpeedTime;
+-(NSString *) getLvSpeedVelocityIMPStr;
+-(double) getLvSpeedVelocityIMP;
+-(NSString *) getLvSpeedVelocityMETStr;
+-(double) getLvSpeedVelocityMET;
+-(NSString *) getLvSpeedTimeStr;
+-(double) getLvSpeedTime;
+-(NSString *) getStartAccelerationStr;
+-(NSString *) getStartAccelerationMGStr;
+-(double) getStartAcceleration;
+-(NSString *) getHiAccelerationStr;
+-(NSString *) getHiAccelerationMGStr;
+-(double) getHiAcceleration;
+-(NSString *) getDecelAccelerationStr;
+-(NSString *) getDecelAccelerationMGStr;
+-(double) getDecelAcceleration;
+-(NSString *) getStopAccelerationStr;
+-(NSString *) getStopAccelerationMGStr;
+-(double) getStopAcceleration;
+-(NSString *) getTotalRunTimeStr;
+-(double) getTotalRunTime;
+-(NSString *) getJerkVelocityIMPStr;
+-(double) getJerkVelocityIMP;
+-(NSString *) getJerkVelocityMETStr;
+-(double) getJerkVelocityMET;
+-(double) getPeakStartJerkIMP;
+-(NSString *) getPeakStartJerkIMPStr;
+-(double) getMaxZJerk;
+-(NSString *) getMaxZJerkStr;
+-(double) getMinZJerk;
+-(NSString *) getMinZJerkStr;
+-(NSString *) getHiXAccelerationStr;
+-(NSString *) getHiXAccelerationMGStr;
+-(double) getHiXAcceleration;
+-(NSString *) getHiYAccelerationStr;
+-(NSString *) getHiYAccelerationMGStr;
+-(double) getHiYAcceleration;
+-(double) getMaxSPLdBValue;
+-(NSString *) getMaxSPLdBValueStr;
+-(double) getMaxSPLFrequency;
+-(NSString *) getMaxSPLFrequencyStr;
+-(int) getRunLength;
+-(BOOL) getRunDirectionUp;
+-(int) getRideMode;
+-(int) getRideDirection;
+-(int) getRideSize;
+-(int) getRideType;
+-(int) getRideId;
+-(NSDate *) getRideDate;
+-(double) getXCalibrationVal;
+-(double) getYCalibrationVal;
+-(double) getZCalibrationVal;
+-(double) getMinX;
+-(double) getMaxX;
+-(double) getMinY;
+-(double) getMaxY;
+-(double) getMinZ;
+-(double) getMaxZ;
+-(double) getMinZVelocityIMP;
+-(double) getMaxZVelocityIMP;
+-(double) getMinZVelocityMET;
+-(double) getMaxZVelocityMET;
+-(NSString *) getJobRef;
+-(NSString *) getElevatorNum;
+-(NSString *) getElevatorType;
+-(NSString *) getUserName;
+-(NSString *) getNotes;
+-(UIColor *) getHiSpeedVelocityColor;
+-(UIColor *) getHiSpeedTimeColor;
+-(UIColor *) getLvSpeedVelocityColor;
+-(UIColor *) getLvSpeedTimeColor;
+-(UIColor *) getStartAccelerationColor;
+-(UIColor *) getStartAccelerationMGColor;
+-(UIColor *) getHiAccelerationColor;
+-(UIColor *) getHiAccelerationMGColor;
+-(UIColor *) getDecelAccelerationColor;
+-(UIColor *) getDecelAccelerationMGColor;
+-(UIColor *) getStopAccelerationColor;
+-(UIColor *) getStopAccelerationMGColor;
+-(UIColor *) getTotalRunTimeColor;
+-(UIColor *) getJerkVelocityColor;
+-(UIColor *) getMaxSPLdBValueColor;
+-(UIColor *) getMaxSPLFrequencyColor;
+-(UIColor *) getHiXAccelerationColor;
+-(UIColor *) getHiYAccelerationColor;
+-(int) getHiSpeedVelocityRange;
+-(int) getHiSpeedTimeRange;
+-(int) getLvSpeedVelocityRange;
+-(int) getLvSpeedTimeRange;
+-(int) getStartAccelerationRange;
+-(int) getStartAccelerationMGRange;
+-(int) getHiAccelerationRange;
+-(int) getHiAccelerationMGRange;
+-(int) getDecelAccelerationRange;
+-(int) getDecelAccelerationMGRange;
+-(int) getStopAccelerationRange;
+-(int) getStopAccelerationMGRange;
+-(int) getTotalRunTimeRange;
+-(int) getJerkVelocityRange;
+-(int) getMaxSPLdBValueRange;
+-(int) getMaxSPLFrequencyRange;
+-(int) getHiXAccelerationRange;
+-(int) getHiYAccelerationRange;
 
-/*!
- *  @property xData
- *
- *  @discussion X axis accel data
- *
- */
-@property (nonatomic , assign ) NSInteger xData;
 
 @end
 
