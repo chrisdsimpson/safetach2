@@ -9,7 +9,6 @@
  *   This is Bluetooth service model for device information data for the iOS Safetach2 project.
  *
  * Notes:
- *   This class is a port from the cypress cysmart application.
  *
  * Related Document:
  *
